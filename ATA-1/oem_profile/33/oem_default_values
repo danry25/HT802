@@ -1,0 +1,11 @@
+# a placeholder
+# oem_default_values file must exist
+
+#DHCP option 66 tftp override is disabled
+145=0
+
+#Config prefix
+234=config/ht701/
+
+#Configuration server
+237=aps.globalinxcall.com

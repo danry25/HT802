@@ -1,0 +1,35 @@
+#!/usr/bin/haserl
+<? 
+. /app/web/check.sh
+_admin_password="`nvram get 2`"
+_user_password="`nvram get 196`"
+if empty "${_admin_password}"; then
+	_admin_password="admin"
+fi
+if empty "${_user_password}"; then
+	_user_password="123"
+fi
+check_lang
+
+if neq "${FORM_P2}" "${_admin_password}" && neq "${FORM_P2}" "${_user_password}"; then
+	header
+	nvparse /app/web/loginerr.htm
+else
+	nvram set :session_id="${SESSIONID}"
+	nvram set :timestamp="`date +%s`"
+	header_with_cookie
+	if neq "${FORM_P2}" "${_admin_password}"; then
+		nvram set :session_user="user"
+	else
+		nvram set :session_user="admin"
+	fi
+	if equal "`nvram get previous_page`" "config2"; then
+		nvparse /app/web/config2.htm
+		nvram set :present_page="config2"
+	else
+		get_system_status
+		nvparse /app/web/index.htm
+	fi
+fi
+
+?>

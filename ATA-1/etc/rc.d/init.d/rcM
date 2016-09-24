@@ -1,0 +1,49 @@
+#!/bin/sh
+
+signal_exit()
+{
+    #send signal that we are done
+    scripts_signal 0
+    if [ -n "$1" ]; then
+        exit $1
+    else
+        exit 0
+    fi    
+}
+
+if [ $# -lt 1 ]; then
+        signal_exit 1
+        fi
+
+CMD="$(echo $*|tr -s ' ')"
+while [ -n "$CMD" ]
+do
+    SCRIPT="$(echo $CMD|cut -d' ' -f1)"
+
+    case "$SCRIPT" in
+	    1)
+		    /etc/init.d/cron 
+        ;;
+    	2)
+	    	/etc/init.d/telnet 
+    	;;
+	    3)
+		    /etc/init.d/syslog restart
+    	;;
+	    4)
+		    /etc/init.d/reload_gs_ata 
+    	;;
+	    5)
+		    /etc/init.d/apply_country_profile reload
+    		/etc/init.d/reload_gs_ata 
+	    ;;
+    esac
+    PREVCMD="$CMD"
+    CMD="$(echo $CMD|cut -d' ' -f2-)"
+    if [ "$PREVCMD" = "$CMD" ]; then
+        break
+    fi
+done
+
+signal_exit 0
+

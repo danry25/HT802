@@ -1,0 +1,32 @@
+#!/usr/bin/haserl
+#!/bin/ash
+<? 
+
+STATUS="`nvram get provision_status`"
+RUNNING="`nvram get provision_state`"
+if [ "${STATUS}x" != "x" ]; then
+    if [ "${RUNNING}x" = "1x" ]; then
+        RESULT="{\"status\":\"Running, Status : $STATUS\"}"
+    else    
+        RESULT="{\"status\":\"Not running, Last status : $STATUS\"}"
+    fi    
+else
+    if [ "${RUNNING}x" = "1x" ]; then
+        RESULT="{\"status\":\"Running\"}"
+    else
+        RESULT="{\"status\":\"Not running\"}"
+    fi
+fi    
+								
+HEADER="Content-Type: application/json\r\n\r\n"
+HEADER="Expires: $(date)\r\n$HEADER"
+HEADER="Cache-Control: no-cache, must-revalidate\r\n$HEADER"
+
+
+FormatTop="{\"results\":["
+FormatBottom="]}"
+
+echo -en $HEADER
+echo "$FormatTop$RESULT$FormatBottom"
+
+?>

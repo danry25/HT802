@@ -1,0 +1,45 @@
+#!/usr/bin/haserl
+<? 
+. /app/web/check.sh
+_admin_password="`nvram get 2`"
+if empty "${_admin_password}"; then
+	_admin_password="admin"
+fi
+check_lang
+
+if neq "${FORM_P2}" "${_admin_password}"; then
+	header
+	nvparse /app/web/loginerr.htm
+else
+	nvram set :session_id="${SESSIONID}"
+	nvram set :timestamp="`date +%s`"
+	header_with_cookie
+	nvram set :session_user="admin"
+	if empty "`nvram get previous_page`"; then
+		get_system_status
+		nvparse /app/web/index.htm
+	else
+		nvram set :present_page="`nvram get previous_page`"
+		if equal "`nvram get previous_page`" "rs"; then
+			nvram unset session_id 
+			nvram unset session_user
+			nvram unset previous_page
+			nvram unset timestamp
+			_reset_lock="`nvram get :reset_lock`"
+            if neq "${_reset_lock}" "1" ; then
+				nvparse /app/web/"`nvram get previous_page`".htm
+				reboot
+			else	
+				get_system_status
+				nvparse /app/web/index.htm
+			fi	
+        elif equal "`nvram get previous_page`" "download_core"; then
+            get_system_status
+            nvparse /app/web/index.htm
+		else
+			nvparse /app/web/"`nvram get previous_page`".htm
+		fi	
+	fi
+fi
+
+?>

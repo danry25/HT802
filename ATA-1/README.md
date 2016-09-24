@@ -1,0 +1,1 @@
+This directory is missing dev, proc & ram folders for somewhat obvious reasons. The nvram file is a dump of the provisioned values on this rando device I found, and bootlog.md is a copy of the bootlog from this device.

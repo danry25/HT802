@@ -1,0 +1,445 @@
+<html>
+<head>
+<title>Grandstream Device Configuration</title>
+<style type="text/css">
+<!--
+.l{  font-family: Tahoma; font-size: 10pt; color: #000000; }
+a.l:Hover{  font-family: Tahoma; font-size: 10pt; color: #ffffff; }
+-->
+</style></head>
+<body bgcolor="#CCCCCC">
+<form action="update" method="post">
+<table width="870" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#336699">
+<tr><td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td height="48" valign="middle" bgcolor="#F3C47C" class="l" align="center"><strong><font color="#336699" size="3"><b>Grandstream Device Configuration</b></font></strong></td>
+</tr><tr><td height="20" valign="top" background="/backline.gif" bgcolor="#F3C47C" align="center">
+<table width="60%" cellpadding="0" cellspacing="0"><tr>
+<td height="16" bgcolor="#999999" align="center"><a href="index" class="l"><b>STATUS</b></a></td>
+<td bgcolor="#336699" align="center" class="l"><b>BASIC SETTINGS</b></td>
+<td bgcolor="#999999" align="center"><a href="config" class="l"><b>ADVANCED SETTINGS</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a1" class="l"><b>FXS PORT1</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a2" class="l"><b>FXS PORT2</b></a></td>
+                </tr>
+              </table>
+            </td>
+        </tr>
+        <tr bgcolor="#FFFFCC">
+          <td align=right valign=top> <table  align="top" width=100% border=0 cellspacing=1 cellpadding=2>
+              <tr>
+                <td align=right><b>End User Password: </b></td>
+                <td>&nbsp; <input type="password" name="P196" maxlength=30 size=30>
+                  (purposely not displayed for security protection) </td>
+              </tr>
+              <tr>
+                <td align=right><b>Web Port: </b></td>
+                <td>&nbsp; <input type=text name="P901" value="<% 901 %>" maxlength=5 size=7>
+                  (default for HTTP is 80) </td>
+              </tr>
+              <tr>
+                <td align=right><b>Telnet Server: </b></td>
+                <td>&nbsp; <input type=radio name="P276" value=1 <% 276 1 checked %>>No &nbsp;&nbsp; &nbsp; <input type=radio name="P276" value=0 <% 276 0 checked %>>Yes</td>
+              </tr>
+              <tr>
+                <td align=right valign=top><b>IP Address: </b></td>
+                <td>
+                 <table width="95%" border=0 cellspacing=1 cellpadding=1>
+                  <tr>
+                   <td>
+                    <table width="100%" border=0 cellspacing=1 cellpadding=1>
+                     <tr>
+                      <td><input TYPE="radio" NAME="P8" VALUE=0 <% 8 0 checked %>>
+                              dynamically assigned via DHCP
+                              <br>
+                       <table width="100%">
+                        <tr>
+                         <td width="6%">&nbsp;</td>
+                         <td width="27%">DHCP hostname:</td>
+                         <td colspan=3><input type=text name="P146" value="<% 146                                                         %>" maxlength=32 size=30> (optional)</td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>DHCP domain:</td>
+                         <td><input type=text name="P147" value="<% 147                                                         %>" maxlength=32 size=30> (optional)</td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>DHCP vendor class ID:</td>
+                         <td><input type=text name="P148" value="<% 148                                                         %>" maxlength=32 size=30> (optional)</td>
+                        </tr>
+                       </table>
+                      </td>
+                     </tr>
+                     <tr>
+                      <td><input TYPE="radio" NAME="P8" VALUE=2 <% 8 2 checked %>>
+                              use PPPoE
+                            <br>
+                       <table width=100%>
+                        <tr>
+                         <td width="6%">&nbsp;</td>
+                         <td width="27%">PPPoE account ID:</td>
+                         <td><input type=text name="P82" value="<% 82                                                          %>" maxlength=64 size=30></td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>PPPoE password:</td>
+                         <td><input type="password" name="P83" value="<% 83                         %>" maxlength=32 size=30></td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>PPPoE Service Name:</td>
+                         <td><input type=text name="P269" value="<% 269                                                          %>" maxlength=64 size=30></td>
+                        </tr>
+                       </table>
+                              &nbsp;&nbsp;Preferred DNS server: &nbsp;
+                              <input type=text name="P92" value="<% 92 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P93" value="<% 93 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P94" value="<% 94 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P95" value="<% 95 %>" maxlength=3 size=3>
+                      </td>
+                     </tr>
+                     <tr>
+                      <td><input TYPE="radio" NAME="P8" VALUE=1 <% 8 1 checked %>>
+                              statically configured as: <br>
+                       <table width="100%">
+                        <tr>
+                         <td width="6%">&nbsp;</td>
+                         <td width="27%">IP Address: </td>
+                         <td><input type=text name="P9"  value="<% 9  %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P10" value="<% 10 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P11" value="<% 11 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P12" value="<% 12 %>" maxlength=3 size=3>
+                         </td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>Subnet Mask: </td>
+                         <td><input type=text name="P13" value="<% 13 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P14" value="<% 14 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P15" value="<% 15 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P16" value="<% 16 %>" maxlength=3 size=3>
+                         </td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>Default Router: </td>
+                         <td><input type=text name="P17" value="<% 17 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P18" value="<% 18 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P19" value="<% 19 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P20" value="<% 20 %>" maxlength=3 size=3>
+                         </td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>DNS Server 1: </td>
+                         <td><input type=text name="P21" value="<% 21 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P22" value="<% 22 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P23" value="<% 23 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P24" value="<% 24 %>" maxlength=3 size=3>
+                         </td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>DNS Server 2: </td>
+                         <td><input type=text name="P25" value="<% 25 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P26" value="<% 26 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P27" value="<% 27 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P28" value="<% 28 %>" maxlength=3 size=3>
+                         </td>
+                        </tr>
+                       </table>
+                      </td>
+                     </tr>
+                    </table>
+                   </td>
+                 </tr>
+                </table>
+               </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><b>Time Zone: </b></td>
+                <td>&nbsp; <select name="P64">
+                    <option value=TZA+12 <% 64 TZA+12 selected %>>GMT-12:00 (International Date Line West)</option>
+                    <option value=TZB+11 <% 64 TZB+11 selected %>>GMT-11:00 (Midway Island, Samoa)</option>
+                    <option value=TZC+10 <% 64 TZC+10 selected %>>GMT-10:00 (US Hawaiian Time)</option>
+                    <option value=TZD+9  <% 64 TZD+9  selected %>>GMT-9:00 (US Alaska Time)</option>
+                    <option value=TZE+8  <% 64 TZE+8  selected %>>GMT-8:00 (US Pacific Time, Los Angeles)</option>
+                    <option value=TZF+7  <% 64 TZF+7  selected %>>GMT-7:00 (US Mountain Time, Denver)</option>
+                    <option value=TZG+6  <% 64 TZG+6  selected %>>GMT-6:00 (US Central Time, Chicago)</option>
+                    <option value=TZH+5  <% 64 TZH+5  selected %>>GMT-5:00 (US Eastern Time, New York)</option>
+                    <option value=TZf+4:30 <% 64 TZf+4:30 selected %>>GMT-4:30 (Caracas)</option>
+                    <option value=TZI+4  <% 64 TZI+4  selected %>>GMT-4:00 (Atlantic Time, Quebec)</option>
+                    <option value=TZJ+3:30  <% 64 TZJ+3:30  selected %>>GMT-3:30 (Newfoundland)</option>
+                    <option value=TZK+3  <% 64 TZK+3  selected %>>GMT-3:00 (Greenland)</option>
+                    <option value=TZL+2  <% 64 TZL+2  selected %>>GMT-2:00 (Mid-Atlantic)</option>
+                    <option value=TZM+1  <% 64 TZM+1  selected %>>GMT-1:00 (Azores, Cape Verdi Is.)</option>
+                    <option value=TZN+0  <% 64 TZN+0  selected %>>GMT (London, Dublin, Edinburgh, Lisbon, Casablanca, Monrovia)</option>
+                    <option value=TZO-1  <% 64 TZO-1  selected %>>GMT+1:00 (Paris, Amsterdam, Berlin, Rome, Vienna, Madrid, Warsaw, Brussels)</option>
+                    <option value=TZP-2  <% 64 TZP-2  selected %>>GMT+2:00 (Israel, Cairo, Athens, Helsinki, Istanbul, Buchrest)</option>
+                    <option value=TZQ-3  <% 64 TZQ-3  selected %>>GMT+3:00 (Moscow, Kuwait, Baghdad, Tehran, Nairobi)</option>
+                    <option value=TZR-4  <% 64 TZR-4  selected %>>GMT+4:00 (Abu Dhabi, Baku)</option>
+                    <option value=TZS-5  <% 64 TZS-5  selected %>>GMT+5:00 (Islamabad, Ekaterinburg, Karachi, Tashkent)</option>
+                    <option value=TZT-5:30 <% 64 TZT-5:30 selected %>>GMT+5:30 (Chennai, New Delhi, Mumbai)</option>
+                    <option value=TZU-5:45 <% 64 TZU-5:45 selected %>>GMT+5:45 (Kathmandu)</option>
+                    <option value=TZV-6  <% 64 TZV-6 selected %>>GMT+6:00 (Almaty, Astana, Dhaka, Novosibirsk)</option>
+                    <option value=TZW-6:30 <% 64 TZW-6:30 selected %>>GMT+6:30 (Rangoon)</option>
+                    <option value=TZX-7  <% 64 TZX-7 selected %>>GMT+7:00 (Bankok, Jakarta, Hanoi, Krasnoyarsk)</option>
+                    <option value=TZY-8  <% 64 TZY-8 selected %>>GMT+8:00 (Beijing, Singapore, Taipei, Kuala Lumpur, Irkutsk, Perth)</option>
+                    <option value=TZZ-9  <% 64 TZZ-9 selected %>>GMT+9:00 (Japan, Korea, Yakutsk)</option>
+                    <option value=TZa-9:30 <% 64 TZa-9:30 selected %>>GMT+9:30 (Adelaide, Darwin)</option>
+                    <option value=TZb-10 <% 64 TZb-10 selected %>>GMT+10:00 (Brisbane, Sydney, Melbourne, Canberra, Guam, Hobart)</option>
+                    <option value=TZc-11 <% 64 TZc-11 selected %>>GMT+11:00 (Magadan, Solomon Is., New Caledonia)</option>
+                    <option value=TZd-12 <% 64 TZd-12 selected %>>GMT+12:00 (Auckland, Wellington, Fiji)</option>
+                    <option value=TZe-13 <% 64 TZe-13 selected %>>GMT+13:00 (Nuku'alofa)</option>
+                    <option value=customize <% 64 customize selected %>>Using self-defined Time Zone</option>
+                  </select> </td>
+              </tr>
+              <tr>
+                <td align=right><i>Self-Defined Time Zone:</i></td>
+                <td>&nbsp;
+                <!---
+                <input type=radio name="P75" value=0 <% 75 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P75" value=1 <% 75 1 checked %>>
+                  Yes &nbsp;Optional Rule:
+                  --->
+                  <input type=text name="P246" value="<% 246                              %>" maxlength=100 size=33>
+                  (For exampe: MTZ+6MDT+5,M4.1.0,M11.1.0) </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><b>Language: </b></td>
+                <td>&nbsp; <select name="P342">
+                    <option value=0 <% 342 0 selected %>>English</option>
+                    <option value=4 <% 342 4 selected %>>Chinese</option>
+                    <option value=10 <% 342 10 selected %>>Spanish IVR</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+              </tr>
+              <tr>
+                <td colspan=2>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align=left colspan=2><font color="#DF46"><i><b>NAT/DHCP Server Information & Configuration: </b></i></font></td>
+              </tr>
+              <tr>
+                <td align=right><i>Device Mode:</i></td>
+                <td>&nbsp; <input type=radio name="P231" value=0 <% 231 0 checked %>>
+                  NAT Router &nbsp;&nbsp; &nbsp; <input type=radio name="P231" value=1 <% 231 1 checked %>>
+                  Bridge</td>
+              </tr>
+              <tr>
+                <td align=right><i>NAT maximum ports: </i></td>
+                <td>&nbsp; <input type=text name="P896" value="<% 896 %>" maxlength=4 size=7>
+                  (range: 0 - 4096, default is 1024) </td>
+              </tr>
+              <tr>
+                <td align=right><i>NAT TCP timeout: </i></td>
+                <td>&nbsp; <input type=text name="P897" value="<% 897 %>" maxlength=4 size=7>
+                  (range: 0 - 3600, default is 3600) </td>
+              </tr>
+              <tr>
+                <td align=right><i>NAT UDP timeout: </i></td>
+                <td>&nbsp; <input type=text name="P898" value="<% 898 %>" maxlength=4 size=7>
+                  (range: 0 - 3600, default is 300) </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Uplink bandwidth: </i></td>
+                <td>&nbsp; <select name="P867">
+                    <option value=0 <% 867 0 selected %>>Disabled</option>
+                    <option value=2 <% 867 2 selected %>>128k</option>
+                    <option value=3 <% 867 3 selected %>>256k</option>
+                    <option value=4 <% 867 4 selected %>>512k</option>
+                    <option value=5 <% 867 5 selected %>>1M</option>
+                    <option value=8 <% 867 8 selected %>>2M</option>
+                    <option value=9 <% 867 9 selected %>>3M</option>
+                    <option value=6 <% 867 6 selected %>>4M</option>
+                    <option value=10 <% 867 10 selected %>>5M</option>
+                    <option value=7 <% 867 7 selected %>>10M</option>
+                    <option value=11 <% 867 11 selected %>>15M</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Downlink bandwidth: </i></td>
+                <td>&nbsp; <select name="P868">
+                    <option value=0 <% 868 0 selected %>>Disabled</option>
+                    <option value=2 <% 868 2 selected %>>128k</option>
+                    <option value=3 <% 868 3 selected %>>256k</option>
+                    <option value=4 <% 868 4 selected %>>512k</option>
+                    <option value=5 <% 868 5 selected %>>1M</option>
+                    <option value=8 <% 868 8 selected %>>2M</option>
+                    <option value=9 <% 868 9 selected %>>3M</option>
+                    <option value=6 <% 868 6 selected %>>4M</option>
+                    <option value=10 <% 868 10 selected %>>5M</option>
+                    <option value=7 <% 868 7 selected %>>10M</option>
+                    <option value=11 <% 868 11 selected %>>15M</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Enable UPnP support:</i></td>
+                <td>&nbsp; <input type=radio name="P890" value=0 <% 890 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P890" value=1 <% 890 1 checked %>>
+                  Yes</td>
+              </tr>
+              <tr>
+                <td align=right><i>Reply to ICMP on WAN port: </i></td>
+                <td>&nbsp; <input type=radio name="P189" value=0 <% 189 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P189" value=1 <% 189 1 checked %>>
+                  Yes &nbsp; (Unit will not respond to PING from WAN side if set to No) </td>
+              </tr>
+              <tr>
+                <td align=right><i>WAN side HTTP/Telnet access: </i></td>
+                <td>&nbsp; <input type=radio name="P190" value=0 <% 190 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P190" value=1 <% 190 1 checked %>>
+                  Yes &nbsp; (WAN side access will be rejected if set to No) </td>
+              </tr>
+              <tr>
+                <td align=right><i>Cloned WAN MAC Addr: </i></td>
+                <td>&nbsp; <input type=text name="P115" value="<% 115 %>" maxlength=2 size=2>
+                  &nbsp; <input type=text name="P116" value="<% 116 %>" maxlength=2 size=2>
+                  &nbsp; <input type=text name="P117" value="<% 117 %>" maxlength=2 size=2>
+                  &nbsp; <input type=text name="P118" value="<% 118 %>" maxlength=2 size=2>
+                  &nbsp; <input type=text name="P119" value="<% 119 %>" maxlength=2 size=2>
+                  &nbsp; <input type=text name="P120" value="<% 120 %>" maxlength=2 size=2>
+                  (in hex format) </td>
+              </tr>
+              <tr>
+                <td align=right><i>Enable LAN DHCP:</i></td>
+                <td>&nbsp; <input type=radio name="P5001" value=0 <% 5001 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P5001" value=1 <% 5001 1 checked %>>
+                  Yes</td>
+              </tr>
+              <tr>
+                <td align=right><i>LAN DHCP Base IP: </i></td>
+                <td>&nbsp; <input type=text name="P111" value="<% 111          %>" maxlength=15 size=30>
+                  (base IP for the LAN port, default is 192.168.2.1) </td>
+              </tr>
+              <tr>
+                <td align=right><i>LAN DHCP Start IP: </i></td>
+                <td>&nbsp; <input type=text name="P5002" value="<% 5002          %>" maxlength=3 size=30>
+                  (default is 100) </td>
+              </tr>
+              <tr>
+                <td align=right><i>LAN DHCP End IP: </i></td>
+                <td>&nbsp; <input type=text name="P5003" value="<% 5003          %>" maxlength=3 size=30>
+                  (default is 199) </td>
+              </tr>
+              <tr>
+                <td align=right><i>LAN Subnet Mask: </i></td>
+                <td>&nbsp; <input type=text name="P110" value="<% 110          %>" maxlength=15 size=30>
+                  (default is 255.255.255.0) </td>
+              </tr>
+              <tr>
+                <td align=right><i>DHCP IP Lease Time: </i></td>
+                <td>&nbsp; <input type=text name="P112" value="<% 112 %>" maxlength=4 size=7>
+                  (in units of hours, default is 120 hours or 5 days) </td>
+              </tr>
+              <tr>
+                <td align=right><i>DMZ IP: </i></td>
+                <td>&nbsp; <input type=text name="P113" value="<% 113          %>" maxlength=15 size=30>
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Port Forwarding: </i></td>
+                <td> &nbsp;&nbsp;WAN port
+                  <input type=text name="P150" value="<% 150  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;LAN IP
+                  <input type=text name="P158" value="<% 158        %>" maxlength=15 size=14>
+                  &nbsp;&nbsp;LAN port
+                  <input type=text name="P166" value="<% 166  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;Protocol
+                  <select name="P174">
+                    <option value=0 <% 174 0 selected %>>UDP Only</option>
+                    <option value=1 <% 174 1 selected %>>TCP Only</option>
+                    <option value=2 <% 174 2 selected %>>TCP/UDP</option>
+                  </select> <br> &nbsp;&nbsp;WAN port
+                  <input type=text name="P151" value="<% 151  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;LAN IP
+                  <input type=text name="P159" value="<% 159        %>" maxlength=15 size=14>
+                  &nbsp;&nbsp;LAN port
+                  <input type=text name="P167" value="<% 167  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;Protocol
+                  <select name="P175">
+                    <option value=0 <% 175 0 selected %>>UDP Only</option>
+                    <option value=1 <% 175 1 selected %>>TCP Only</option>
+                    <option value=2 <% 175 2 selected %>>TCP/UDP</option>
+                  </select> <br> &nbsp;&nbsp;WAN port
+                  <input type=text name="P152" value="<% 152  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;LAN IP
+                  <input type=text name="P160" value="<% 160        %>" maxlength=15 size=14>
+                  &nbsp;&nbsp;LAN port
+                  <input type=text name="P168" value="<% 168  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;Protocol
+                  <select name="P176">
+                    <option value=0 <% 176 0 selected %>>UDP Only</option>
+                    <option value=1 <% 176 1 selected %>>TCP Only</option>
+                    <option value=2 <% 176 2 selected %>>TCP/UDP</option>
+                  </select> <br> &nbsp;&nbsp;WAN port
+                  <input type=text name="P153" value="<% 153  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;LAN IP
+                  <input type=text name="P161" value="<% 161        %>" maxlength=15 size=14>
+                  &nbsp;&nbsp;LAN port
+                  <input type=text name="P169" value="<% 169  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;Protocol
+                  <select name="P177">
+                    <option value=0 <% 177 0 selected %>>UDP Only</option>
+                    <option value=1 <% 177 1 selected %>>TCP Only</option>
+                    <option value=2 <% 177 2 selected %>>TCP/UDP</option>
+                  </select> <br> &nbsp;&nbsp;WAN port
+                  <input type=text name="P154" value="<% 154  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;LAN IP
+                  <input type=text name="P162" value="<% 162        %>" maxlength=15 size=14>
+                  &nbsp;&nbsp;LAN port
+                  <input type=text name="P170" value="<% 170  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;Protocol
+                  <select name="P178">
+                    <option value=0 <% 178 0 selected %>>UDP Only</option>
+                    <option value=1 <% 178 1 selected %>>TCP Only</option>
+                    <option value=2 <% 178 2 selected %>>TCP/UDP</option>
+                  </select> <br> &nbsp;&nbsp;WAN port
+                  <input type=text name="P155" value="<% 155  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;LAN IP
+                  <input type=text name="P163" value="<% 163        %>" maxlength=15 size=14>
+                  &nbsp;&nbsp;LAN port
+                  <input type=text name="P171" value="<% 171  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;Protocol
+                  <select name="P179">
+                    <option value=0 <% 179 0 selected %>>UDP Only</option>
+                    <option value=1 <% 179 1 selected %>>TCP Only</option>
+                    <option value=2 <% 179 2 selected %>>TCP/UDP</option>
+                  </select> <br> &nbsp;&nbsp;WAN port
+                  <input type=text name="P156" value="<% 156  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;LAN IP
+                  <input type=text name="P164" value="<% 164        %>" maxlength=15 size=14>
+                  &nbsp;&nbsp;LAN port
+                  <input type=text name="P172" value="<% 172  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;Protocol
+                  <select name="P180">
+                    <option value=0 <% 180 0 selected %>>UDP Only</option>
+                    <option value=1 <% 180 1 selected %>>TCP Only</option>
+                    <option value=2 <% 180 2 selected %>>TCP/UDP</option>
+                  </select> <br> &nbsp;&nbsp;WAN port
+                  <input type=text name="P157" value="<% 157  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;LAN IP
+                  <input type=text name="P165" value="<% 165        %>" maxlength=15 size=14>
+                  &nbsp;&nbsp;LAN port
+                  <input type=text name="P173" value="<% 173  %>" maxlength=5 size=4>
+                  &nbsp;&nbsp;Protocol
+                  <select name="P181">
+                    <option value=0 <% 181 0 selected %>>UDP Only</option>
+                    <option value=1 <% 181 1 selected %>>TCP Only</option>
+                    <option value=2 <% 181 2 selected %>>TCP/UDP</option>
+                  </select> <br> </td>
+              </tr>
+              <tr height=28 bgcolor="#F3C47C" align=center>
+                <td colspan=2> <input type="submit" name="update" value="Update">
+                  &nbsp;&nbsp; <input type="button" name="cancel" value="Cancel" onClick="document.location='login'">
+                  &nbsp;&nbsp; <input type="button" name="reboot" value="Reboot" onClick="document.location='rs'">
+                  <input name="gnkey" type=hidden value=0b82> </td>
+              </tr>
+</table></td>
+</tr>
+<tr><td bgcolor="#336699" align="center" class="l"><font size="1">All Rights Reserved Grandstream Networks, Inc. 2006-2014</font></td></tr></table></td>
+</tr></table>
+</form></body></html>

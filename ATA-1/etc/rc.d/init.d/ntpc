@@ -1,0 +1,10 @@
+#!/bin/sh
+
+OVERRIDE_NTP_SERVER=`nvram get override_ntp_server`
+
+killall ntpclient
+if [ -z "$OVERRIDE_NTP_SERVER" -o "`nvram get 144`" != "1" ]; then
+    /usr/sbin/ntpclient -s -h "`nvram get 30`" -i 30 -c 3 &
+else
+    /usr/sbin/ntpclient -s -h "${OVERRIDE_NTP_SERVER}" -i 30 -c 3 &
+fi

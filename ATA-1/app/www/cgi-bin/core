@@ -1,0 +1,23 @@
+#!/usr/bin/haserl
+<? 
+. /app/web/check.sh
+_session_id="`nvram get session_id`"
+_timestamp="`nvram get timestamp`"
+_scriptname="`basename ${SCRIPT_NAME}`"
+
+if empty "${_session_id}" || neq "${FORM_session_id}" "${_session_id}" || check_timestamp "${_timestamp}"; then
+	header
+	nvparse /app/web/login.htm
+	nvram set :previous_page="${_scriptname}"
+elif neq "${_scriptname}" "login" && neq "${_scriptname}" "index" && check_user "${_scriptname}"; then
+	header
+	nvparse /app/web/adminlogin.htm
+	nvram set :previous_page="${_scriptname}"
+else
+    header
+    echo "<html><body><p3>"
+    ls -1 /core | sed -e 's/\(.*\)/<a href=\"\.\.\/core\/\1\">\1<\/a>/'
+    echo "</p3></body></html>"
+fi
+
+?>

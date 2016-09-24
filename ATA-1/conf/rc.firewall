@@ -1,0 +1,101 @@
+#!/bin/sh
+
+#
+# Read Configuration File
+#
+if [ -r /etc/rc.conf ]; then
+        . /etc/rc.conf
+fi
+
+#Public variable
+if [ ${wan_ip_option} = 0 ]; then
+	WAN=eth0
+elif [ ${wan_ip_option} = 1 ]; then
+	WAN=eth0
+elif [ ${wan_ip_option} = 2 ]; then
+	WAN=ppp0
+else
+	WAN=eth0
+fi
+
+LAN=eth1
+
+WAN_IP=`ifconfig ${WAN} |grep -i "inet addr:" | cut -f2 -d: | cut -f1 -d" "`
+if [ -z $WAN_IP ];then
+        exit
+fi
+
+LAN_IP=`ifconfig ${LAN} |grep -i "inet addr:" | cut -f2 -d: | cut -f1 -d" "`
+LAN_IP_PREFIX=`echo ${LAN_IP} | cut -f1,2,3 -d.`
+
+#Check firewall enable
+if [ $FIREWALL_ENABLE -eq 0 ];then
+	exit
+fi
+
+if [ ${route_switch_mode} = 0 ]; then
+#Ping From WAN side
+if [ $ALLOW_PING_FROM_WAN_SIDE -eq 0 ];then
+    iptables -D INPUT -i $WAN -p icmp --icmp-type echo-request -j DROP 2> /dev/null
+    iptables -A INPUT -i $WAN -p icmp --icmp-type echo-request -j DROP
+else
+    iptables -A INPUT -i $WAN -d ${LAN_IP} -p icmp --icmp-type echo-request -j DROP
+fi
+
+#HTTP Access From WAN side
+if [ $ALLOW_WAN_HTTP_ACCESS -eq 0 ];then
+	iptables -D INPUT -p tcp -i $WAN --syn --dport ${web_port} -j DROP 2> /dev/null
+	iptables -A INPUT -p tcp -i $WAN --syn --dport ${web_port} -j DROP
+
+	iptables -D INPUT -p tcp -i $WAN --syn --dport 23 -j DROP 2> /dev/null
+	iptables -A INPUT -p tcp -i $WAN --syn --dport 23 -j DROP
+else
+    iptables -t nat -D PREROUTING  -p tcp --dport ${web_port} -d $WAN_IP -j ACCEPT 2>/dev/null
+    iptables -t nat -A PREROUTING  -p tcp --dport ${web_port} -d $WAN_IP -j ACCEPT
+    iptables -t nat -D PREROUTING  -p tcp --dport 23 -d $WAN_IP -j ACCEPT 2>/dev/null
+    iptables -t nat -A PREROUTING  -p tcp --dport 23 -d $WAN_IP -j ACCEPT
+	#iptables -A INPUT -p tcp -i $WAN -d ${WAN_IP} --dport ${web_port} -j ACCEPT
+	#iptables -A INPUT -p tcp -i $WAN -d ${WAN_IP} --dport 23 -j ACCEPT
+	iptables -A INPUT -p tcp -i $WAN --dport ${web_port} -j ACCEPT
+	iptables -A INPUT -p tcp -i $WAN --dport 23 -j ACCEPT
+fi
+
+#####################enable DMZ#################################################
+if [ -n "$DMZ_HOST" ]; then
+    iptables -t nat -A PREROUTING  -p tcp -d $WAN_IP -j DNAT --to $DMZ_HOST
+    iptables -t nat -A PREROUTING  -p udp -d $WAN_IP -j DNAT --to $DMZ_HOST
+fi
+fi
+
+#if [ $MAC_Unspecified -eq 1 ];then
+   iptables -F FORWARD
+#   iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+#fi
+if [ $ENABLE_HACKER_ATTACK_PROTECT -gt 0 ];then
+	#Syn-flood Protection
+    iptables -A FORWARD -p tcp --syn -m limit --limit 1/s -j ACCEPT
+	#SPOOFING
+    eval OURNET=$LANIP_PREFIX'0/24'
+    iptables -A FORWARD -s $OURNET -i $WAN -j DROP
+
+	#SMURF
+    echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
+
+	#Ping of death
+    iptables -A FORWARD -p icmp --icmp-type echo-request -m limit --limit 1/s -j ACCEPT
+
+  	#Enable Hacker Attack Protect
+  	iptables -A INPUT -i $WAN -p tcp --tcp-flags ALL FIN,URG,PSH -j DROP
+  	iptables -A INPUT -i $WAN -p tcp --tcp-flags ALL ALL -j DROP
+  	iptables -A INPUT -i $WAN -p tcp --tcp-flags ALL SYN,RST,ACK,FIN,URG -j DROP
+  	iptables -A INPUT -i $WAN -p tcp --tcp-flags ALL NONE -j DROP
+  	iptables -A INPUT -i $WAN -p tcp --tcp-flags SYN,RST SYN,RST -j DROP
+  	iptables -A INPUT -i $WAN -p tcp --tcp-flags SYN,FIN SYN,FIN -j DROP
+fi
+#Furtive port scan
+if [ $FURTIVE_PORT_SCAN -gt 0 ];then
+    iptables -A FORWARD -p tcp --tcp-flags SYN,ACK,FIN,RST RST -m limit --limit 1/s -j ACCEPT
+fi
+
+#Client control not enabled
+#Mac control not enabled

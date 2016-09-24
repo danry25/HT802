@@ -1,0 +1,46 @@
+<html>
+<head>
+<script language="javascript"><!--
+window.location = "/cgi-bin/login";
+//-->
+</script>	
+<title>Grandstream Device Configuration</title>
+<style type="text/css">
+<!--
+.l{  font-family: Tahoma; font-size: 10pt; color: #000000; }
+a.l:Hover {  font-family: Tahoma; font-size: 10pt; color: #ffffff; }
+-->
+</style></head>
+<body bgcolor="#CCCCCC" topmargin="80">
+<form action="/cgi-bin/dologin" method="post" name="loginForm">
+<table width="600" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#336699" style="display: none;">
+  <tr>
+    <td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td height="48" valign="middle" bgcolor="#F3C47C" class="l" align="center"><strong><font color="#336699" size="3"><b>Grandstream Device Configuration</b></font></strong></td>
+</tr>
+<tr><td valign="top" background="backline.gif" bgcolor="#F3C47C">&nbsp;</td></tr>
+        <tr bgcolor="ffffff"> 
+          <td align=center bgcolor="ffffcc" height=69> <table width=500 border=0 cellspacing=5 cellpadding=0 align=center bgcolor="ffffcc">
+              <tr> 
+                <td width=32%><div align=right><font color="006699"><b>Password</b></font></div></td>
+                <td width=68%><input name="P2" type=password size=30 maxlength=30></td>
+              </tr>
+            </table></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td align=right> <div align=center> 
+              <input type="submit" name="Login" value="Login">
+              <input name="gnkey" type=hidden value=0b82>
+            </div><br>
+          </td>
+        </tr>
+        <tr> 
+<td bgcolor="#336699" align="center" class="l"><font size="1">All Rights Reserved Grandstream Networks, Inc. 2010</font></td>
+</tr></table></td></tr></table>
+</form>
+<script>
+document.body.onLoad = document.loginForm.P2.focus();
+</script>
+</body>
+</html>
+

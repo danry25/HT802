@@ -1,0 +1,23 @@
+#!/bin/sh
+
+VERBOSE=2
+
+die () {
+	echo $@ >&2
+	exit 1;
+}
+
+warn () {
+	echo "Warning: "$@ >&2
+}
+required(){
+    prg=`which $1`
+    test -x "$prg" || die "$0: Error $1 is required"
+}
+
+info(){
+	level=$1
+	shift
+	[ $level -le $VERBOSE ] && echo Info: "$@" >&2
+}
+

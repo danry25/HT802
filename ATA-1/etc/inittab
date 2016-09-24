@@ -1,0 +1,13 @@
+#/etc/inittab
+
+# Do sysinit
+::sysinit:/etc/rc.d/rc.sysinit
+
+# Start a shell
+/dev/ttyS0::askfirst:/bin/sh
+
+null::shutdown:/usr/bin/killall udhcpc
+null::shutdown:/usr/bin/killall klogd
+null::shutdown:/usr/bin/killall syslogd
+null::shutdown:/bin/umount -a -r
+

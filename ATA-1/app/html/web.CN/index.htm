@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>潮流网络产品配置</title>
+<script src="../scripts/jquery-min.js" type="text/javascript"></script>
+<script src="../scripts/jquery.validate.min.js" type="text/javascript"></script>
+<style type="text/css">
+<!--
+.l{  font-family: Tahoma; font-size: 10pt; color: #000000; }
+a.l:Hover{  font-family: Tahoma; font-size: 10pt; color: #ffffff; }
+-->
+</style></head><body bgcolor="#CCCCCC">
+<table width="870" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#336699">
+<tr><td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td height="48" valign="middle" bgcolor="#F3C47C" class="l" align="center"><strong><font color="#336699" size="3"><b>潮流网络产品配置</b></font></strong></td>
+</tr><tr><td height="20" valign="top" background="/backline.gif" bgcolor="#F3C47C" align="center"> 
+<table width="60%" cellpadding="0" cellspacing="0">
+<tr><td bgcolor="#336699" align="center" class="l"><b>状态</b></td>
+<td bgcolor="#999999" align="center"><a href="config2" class="l"><b>基本设置</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config" class="l"><b>高级设置</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a1" class="l"><b>FXS端口1 </b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a2" class="l"><b>FXS端口2 </b></a></td>
+</tr></table></td></tr><tr bgcolor="#FFFFCC">
+<td> <table width="100%" border=0 cellspacing=1 cellpadding=2>
+              <tr>
+                <td align=right><b>MAC地址: </b></td>
+                <td>&nbsp;
+                  <% 67              %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>IP地址: </b></td>
+                <td>&nbsp;
+                  <% 121        %>
+                   </td>
+              </tr>
+              <tr>
+                <td align=right><b>产品模型: </b></td>
+                <td>&nbsp;
+                  <% 89            %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>硬件版本: </b></td>
+                <td>&nbsp;
+                  <% 917            %>
+				  &nbsp;&nbsp;&nbsp;产品编号 --
+                  <% 1397            %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>软件版本: </b></td>
+                <td>&nbsp; Program --
+                  <% 68     %>
+                   &nbsp;&nbsp;&nbsp;Bootloader --
+                  <% 69     %>
+                   &nbsp;&nbsp;&nbsp;Core --
+                  <% 70     %>
+                   &nbsp;&nbsp;&nbsp;Base --
+                  <% 45     %>
+                  <br>&nbsp; CPE -- <% cpe_version     %> 
+                  </td>
+              </tr>
+              <tr> 
+                <td align=right><b>系统运行时间: </b></td>
+                <td>&nbsp;
+		  <% 199                                      %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>PPPoE连接状态: </b></td>
+                <td>&nbsp;
+		  <% 211  %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>NAT: </b></td>
+                <td>&nbsp;
+                  <% 80                                                          %>
+                   </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><b>端口状态: </b></td>
+                <td>
+                  <table border=1>
+                    <tr>
+                      <td>端口</td>
+                      <td>摘机</td>
+                      <td>注册状态</td>
+                      <td>免打扰</td> 
+                      <td>&nbsp;转移</td>
+                      <td>&nbsp;遇忙转移</td>
+                      <td>&nbsp;延时转移</td>
+                    </tr>
+                    <tr>
+                      <td>FXS 1</td>
+                      <td><b><% 4901                       %></b></td>
+                      <td><b><% 4921                       %></b></td>
+                      <td><% dnd_0 0 No  %><% dnd_0 1 Yes  %></td>
+                      <td>&nbsp;<% forward_0                  %></td>
+                      <td>&nbsp;<% busyForward_0              %></td>
+                      <td>&nbsp;<% delayedForward_0           %></td>
+                    </tr>
+                    <tr>
+                      <td>FXS 2</td>
+                      <td><b><% 4902                       %></b></td>
+                      <td><b><% 4922                       %></b></td>
+                      <td><% dnd_1 0 No  %><% dnd_1 1 Yes  %></td>
+                      <td>&nbsp;<% forward_1                  %></td>
+                      <td>&nbsp;<% busyForward_1              %></td>
+                      <td>&nbsp;<% delayedForward_1           %></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+			<% hacked_pvalues %>
+			</td>
+        </tr>
+        <tr>
+<td bgcolor="#336699" align="center" class="l"><font size="1">版权所有 潮流网络 2006-2014</font></td>
+</tr></table></td></tr></table>
+</body>
+</html>

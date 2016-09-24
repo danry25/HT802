@@ -1,0 +1,51 @@
+#!/bin/sh
+
+if [ -r /etc/rc.conf ]; then
+        . /etc/rc.conf
+fi
+
+RESOLV_CONF="/etc/resolv.conf"
+
+# set default route
+route add default gw ${IPREMOTE}
+
+PREFERRED_DNS=0
+
+if [ -n "${wan_preferred_dns1}" -a "${wan_preferred_dns1}" != "..." -a  "${wan_preferred_dns1}" != "0.0.0.0" \
+	 -a -n "`nvram get 92`" -a "`nvram get 92`" != "0" ]; then
+    echo > ${RESOLV_CONF}
+    PREFERRED_DNS=1
+	echo nameserver ${wan_preferred_dns1} >> $RESOLV_CONF
+fi
+if [ -n "${wan_preferred_dns2}" -a "${wan_preferred_dns2}" != "..." -a  "${wan_preferred_dns2}" != "0.0.0.0" \
+	 -a -n "`nvram get 5026`" -a "`nvram get 5026`" != "0" ]; then
+	 if [ "${PREFERRED_DNS}" = "0" ]; then
+    	echo > ${RESOLV_CONF}
+	    PREFERRED_DNS=1
+	 fi   
+	 echo nameserver ${wan_preferred_dns2} >> $RESOLV_CONF
+fi
+if [ -n "${wan_preferred_dns3}" -a "${wan_preferred_dns3}" != "..." -a  "${wan_preferred_dns3}" != "0.0.0.0" \
+	 -a -n "`nvram get 5030`" -a "`nvram get 5030`" != "0" ]; then
+	 if [ "${PREFERRED_DNS}" = "0" ]; then
+    	echo > ${RESOLV_CONF}
+	    PREFERRED_DNS=1
+	 fi   
+	echo nameserver ${wan_preferred_dns3} >> $RESOLV_CONF
+fi
+if [ -n "${wan_preferred_dns4}" -a "${wan_preferred_dns4}" != "..." -a  "${wan_preferred_dns4}" != "0.0.0.0" \
+	 -a -n "`nvram get 5034`" -a "`nvram get 5034`" != "0" ]; then
+	 if [ "${PREFERRED_DNS}" = "0" ]; then
+    	echo > ${RESOLV_CONF}
+	    PREFERRED_DNS=1
+	 fi   
+	echo nameserver ${wan_preferred_dns4} >> $RESOLV_CONF
+fi
+
+if [ "${PREFERRED_DNS}" = "1" ]; then
+    [ -n "${DNS1}" ] && echo "nameserver ${DNS1}" >> ${RESOLV_CONF}
+    [ -n "${DNS2}" ] && echo "nameserver ${DNS2}" >> ${RESOLV_CONF}
+fi
+
+echo stop led_error_wan_pppoe > /proc/gxp/led_patterns
+echo start led_wan_dhcp_ok > /proc/gxp/led_patterns

@@ -1,0 +1,94 @@
+#!/bin/sh
+FACT_ATE=debug
+FACT_ATE_MAGIC="FACT_ATE"
+
+# Probe for Factory ATE 
+ate_probe_fun () {
+    if [ -z "`cat /proc/mtd  | grep ${FACT_ATE}`" ]; then
+        # if the FACT_ATE partition is not in the mtd then continue
+        echo "ATE: No FACT ATE partition ${FACT_ATE} found in mtd"
+        return 255
+    fi
+    # check for ATE related information on FACT_ATE partition
+    MTD_FACT_ATE="/dev/mtd`cat /proc/mtd|grep ${FACT_ATE} |cut -c 4`"
+    if [ -z "`cat ${MTD_FACT_ATE}  | grep ${FACT_ATE_MAGIC}`" ]; then
+        # FACT ATE partition found but no ATE info on it, so skip and continue
+        echo "ATE: No FACT ATE information found on ${MTD_FACT_ATE}"
+        return 254
+    fi
+
+    # check the validity of teh FACT_ATE parent partition
+    ATE_IMG_PARENT=`cat ${MTD_FACT_ATE} | grep Id | cut -d":" -f2`
+    if [ -z "`prov_procheader /proc/provision/partition/${ATE_IMG_PARENT} |grep 43a78f39`" ]; then
+        # ATE Parent partition is invalid GS partition
+        echo "ATE: Parent ATE partiotion ${ATE_IMG_PARENT} is invalid GS partition"
+        return 253
+    fi
+
+    local dd_bs=512
+    echo "ATE: FACT ATE found in ${ATE_IMG_PARENT} partition"
+    # WE have a valid FACT ATE partition now, get the parent partition Id, offset and size
+    MTD_FACT_ATE_PARENT="/dev/mtd`cat /proc/mtd|grep ${ATE_IMG_PARENT} |cut -c 4`"
+
+    # get the ATE start location in the parent partinion
+    ATE_IMG_START=`prov_procheader /proc/provision/partition/${ATE_IMG_PARENT} | grep Size | cut -d":" -f3`
+    # get the ATE adjusted start location in dd  blocksize
+    dd_ate_img_start=$((${ATE_IMG_START}/${dd_bs}))
+    # increment the start location by 512 to account for partition header
+    dd_ate_img_start=$((${dd_ate_img_start}+1))
+    echo "ATE: Starting @ ${ATE_IMG_START} (bs adjusted ${dd_ate_img_start})"
+
+    # get the ATE image size 
+    ATE_IMG_SIZE=`cat ${MTD_FACT_ATE} | grep size | cut -d":" -f2`
+    if [ -z "${ATE_IMG_SIZE}" ]; then
+        echo "ATE: No valid embedded FACT ATE size found"
+        return 252
+    fi
+    # get the ATE image size adjusted for dd bs operation
+    dd_ate_img_size=$((${ATE_IMG_SIZE}/${dd_bs}))
+    echo "ATE: Size of ${ATE_IMG_SIZE} (bs adjusted ${dd_ate_img_size})"
+
+    #blocksize of 512 bytes
+    echo "dd if=${MTD_FACT_ATE_PARENT} of=/tmp/ate.img bs=${dd_bs} skip=${dd_ate_img_start} count=${dd_ate_img_size}"
+    dd if=${MTD_FACT_ATE_PARENT} of=/tmp/ate.img bs=${dd_bs} skip=${dd_ate_img_start} count=${dd_ate_img_size}
+
+    if [ ! -d /ate ]; then
+        mkdir /ate
+    fi
+
+    mount -t squashfs /tmp/ate.img /ate
+    if [ "$?" != "0" ]; then
+        echo "ATE: Mounting FACT ATE failed"
+        # Allow FACT ATE embedded tarball
+        cd /tmp
+        rm /tmp/ate.img
+        # Tarballs are not blocksize multiples so make sure we read one extra bs in just in case
+        dd_ate_img_size=$((${dd_ate_img_size}+1))
+        echo "dd if=${MTD_FACT_ATE_PARENT} of=/tmp/ate.tar.gz bs=${dd_bs} skip=${dd_ate_img_start} count=${dd_ate_img_size}"
+        dd if=${MTD_FACT_ATE_PARENT} of=/tmp/ate.tar.gz bs=${dd_bs} skip=${dd_ate_img_start} count=${dd_ate_img_size}
+        gunzip ate.tar.gz
+        tar -xvf ate.tar -C /
+        if [ "$?" != "0" ]; then
+            echo "ATE: Failed FACT ATE tarball loading "
+            return 251
+        else
+            echo "ATE: Found FACT ATE Tarball"
+        fi
+    fi
+
+    return 0
+}
+
+
+#
+# Start probing for FACT ATE embedded inage
+#
+ate_probe_fun && {
+    #
+    # Start FACT ATE script
+    #
+    echo "ATE: Finished mounting ATE embedded image"
+    /ate/fact_ate.sh && {
+        echo "ATE: Finished FACT ATE embedded execusiton"
+    }
+}

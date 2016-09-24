@@ -1,0 +1,337 @@
+#!/bin/sh
+
+NFS=0
+
+make_chkdir() {
+	if [ ! -d $1 ]; then
+		mkdir $1
+	fi
+}
+
+check_adapter_voltage() {
+	# Turn on power-LED if VBAT is within acceptable range, 0 (10V) to 255 (14V).
+	# Turn off power-LED otherwise.
+	nvram set :vbat_err=1
+	nvram set :vbat_val=0
+	VBAT=`/app/bin/dspctl -v`
+	echo "**** VBAT *****"
+	echo $VBAT
+	if [ $VBAT -le 0 ]; then
+		if [ -f "/proc/gxp/led_patterns" ]; then
+			echo start led_error_power > /proc/gxp/led_patterns
+		fi
+		echo "Warning: VBAT returns null"
+		if [ "$(nvram get 208)" != "5" ]; then
+			logger -p kern.info -t $(nvram get syslog_id) "VBAT returns null"
+		else
+			logger -p kern.info -U -t "" "<30> $(nvram get syslog_id) VBAT returns null"
+		fi
+	else
+		nvram set :vbat_val=$VBAT
+		if [ $VBAT -le 255 ]; then
+			if [ -f "/proc/gxp/led_patterns" ]; then
+				echo start led_power_normal > /proc/gxp/led_patterns
+			fi
+			nvram set :vbat_err=0
+		else
+			if [ -f "/proc/gxp/led_patterns" ]; then
+				echo start led_error_power > /proc/gxp/led_patterns
+			fi
+			echo "Warning: VBAT exceeds max safe value"
+			if [ "$(nvram get 208)" != "5" ]; then
+				logger -p kern.info -t $(nvram get syslog_id) "INIT: VBAT exceeds max safe value"
+			else
+				logger -p kern.info -U -t "" "<30> $(nvram get syslog_id) VBAT exceeds max safe value"
+			fi
+		fi
+	fi
+}
+
+get_system_status() {
+    nvram set   :67="`tr \"[:lower:]\" \"[:upper:]\" < /proc/gxp/dev_info/dev_mac`"
+    nvram set   :89="`cat /proc/gxp/dev_info/dev_alias`"
+    nvram set :1395="`cat /proc/gxp/dev_info/hw_features/vendor`"
+    nvram set :1396="`cat /proc/gxp/dev_info/hw_features/vendor_fullname`"
+    nvram set :1397="`cat /proc/gxp/dev_info/PN`"
+    nvram set :user_agent="`nvram get 1395` `nvram get 89` `nvram get 68`"
+    nvram set :phone_model="`nvram get 89`"
+}
+
+echo "Mounting filesystems..."
+mount -n /proc
+mount -a
+
+if [ "`grep nfs /etc/mtab`" ]; then
+	NFS=1
+	# It seems some distros need this
+	# right now, existing an issue in current file system, please add NFS bootargs rw option
+	#mount -n -o remount,rw /
+fi
+
+if [ $NFS -eq 0 ]; then
+#	mount -t ramfs ramfs /var
+	echo "*** Flash Boot ***"
+else
+	echo "*** NFS Boot ***"
+fi
+
+#
+# Start mdev
+#
+mount -t tmpfs mdev /dev
+mdev -s
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+
+#
+# RootFS & Fixups
+#
+echo "Mounting Root FS..."
+/sbin/mount_root
+
+# load CSS first to avoid the issue of out of memory
+/etc/rc.d/init.d/load_css.sh
+
+if [ $NFS -eq 1 ]; then
+    rm -rf /tmp
+    mkdir /tmp
+fi
+
+#
+# Check Provider Lock
+#
+if [ -n "`nvram get 9998`" -a "`nvram get 9999`" = "1" ]; then
+	nvlockl2 /etc/l2locked
+	nvlockl1 /etc/l1locked
+	echo "Provider Lock Applied"
+fi
+
+#
+# Start Reset Button polling
+#
+nvram set :reset_lock=0
+reset_poll&
+
+#
+# Check for reboot from provision
+#
+if [ "`nvram get reboot_after_provision`" = "1" ]; then
+    nvram set :rebooted_from_provision=1
+else
+    nvram set :rebooted_from_provision=0
+fi
+nvram set reboot_after_provision=0
+
+#
+# Starting Pvalues validation server
+#
+if [ -f /tmp/.pvalue_validation ]; then
+	killall pvalue_validation_server
+	rm /tmp/.pvalue_validation
+fi
+if [ -f /etc/pvalues.bin ]; then
+	/usr/bin/pvalue_validation_server /tmp/.pvalue_validation /etc/pvalues.bin &
+fi
+
+
+#
+# Apply Country specific deployment values
+#
+if [ -f /etc/rc.d/init.d/apply_country_profile ]; then
+    /etc/rc.d/init.d/apply_country_profile
+fi
+
+
+#
+# Start LED pattern driver
+#
+/etc/rc.d/init.d/ledrc start
+
+if [ -f "/proc/gxp/dev_info/dev_id" -a "`cat /proc/gxp/dev_info/dev_id`" == "DP715" ]; then
+    echo "start led_phone_boot" > /proc/gxp/led_patterns
+fi
+
+#
+# Prepare Config
+#
+echo "Prepare conf"
+
+make_chkdir /dev/pts
+mount -t devpts devpts /dev/pts
+
+make_chkdir /var/spool/cron
+make_chkdir /var/spool/cron/crontabs
+
+#
+# Read Configuration File
+#
+if [ -r /etc/rc.conf ]; then
+    . /etc/rc.conf
+fi
+
+if [ -r /etc/funcs.sh ]; then
+    . /etc/funcs.sh
+fi
+
+#
+# Set System Strings
+#
+nvram set :89="`cat /proc/gxp/dev_info/dev_alias`"
+nvram set :67="`tr \"[:lower:]\" \"[:upper:]\" < /proc/gxp/dev_info/dev_mac`"
+nvram set :1397="`cat /proc/gxp/dev_info/PN`"
+nvram set :917="`cat /proc/gxp/dev_info/dev_rev`"
+nvram set :dev_alias="`cat /proc/gxp/dev_info/dev_alias`"
+nvram set :vendor_name="`cat /proc/gxp/dev_info/hw_features/vendor`"
+nvram set :1395="`cat /proc/gxp/dev_info/hw_features/vendor`"
+nvram set :1396="`cat /proc/gxp/dev_info/hw_features/vendor_fullname`"
+nvram set :1397="`cat /proc/gxp/dev_info/PN`"
+nvram set :user_agent="`nvram get 1395` `nvram get 89` `nvram get 68`"
+nvram set :phone_model="`nvram get 89`"
+
+if [ -f /proc/gxp/dev_info/hw_features/dect_region ]; then
+    nvram set :dect_region="`cat /proc/gxp/dev_info/hw_features/dect_region`"
+fi
+
+if [ -z "`prov_procheader /proc/provision/partition/prog|grep 23c97af9`" ]; then
+    nvram set :68="unknown"
+else
+    nvram set :68=`prov_procheader /proc/provision/partition/prog|grep Ver|cut -d ':' -f2|tr -d ' '`
+fi
+if [ -z "`prov_procheader /proc/provision/partition/uboot|grep 23c97af9`" ]; then
+    nvram set :69="unknown"
+else
+    nvram set :69=`prov_procheader /proc/provision/partition/uboot|grep Ver|cut -d ':' -f2|tr -d ' '`
+fi
+if [ -z "`prov_procheader /proc/provision/partition/core|grep 23c97af9`" ]; then
+    nvram set :70="unknown"
+else
+    nvram set :70=`prov_procheader /proc/provision/partition/core|grep Ver|cut -d ':' -f2|tr -d ' '`
+fi
+if [ -z "`prov_procheader /proc/provision/partition/base|grep 23c97af9`" ]; then
+    nvram set :45="unknown"
+else
+    nvram set :45=`prov_procheader /proc/provision/partition/base|grep Ver|cut -d ':' -f2|tr -d ' '`
+fi
+nvram set :210="No"
+nvram set :80="Unknown"
+nvram set :ini_prov=0
+
+/etc/init.d/syslog syslog_id
+
+# Setup Security
+if [ -f /proc/gxp/dev_info/security/private_key -a -f /proc/gxp/dev_info/security/certificate ]; then
+    if [ -n "`cat /proc/gxp/dev_info/security/private_key`" -a -n "`cat /proc/gxp/dev_info/security/certificate`" ]; then
+        echo "Loading custom certificate and private key"
+        cat /proc/gxp/dev_info/security/private_key > /etc/gxe50xx.pem
+        cat /proc/gxp/dev_info/security/certificate >> /etc/gxe50xx.pem
+    fi
+fi
+
+#
+# Start urandom
+#
+/etc/rc.d/init.d/urandom start
+
+#
+# Basic Networking
+#
+/etc/rc.d/rc.network
+
+#################################################
+if [ "x${FACTORYMODE}" != "x1" ]; then
+
+    #
+    # Set sytem TZ
+    #
+    if [ ! -z "${time_zone}" ]; then
+        if [ ${time_zone} = customize ]; then
+            echo ${customize_time_zone_rule} > /etc/TZ
+        elif [ ${time_zone} = auto ]; then
+            echo `nvram get autoTimezone` > /etc/TZ
+        else
+            echo ${time_zone} > /etc/TZ
+        fi
+    else
+        echo ${customize_time_zone_rule} > /etc/TZ
+    fi
+
+    if [ "x${otz_enabled}" = "x1" ]; then
+        DHCP_TZ="`nvram get override_time_zone`"
+        if [ -n "${DHCP_TZ}" ]; then
+            DHCP_OTZ="UCT"
+            if [ $DHCP_TZ -gt 0 ]; then
+                DHCP_OTZ=$DHCP_OTZ-
+            else
+                DHCP_TZ=$(($DHCP_TZ * -1))
+            fi
+            # convert to minute
+            echo $DHCP_OTZ$(($DHCP_TZ / 3600)):$(($DHCP_TZ % 3600 / 60)):$(($DHCP_TZ % 60)) > /etc/TZ
+        fi
+    fi
+
+    #
+    # Start cron daemon
+    #
+    /etc/rc.d/init.d/cron 
+
+    #
+    # Start event notifier
+    #
+    msg_server&
+    msg_monitor_cc&
+fi #factorymode
+#################################################
+
+cd /
+
+# rc.cordless
+ln -s /dev/voice0 /dev/voice
+
+nvram set :ini_prov=1
+if [ $NFS -eq 1 ]; then
+	# Add compressed swap space if available
+#	/etc/init.d/ramzswap.sh
+
+	if [ -n "`nvram get nfs_autorun`" ] ; then
+		echo "NFS Autorun options selected = `nvram get nfs_autorun`."
+		if [ `nvram get nfs_autorun` = 1 ] ; then
+                        /etc/rc.d/init.d/load_modules.sh
+#			check_adapter_voltage
+			/app/bin/ht_start.sh
+		elif [ `nvram get nfs_autorun` = 2 ] ; then
+                        /etc/rc.d/init.d/load_modules.sh
+#			check_adapter_voltage
+			echo 'source /app/bin/ht_start.sh'
+			echo 'httpd -h /app/www -p 80'
+		elif [ `nvram get nfs_autorun` = 3 ] ; then
+                        /etc/rc.d/init.d/load_modules.sh
+			/app/bin/start_sys_tapi.sh
+		fi
+	else
+		echo "No special NFS Autorun options selected."
+	fi
+	nvram set :ini_prov=1
+else
+    if [ -n "`mount | grep 'app'`" ]; then
+        /etc/rc.d/init.d/load_modules.sh
+        #if [ -f /proc/gxp/dev_info/hw_features/model_str -a "`cat /proc/gxp/dev_info/hw_features/model_str`" = "DP715" ]; then
+        #    echo "DP715 SKIPS VOLTAGE CHECK FIXME"
+        #else
+        #    check_adapter_voltage
+        #fi
+
+        /app/bin/ht_start.sh
+    else
+                # /app corrupted, recovery will start automatically
+                # flash some lights or something...
+                true
+    fi
+
+#################################################
+    if [ "x${FACTORYMODE}" != "x1" ]; then
+        # Check for upgrade on boot
+    	initial_provision &
+	else
+		nvram set :ini_prov=1
+    fi #!FACTORYMODE    
+#################################################
+fi

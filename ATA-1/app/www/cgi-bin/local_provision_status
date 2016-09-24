@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. /app/web/check.sh
+_session_id="`nvram get session_id`"
+_timestamp="`nvram get timestamp`"
+_scriptname="`basename ${SCRIPT_NAME}`"
+
+header
+if [ "`nvram get local_provision_status`" != "0" ]; then
+	nvparse /app/web/local_provision_status.htm
+else 
+	nvparse /app/web/login.htm
+fi
+

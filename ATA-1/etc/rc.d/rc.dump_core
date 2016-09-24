@@ -1,0 +1,39 @@
+#!/bin/sh
+
+MODEL="`cat /proc/gxp/dev_info/dev_alias`"
+VER="FW`prov_procheader /proc/provision/partition/prog | grep 'Ver:' | cut -d' ' -f3`"
+MAC="`nvram get 67|tr -d ':'`"
+CORE_DUMP_NAME="core_`echo ${MODEL}.${VER}.${MAC} | sed 's/\\./\_/g'`_%e"
+CORE_DIR="/core"
+CORE_DOWNLOAD_NAME="core.gz"
+
+start()
+{
+#    echo "${CORE_DIR}/${CORE_DUMP_NAME}" > /proc/sys/kernel/core_pattern
+    echo "|/usr/sbin/core_dump ${CORE_DIR} ${CORE_DUMP_NAME} %e" > /proc/sys/kernel/core_pattern
+ 
+}
+
+stop()
+{
+    for i in `ls -r ${CORE_DIR} 2>/dev/null` ; do
+        if [ -n "`echo $i | grep gs_ata`" -a ! -f ${CORE_DIR}/${CORE_DOWNLOAD_NAME} ]; then
+# FIXME
+# must add support for combining multiple core files in single download file
+
+            #encrypt core file          
+#FIXME 
+#must add encryption one the host/target tools are ready.
+            encfile ${CORE_DIR}/$i
+            mv ${CORE_DIR}/$i ${CORE_DIR}/${CORE_DOWNLOAD_NAME}
+            echo "Core dumped."
+        else
+#            gzip $i
+#            rm $i
+            echo "Other Core Dumped"
+        fi
+    done
+}
+
+
+. /etc/rc.common

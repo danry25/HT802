@@ -1,0 +1,132 @@
+#!/bin/sh
+
+DEVIMG=$1
+
+if [ -z "$DEVIMG" ]; then
+    #call prov_fw.sh to download boot image in /tmp
+    /sbin/prov_fw.sh boot > /dev/null 2>&1
+fi    
+
+#DBG_ERR_DEVICE=/dev/console
+DBG_ERR_DEVICE=/dev/null
+#DBG_LOG_DEVICE=/dev/console
+DBG_LOG_DEVICE=/dev/null
+REBOOT=false
+DEVICE_ALIAS=`cat /proc/gxp/dev_info/dev_id 2> ${DBG_LOG_DEVICE}|tr '[A-Z]' '[a-z]' |tr -d '-'`
+OVERRIDE_TFTP_SERVER=`nvram get override_tftp_server`
+FW_DOWNLOAD_PIPE=/tmp/fw_down
+PROG_STOPPED=false
+HEADER_AT_END=1
+
+. /sbin/prov_func.sh
+
+##############################################################
+######################### Start Here #########################
+##############################################################
+
+SKIPFWCHECK=false
+if [ -z "$firmware_server_uri" -a -z "$OVERRIDE_TFTP_SERVER" ]; then
+	SKIPFWCHECK=true
+fi
+
+if $SKIPFWCHECK; then
+    syslog "Boot upgrade check is skipped"
+    nvram set provision_state=0
+    echo stop led_provision > /proc/gxp/led_patterns
+    nvram commit
+
+    if $REBOOT; then
+        check_ongoing_call_status && {
+	        syslog "Reboot"
+	        reboot
+        }
+    fi
+
+    exit
+fi
+
+syslog "Starting boot upgrade check"
+
+#re-generate provision conf in case prefix/suffix changed
+if [ ! "`grep \"\/dev\/root\" /etc/mtab | grep nfs`" ]; then
+    nvparse_conf /rom/conf/provision.conf > /etc/provision.conf
+else
+    nvparse_conf /conf/provision.conf > /etc/provision.conf
+fi
+. /etc/provision.conf
+
+if [ -z "$firmware_key" ]; then
+    firmware_key="`cat /proc/gxp/dev_info/hw_features/default_fwkey`"
+else
+    firmware_key="`echo $firmware_key |tr -d ' '`"
+fi
+
+# Upgrade Boot
+if [ -z "$DEVIMG" ]; then
+    local LCL_IMG_NAME="/tmp/`basename ${DEVICE_ALIAS}${BOOT_IMAGE}.bin`"
+    if [ -s $LCL_IMG_NAME ]; then
+        prov_dec $firmware_key $LCL_IMG_NAME /proc/provision/partition/$BOOT_IMAGE 0 $HEADER_AT_END || {
+            echo "$LCL_IMG_NAME image validation failed."
+            return 210;
+        }
+        echo "$LCL_IMG_NAME image validation passed."
+        check_ongoing_call_status && {
+            nvram set provision_state=1
+            echo start led_provision > /proc/gxp/led_patterns
+            nvram commit
+            echo "Updating boot..."
+            #prompt upgrade info
+            REBOOT=true
+
+            prog_mtd_part  $LCL_IMG_NAME ${MTD_BOOT_PART} /proc/provision/partition/${BOOT_IMAGE}
+            rm -f $LCL_IMG_NAME
+        }
+    else
+        echo "Skipping $LCL_IMG_NAME image validation."
+        echo "No valid boot image for upgrade"
+    fi
+elif [ "$DEVIMG" = "load_dev" ]; then
+    echo "Starting dev boot upgrade"
+    local full_image_filename="`basename ${DEVICE_ALIAS}${BOOT_IMAGE}dev.bin`"
+    local LCL_IMG_NAME=boot.img
+    fetch_image $full_image_filename $LCL_IMG_NAME $firmware_server_uri 0 2>${DBG_ERR_DEVICE} >${DBG_LOG_DEVICE}
+    checksum_image $LCL_IMG_NAME 
+    if [ "$?" = "0" ]; then
+        if [ -n "$MTD_BOOT_PART" ]; then
+            nvram set provision_state=1
+            echo start led_provision > /proc/gxp/led_patterns
+            nvram commit
+            echo "Updating dev boot..."
+            REBOOT=false
+
+            prog_mtd_part  $LCL_IMG_NAME ${MTD_BOOT_PART} /proc/provision/partition/${BOOT_IMAGE}
+            rm -f $LCL_IMG_NAME
+            echo "Dev bootloader burned successfuly"
+        else
+            echo "Can't locate boot partition."
+        fi
+    else
+        echo "Dev boot image checksum fail."
+    fi
+fi
+
+nvram set provision_state=0
+echo stop led_provision > /proc/gxp/led_patterns
+nvram commit
+
+sleep 1
+
+if $REBOOT; then
+    check_ongoing_call_status && {
+	    syslog "Reboot after boot upgrade" 
+            save_provision_log
+	    reboot
+    }
+else
+    if [ "$DEVIMG" = "load_dev" ]; then
+	syslog "Dev bootloader upgraded." 
+    else
+	syslog "No image upgraded" 
+    fi
+fi
+

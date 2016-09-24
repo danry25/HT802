@@ -1,0 +1,6 @@
+#!/bin/sh
+
+killall telnetd >/dev/null 2>&1 
+if [ "`nvram get 276`" = "0" ]; then
+	telnetd -l /sbin/gs_config
+fi

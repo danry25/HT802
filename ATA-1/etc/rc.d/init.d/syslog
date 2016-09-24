@@ -1,0 +1,63 @@
+#!/bin/sh
+
+if [ -r /etc/rc.conf ]; then
+        . /etc/rc.conf
+fi
+
+syslog_id() {
+    if [ "$(nvram get 208)" = "5" ]; then
+        oem_id="`cat /proc/gxp/dev_info/hw_features/oem_id`"
+        if [ "${oem_id}" = "23" -o "${oem_id}" = "26" -o "${oem_id}" = "29" ]; then
+            nvram set :syslog_id="GS [`nvram get 67`] [`nvram get 68`]"
+        elif [ "${oem_id}" = "0" ]; then
+            if [ "$(nvram get 198)" = "121" -o "$(nvram get 767)" = "121" -o "$(nvram get 567)" = "121" -o "$(nvram get 624)" = "121" ]; then
+                nvram set :syslog_id="GS [`nvram get 67`] [`nvram get 68`]"
+            fi
+        fi
+    else    
+        nvram set :syslog_id="`cat /proc/gxp/dev_info/dev_alias` [`nvram get 67`] [`nvram get 68`]"
+    fi
+}
+
+start() {
+    if [ -n "`nvram get 207`" -a "`nvram get 208`" != "0" ]; then
+        syslog_id
+        WAN="`nvram get wan_device`"
+        echo "IP: `ifconfig ${WAN}|grep "inet addr" | cut -d: -f2 | cut -d' ' -f1`"
+        echo "Starting syslogd --`nvram get syslog_id`--"
+    	if [ "$(nvram get 208)" != "5" ]; then
+	        /sbin/syslogd -R `nvram get 207`
+    	    logger -p kern.info -t "$(nvram get syslog_id)" "IP: $(ifconfig ${WAN}|grep "inet addr"| tr -s ' ')"
+    	else	
+	    	export syslog_id="$(nvram get syslog_id)"
+	        /sbin/syslogd -U -R `nvram get 207`
+        	logger -p kern.info -U -t "" "<30> $(nvram get syslog_id) IP:$(ifconfig ${WAN}|grep "inet addr"| tr -s ' ')"
+	    fi		
+    fi
+}
+
+stop() {
+    killall syslogd >/dev/null 2>&1
+}
+
+restart() {
+        stop
+        start
+}
+
+case "${1}" in
+        start)
+                start
+                ;;
+        stop)
+                stop
+                ;;
+        restart)
+                restart
+                ;;
+        syslog_id)
+                syslog_id
+                ;;
+esac
+
+exit $?

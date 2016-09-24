@@ -1,0 +1,50 @@
+#!/bin/sh
+
+if [ -r /etc/rc.conf ]; then
+        . /etc/rc.conf
+fi
+
+if [ "`nvram get netserv_started`" = 1 ]; then
+    exit
+fi
+nvram set :netserv_started=1
+
+#
+# Start telnet server
+#
+if [ "`nvram get 276`" = "0" -o "x${FACTORYMODE}" == "x1" ]; then
+    /etc/rc.d/init.d/telnet
+fi
+
+#if factory mode then the rest is not needed.
+if [ "x${FACTORYMODE}" == "x1" ]; then
+    exit
+fi    
+
+#
+# Start Logging
+#
+/etc/rc.d/init.d/syslog restart
+
+#
+# Core dumping
+#
+if [ -f /etc/rc.d/rc.dump_core ]; then
+    /etc/rc.d/rc.dump_core start
+fi
+
+#
+# Start NTP Client
+#
+#if [ -r /etc/rc.d/init.d/ntpc ]; then
+#    /etc/rc.d/init.d/ntpc > /dev/null 2>&1
+#fi
+
+
+#
+# Start SSHD
+#
+if [ -x /usr/sbin/dropbear ]; then
+    killall dropbear >/dev/null 2>&1
+    /usr/sbin/dropbear
+fi

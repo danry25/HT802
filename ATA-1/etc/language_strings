@@ -1,0 +1,25 @@
+#file format: English,,,,,Chinese,Portuguese,,,,,Spanish
+#English=0, Chinese=4, Portuguese=5, Spanish=10
+#Please follow format and do not comment or blank lines.
+Registered,,,,已注册,Registrado,,,,,Registrado
+Not Registered,,,,未注册,Não Registrado,,,,,No Registrado
+Off Hook,,,,摘机,Fora do Gancho,,,,,Descolgado
+On Hook,,,,挂机,No gancho,,,,,Colgado
+Busy,,,,忙,Ocupado,,,,,Ocupado
+In Use,,,,使用中,Em uso,,,,,En uso
+Idle,,,,空闲,Inativo,,,,,Inactivo
+Ring,,,,响铃,Toque,,,,,Timbre
+Ring Back,,,,回铃,Tocando,,,,,Timbrando
+Yes,,,,是,Sim,,,,,Sí
+No,,,,否,Não,,,,,No
+Disabled,,,,已禁用,Desabilitado,,,,,Deshabilitado
+Enabled,,,,已启用,Habilitado,,,,,Habilitado
+Open Internet,,,,打开网络,Internet Aberta,,,,,Internet Abierto
+Full Cone NAT,,,,完全圆锥型NAT,NAT Tipo \"Full Cone\",,,,,NAT Tipo \"Full Cone\"
+Restricted Cone NAT,,,,受限圆锥型NAT,NAT Tipo \"Restricted Cone\",,,,,NAT Tipo \"Restricted Cone\"
+Port Restricted Cone NAT,,,,端口受限圆锥型NAT,NAT Tipo \"Port Restricted\",,,,,NAT Tipo \"Port Restricted\"
+Symmetric NAT,,,,对称NAT,NAT Simétrico,,,,,NAT Simétrico
+Symmetric UDP,,,,对称UDP,UDP Simétrico,,,,,UDP Simétrico
+UDP Blocked,,,,UDP封锁,UDP Bloqueado,,,,,UDP Bloqueado
+Unknown NAT,,,,未知NAT,NAT Desconhecido,,,,,NAT Desconocido
+Unknown,,,,未知,Desconhecido,,,,,Desconocido

@@ -1,0 +1,22 @@
+#!/usr/bin/haserl
+#!/bin/ash
+<? 
+
+if [ -e "/core/core.gz" ]; then
+	RESULT="{\"exist\":\"true\"}"
+else
+	RESULT="{\"exist\":\"false\"}"
+fi
+								
+HEADER="Content-Type: application/json\r\n\r\n"
+HEADER="Expires: $(date)\r\n$HEADER"
+HEADER="Cache-Control: no-cache, must-revalidate\r\n$HEADER"
+
+
+FormatTop="{\"results\":["
+FormatBottom="]}"
+
+echo -en $HEADER
+echo "$FormatTop$RESULT$FormatBottom"
+
+?>

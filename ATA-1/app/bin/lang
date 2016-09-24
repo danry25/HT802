@@ -1,0 +1,60 @@
+#!/bin/sh
+
+populate_nvram_variables()
+{
+    #get languagei, awk uses index from 1,,,...
+    index=$(($(nvram get 342)+1))
+    if [ -z "$index" ]; then
+        index=1  #set language to default
+    fi
+    #the following line extracts the language strings and then nvram set :field1=lang_field
+    #the name of the pvalue is set to the default language which is in field1.
+    #e.g. for English, the commands would be nvram set :field1=field1, 
+    #for Chinese, the commands would be nvram set :field1=field4.
+    #gs_ata looks at the content of the pvalue named with the default string to set the pvalue.
+    awk -F',' '{ if ( $0 !~ /^[[:space:]]*#/ ) { system( "nvram set " "\":"$1"\"=\""$'$index'"\"" ) } }' /etc/language_strings
+}
+
+if [ -n "`mount | grep 'app'`" ]; then
+	WEB_SRC='/rom/app'
+	# Remove link setup recursively by the mount_root script
+	rm -f /app/html
+else
+	WEB_SRC='/app'
+fi
+
+#`if language has changed do this 
+
+LANG=$(nvram get 342)
+case "${LANG}" in
+    5)
+        echo "Set HTML language to Portuguese"
+        if [ -d ${WEB_SRC}/html/web.PT ]; then
+            if [ -e /app/web ]; then
+                rm /app/web
+            fi
+            ln -sf ${WEB_SRC}/html/web.PT /app/web
+        fi
+        ;;
+#	4)
+#		echo "Set HTML language to Chinese"
+#		if [ -d ${WEB_SRC}/html/web.CN ]; then
+#			if [ -e /app/web ]; then
+#				rm /app/web
+#			fi
+#			ln -sf ${WEB_SRC}/html/web.CN /app/web
+#		fi
+#		;;
+	*)
+		echo "Set HTML language to default (English)"
+		if [ -d ${WEB_SRC}/html/web ]; then
+			if [ -e /app/web ]; then
+				rm /app/web
+			fi
+			ln -sf ${WEB_SRC}/html/web /app/web
+		fi
+		;;
+esac
+nvram set :342a=$LANG
+
+populate_nvram_variables

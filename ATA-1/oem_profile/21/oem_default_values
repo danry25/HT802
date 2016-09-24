@@ -1,0 +1,20 @@
+# a placeholder
+# oem_default_values file must exist
+
+# Upgrade frequency = 30 minutes
+193=30
+
+# Automatic upgrade = Yes, every 30 minutes
+194=3
+
+# Upgrade Via HTTPS
+212=2
+
+# HTTP access = Disabled
+190=0
+
+# Telnet Server = No
+276=1
+
+# Disable DNS A query if DNS SRV query fails = yes
+20516=1

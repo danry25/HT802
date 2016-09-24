@@ -1,0 +1,65 @@
+#!/bin/sh
+
+
+if [ "`nvram get nfs_core_mounted`" = "1" ]; then
+	umount -f /core >/dev/null 2>&1
+fi
+
+nvram set :nfs_core_mounted=0
+
+if [ -d "/core" ]; then
+	umount /core
+fi
+
+if [ -z "`nvram get override_core_path`" ]; then
+	if [ -z "`nvram get nfs_core_enable`" ]; then
+		ulimit -c 0
+		exit 0;
+	fi
+
+	NFS_PATH="`nvram get nfs_core_path`"
+
+	if [ -z "$NFS_PATH" ]; then
+		ulimit -c 0
+		exit 0;
+	fi
+else
+	NFS_PATH="`nvram get override_core_path`"
+fi
+
+ulimit -c 32000000
+
+MAC="`ifconfig eth0 | grep "HW" | sed -e 's/.*HWaddr \(.*\)/\1/' | sed -e 's/[ :]//g'`"
+
+dd if=/dev/urandom of=/rand_core.txt bs=1 count=8
+
+echo "1" > /proc/sys/kernel/core_uses_pid
+echo "|/etc/init.d/dump_core" > /proc/sys/kernel/core_pattern
+
+echo "Mounting $NFS_PATH for core files."
+if [ ! -d "/core" ]; then
+	mkdir /core
+fi
+
+if [ -f /app/lib/modules/nfs.ko ]; then
+    echo "Found nfs kernel modules"
+    /etc/init.d/nfsrc start
+fi
+
+mount $NFS_PATH /core -o vers=2 -o mountvers=2 -o nolock 2> /core_mount.txt
+
+if [ -n "`mount | grep "\/core"`" ]; then
+    if [ ! -d "/core/${MAC}" ]; then
+        mkdir /core/${MAC}
+    fi
+    if [ -n "`cat /core_mount.txt`" ]; then
+        logger -p kern.info -t `nvram get syslog_id` `cat /core_mount.txt`
+    fi
+
+    nvram set :nfs_core_mounted=1
+    logger -p kern.info -t `nvram get syslog_id` $NFS_PATH mounted as core path
+else
+    nvram set :nfs_core_mounted=2
+    logger -p kern.info -t `nvram get syslog_id` Error mounting core path
+fi
+

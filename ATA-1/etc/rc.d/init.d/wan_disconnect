@@ -1,0 +1,11 @@
+####################################
+# Latest Updated: 2005/09/09
+####################################
+#!/bin/sh
+
+if [ -r /etc/rc.conf ]; then
+        . /etc/rc.conf
+fi
+/etc/rc.d/init.d/udhcpc stop
+#/etc/rc.d/init.d/pppoe stop
+

@@ -1,0 +1,211 @@
+﻿<html>
+<head>
+<title>Configuração de Dispositivo Grandstream</title>
+<style type="text/css">
+<!--
+.l{  font-family: Tahoma; font-size: 10pt; color: #000000; }
+a.l:Hover{  font-family: Tahoma; font-size: 10pt; color: #ffffff; }
+-->
+</style></head>
+<body bgcolor="#CCCCCC">
+<form name=basic_form action="update" method="post">
+<table width="870" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#336699">
+<tr><td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td height="48" valign="middle" bgcolor="#F3C47C" class="l" align="center"><strong><font color="#336699" size="3"><b>Configuração de Dispositivo Grandstream</b></font></strong></td>
+</tr><tr><td height="20" valign="top" background="/backline.gif" bgcolor="#F3C47C" align="center">
+<table width="60%" cellpadding="0" cellspacing="0"><tr>
+<td bgcolor="#999999" align="center"><a href="index" class="l"><b>ESTADO</b></a></td>
+<td bgcolor="#336699" align="center" class="l"><b>CONFIG BÁSICAS</b></td>
+<td bgcolor="#999999" align="center"><a href="config" class="l"><b>OPÇÕES AVANÇADAS</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a1" class="l"><b>PORTA FXS1</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a2" class="l"><b>PORTA FXS2</b></a></td>
+                </tr>
+              </table>
+            </td>
+        </tr>
+<!-- <% web_update 0 --> %> 
+		<tr bgcolor="#FFFFCC">
+		 <td align=center><hr color="#000000" noshade><b><p style="color:#ff0000">Configuração modificada. Clique em Aplicar para salvar as configurações.</p></b><hr color="#000000" noshade></td> 
+		</tr>
+<% web_update 0 <!-- %> -->
+        <tr bgcolor="#FFFFCC">
+          <td align=right valign=top> <table  align="top" width=100% border=0 cellspacing=1 cellpadding=2>
+              <tr>
+                <td align=right><b>Senha de Usuário Final: </b></td>
+                <td>&nbsp; <input type="password" name="P196" maxlength=30 size=30>
+                  (Por questões de segurança não é exibido) </td>
+              </tr>
+              <tr>
+                <td align=right><b>Porta Web: </b></td>
+                <td>&nbsp; <input type=text name="P901" value="<% 901 %>" maxlength=5 size=7>
+                  (padrão para HTTP é 80) </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><b>Endereço IP: </b></td>
+                <td>
+                 <table width="95%" border=0 cellspacing=1 cellpadding=1>
+                  <tr>
+                   <td>
+                    <table width="100%" border=0 cellspacing=1 cellpadding=1>
+                     <tr>
+                      <td><input TYPE="radio" NAME="P8" VALUE=0 <% 8 0 checked %>>
+                              atribuídos dinamicamente através de DHCP
+                              <br>
+                       <table width="100%">
+                        <tr>
+                         <td width="6%">&nbsp;</td>
+                         <td width="27%">Nome Servidor DHCP :</td>
+                         <td colspan=3><input type=text name="P146" value="<% 146                                                         %>" maxlength=32 size=30> (opcional)</td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>Classe ID Fornecedor DHCP :</td>
+                         <td><input type=text name="P148" value="<% 148                                                         %>" maxlength=32 size=30> (opcional)</td>
+                        </tr>
+                       </table>
+                      </td>
+                     </tr>
+                     <tr>
+                      <td><input TYPE="radio" NAME="P8" VALUE=1 <% 8 1 checked %>>
+                              Configurado Estaticamente como: <br>
+                       <table width="100%">
+                        <tr>
+                         <td width="6%">&nbsp;</td>
+                         <td width="27%">Endereço IP: </td>
+                         <td><input type=text name="P9"  value="<% 9  %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P10" value="<% 10 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P11" value="<% 11 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P12" value="<% 12 %>" maxlength=3 size=3>
+                         </td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>Máscara de sub-rede: </td>
+                         <td><input type=text name="P13" value="<% 13 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P14" value="<% 14 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P15" value="<% 15 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P16" value="<% 16 %>" maxlength=3 size=3>
+                         </td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>Roteador padrão: </td>
+                         <td><input type=text name="P17" value="<% 17 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P18" value="<% 18 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P19" value="<% 19 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P20" value="<% 20 %>" maxlength=3 size=3>
+                         </td>
+                        </tr>
+                       </table>
+                      </td>
+                     </tr>
+                    </table>
+                   </td>
+                 </tr>
+                </table>
+               </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><b>Fuso horário: </b></td>
+                <td>&nbsp; <select name="P64">
+                    <option value=TZA+12 <% 64 TZA+12 selected %>>GMT-12:00 (Linha Internacional de Data)</option>
+                    <option value=TZB+11 <% 64 TZB+11 selected %>>GMT-11:00 (Ilha Midway, Samoa)</option>
+                    <option value=TZC+10 <% 64 TZC+10 selected %>>GMT-10:00 (Hora Havaí EUA)</option>
+                    <option value=TZD+9  <% 64 TZD+9  selected %>>GMT-9:00 (Hora Alasca EUA)</option>
+                    <option value=TZE+8  <% 64 TZE+8  selected %>>GMT-8:00 (Hora do Pacífico EUA, Los Angeles)</option>
+                    <option value=TZF+7  <% 64 TZF+7  selected %>>GMT-7:00 (Hora das Montanhas EUA, Denver)</option>
+                    <option value=TZG+6  <% 64 TZG+6  selected %>>GMT-6:00 (Hora Central EUA, Chicago)</option>
+                    <option value=TZH+5  <% 64 TZH+5  selected %>>GMT-5:00 (Hora do Leste EUA, Nova Iorque)</option>
+                    <option value=TZf+4:30 <% 64 TZf+4:30 selected %>>GMT-4:30 (Caracas)</option>
+                    <option value=TZI+4  <% 64 TZI+4  selected %>>GMT-4:00 (Hora do Atlântico, Quebec)</option>
+                    <option value=TZJ+3:30  <% 64 TZJ+3:30  selected %>>GMT-3:30 (Terra Nova)</option>
+                    <option value=TZK+3  <% 64 TZK+3  selected %>>GMT-3:00 (Groenlândia)</option>
+                    <option value=TZL+2  <% 64 TZL+2  selected %>>GMT-2:00 (Atlântico Meio)</option>
+                    <option value=TZM+1  <% 64 TZM+1  selected %>>GMT-1:00 (Açores, Cabo Verdi Il.)</option>
+                    <option value=TZN+0  <% 64 TZN+0  selected %>>GMT (Londres, Dublin, Edimburgo, Lisboa, Casablanca, Monrovia)</option>
+                    <option value=TZO-1  <% 64 TZO-1  selected %>>GMT+1:00 (Paris, Amsterdã, Berlim, Roma, Viena, Madrid, Varsóvia, Bruxelas)</option>
+                    <option value=TZP-2  <% 64 TZP-2  selected %>>GMT+2:00 (Israel, Cairo, Atenas, Helsínquia, Istambul, Bucareste)</option>
+                    <option value=TZQ-3  <% 64 TZQ-3  selected %>>GMT+3:00 (Moscou, Kuwait, Bagdá, Teerã, Nairobi)</option>
+                    <option value=TZR-4  <% 64 TZR-4  selected %>>GMT+4:00 (Abu Dhabi, Baku)</option>
+                    <option value=TZS-5  <% 64 TZS-5  selected %>>GMT+5:00 (Islamabad, Ekaterinburg, Karachi, Tashkent)</option>
+                    <option value=TZT-5:30 <% 64 TZT-5:30 selected %>>GMT+5:30 (Chennai, Nova Delhi, Mumbai)</option>
+                    <option value=TZU-5:45 <% 64 TZU-5:45 selected %>>GMT+5:45 (Kathmandu)</option>
+                    <option value=TZV-6  <% 64 TZV-6 selected %>>GMT+6:00 (Almaty, Astana, Dhaka, Novosibirsk)</option>
+                    <option value=TZW-6:30 <% 64 TZW-6:30 selected %>>GMT+6:30 (Rangoon)</option>
+                    <option value=TZX-7  <% 64 TZX-7 selected %>>GMT+7:00 (Bankok, Jakarta, Hanói, Krasnoyarsk)</option>
+                    <option value=TZY-8  <% 64 TZY-8 selected %>>GMT+8:00 (Beijing, Singapore, Taipei, Kuala Lumpur, Irkutsk, Perth)</option>
+                    <option value=TZZ-9  <% 64 TZZ-9 selected %>>GMT+9:00 (Japão, Coreia, Yakutsk)</option>
+                    <option value=TZa-9:30 <% 64 TZa-9:30 selected %>>GMT+9:30 (Adelaide, Darwin)</option>
+                    <option value=TZb-10 <% 64 TZb-10 selected %>>GMT+10:00 (Brisbane, Sydney, Melbourne, Canberra, Guam, Hobart)</option>
+                    <option value=TZc-11 <% 64 TZc-11 selected %>>GMT+11:00 (Magadan, Ilhas Salomão., Nova Caledônia)</option>
+                    <option value=TZd-12 <% 64 TZd-12 selected %>>GMT+12:00 (Auckland, Wellington, Fiji)</option>
+                    <option value=TZe-13 <% 64 TZe-13 selected %>>GMT+13:00 (Nuku'alofa)</option>
+                    <option value=customize <% 64 customize selected %>>Fuso horário autodefinido</option>
+                  </select> </td>
+              </tr>
+              <tr>
+                <td align=right><i>Fuso Horário Auto-definido:</i></td>
+                <td>&nbsp;
+                  <input type=text name="P246" value="<% 246                              %>" maxlength=100 size=33>
+                  (Por exemplo: MTZ+6MDT+5,M4.1.0,M11.1.0) </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Permitir ao servidor DHCP estabelecer o fuso horário:</i></td>
+				<td>&nbsp; <input type=radio name="P143" value=0 <% 143 0 checked %>>
+				Não &nbsp;&nbsp; &nbsp; <input type=radio name="P143" value=1 <% 143 1 checked %>>
+				Sim &nbsp;</td>
+              </tr>
+              <tr>
+                <td align=right valign=top><b>Idioma URA: </b></td>
+                <td>&nbsp; <select name="P342">
+                    <option value=0 <% 342 0 selected %>>Inglês</option>
+                    <option value=5 <% 342 5 selected %>>Português</option>
+                    <option value=10 <% 342 10 selected %>>Espanhol</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+<!-- <% session_user user --> %> 
+<% 88 1 <!-- %> 
+                <td align=right valign=top><b>Reset ISP Data : </b></td>
+                <td> 
+				 <table>
+                  <tr>
+                   <td><input type="button" name="reset_unit" value="Reset" onClick="document.location='unit_reset?reset_type=1'"></td>
+                  </tr>
+				 </table>
+				</td>
+<% 88 1 --> %>  
+<% session_user user <!-- %> --> 
+<!-- <% session_user admin --> %> 
+                <td align=right valign=top><b>Tipo de reset:</b></td>
+                <td> <table>
+				       <tr><td><select name="reset_type">
+                                <option value=1 selected >Dados ISP</option>
+                                <option value=2 >Dados VOIP</option>
+                                <option value=0 >Completo</option>
+                                </select>
+                           </td>
+                           <td><input type="button" name="reset_unit" value="Reset" onClick="document.location='unit_reset?reset_type='+document.basic_form.reset_type.value"></td>
+                       </tr>
+					 </table>
+				</td>
+<% session_user admin <!-- %> --> 
+			  </tr>
+              <tr>
+              </tr>
+              <tr>
+                <td colspan=2>&nbsp;</td>
+              </tr>
+              <tr height=28 bgcolor="#F3C47C" align=center>
+                <td colspan=2> <input type="submit" name="update" value="Atualizar">
+                  &nbsp;&nbsp; <input type="submit" name="apply" value="Aplicar">
+                  &nbsp;&nbsp; <input type="button" name="cancel" value="Cancelar" onClick="document.location='login'">
+                  &nbsp;&nbsp; <input type="button" name="reboot" value="Reiniciar" onClick="document.location='rs'">
+                  <input name="gnkey" type=hidden value=0b82> </td>
+              </tr>
+</table></td>
+</tr>
+<tr><td bgcolor="#336699" align="center" class="l"><font size="1">Todos os Direitos Reservados Grandstream Networks, Inc. 2006-2015</font></td></tr></table></td>
+</tr></table>
+</form></body></html>

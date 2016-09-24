@@ -1,0 +1,113 @@
+#!/usr/bin/haserl
+<? 
+. /app/web/check.sh
+_session_id="`nvram get session_id`"
+_timestamp="`nvram get timestamp`"
+_scriptname="`basename ${SCRIPT_NAME}`"
+check_lang
+
+if empty "${_session_id}" || neq "${FORM_session_id}" "${_session_id}" || check_timestamp "${_timestamp}"; then
+	header
+	nvparse /app/web/login.htm
+	nvram set :previous_page="${_scriptname}"
+elif equal "${_scriptname}" "unit_reset"; then
+	nvram unset session_id 
+	nvram unset previous_page
+	nvram unset timestamp
+	_lockKeypad="`nvram get 88`"
+	_reset_lock="`nvram get :reset_lock`"
+	header
+	if neq "${_reset_lock}" "1" ; then
+		if neq "${_lockKeypad}" "1" && equal "`nvram get session_user`" "user"; then	
+			if equal "${FORM_reset_type}" "1" ; then  
+				nvram reset_list 1 /etc/basic_pvalues
+			fi	
+		elif equal "`nvram get session_user`" "admin"; then	
+			if equal "${FORM_reset_type}" "1" ; then  
+				nvram reset_list 1 /etc/basic_pvalues
+			elif equal "${FORM_reset_type}" "0"; then
+				nvram eraseall
+	        	if [ -f /proc/gxp/dev_info/hw_features/dect -a "`cat /proc/gxp/dev_info/hw_features/dect`" = "1" ]; then
+    	        	flash_eraseall /dev/mtd9 >/dev/null 2>&1
+        	        flash_eraseall /dev/mtd10 >/dev/null 2>&1
+	        	fi
+			elif equal "${FORM_reset_type}" "2" ; then  
+				nvram reset_list 2  /etc/basic_pvalues
+			else
+				nvparse /app/web/login.htm
+				nvram unset session_user
+				exit
+			fi	
+		else
+			nvparse /app/web/adminlogin.htm
+			nvram unset session_user
+			exit
+		fi   
+		nvparse /app/web/rs.htm
+		nvram commit
+		reboot
+	else
+		nvparse /app/web/login.htm
+		nvram unset session_user
+		exit
+	fi	
+elif neq "${_scriptname}" "login" && neq "${_scriptname}" "index" && neq "${_scriptname}" "rs" && check_user "${_scriptname}"; then 
+	header
+	nvparse /app/web/adminlogin.htm
+	nvram set :previous_page="${_scriptname}"
+else
+	if equal "${_scriptname}" "index"; then
+		get_system_status
+	fi
+	if equal "${_scriptname}" "firmware_page"; then
+		fw_filename="`cat /proc/gxp/dev_info/dev_id |tr '[A-Z]' '[a-z]' |tr -d '-'`fw.bin"
+		nvram set :firmware_filename=${fw_filename}
+	fi	
+	header
+	nvram set :timestamp="`date +%s`"
+	nvram set :present_page="${_scriptname}"
+	_reset_lock="`nvram get :reset_lock`"
+	if equal "${_scriptname}" "rs" || equal "${_scriptname}" "login" ; then
+		nvram unset session_id 
+		nvram unset session_user
+		nvram unset previous_page
+		nvram unset timestamp
+		if equal "${_scriptname}" "rs" && neq "${_reset_lock}" "1"; then	
+			nvram commit
+			i=1
+			#wait for any calls or IVR instances
+			while [ "${i}" -ge 1 ]
+			do
+				ATA_RUNNING="$(ps|grep gs_ata|grep -v grep)"
+				if empty "${ATA_RUNNING}"; then 
+					break
+				fi	
+				call_cnt="`nvram get cur_call_cnt`"
+				if [ -z "${call_cnt}" -o "${call_cnt}" = "0" ]; then
+					ivr_cnt="`nvram get cur_ivr_cnt`"
+					if [ -z "${ivr_cnt}" -o "${ivr_cnt}" = "0" ]; then
+						break
+					fi
+				fi
+				i=$((${i}+1))
+				if [ "`nvram get 208`" != "0" ]; then
+					logger -p kern.info -t "`nvram get syslog_id`" "Waiting for ongoing calls to finish..."
+				fi
+				sleep 5
+			done
+			_reset_lock="`nvram get :reset_lock`"
+			if neq "${_reset_lock}" "1"; then
+				nvparse /app/web/${_scriptname}.htm
+				reboot
+			else
+				nvparse /app/web/login.htm
+			fi	
+		else	
+			nvparse /app/web/login.htm
+		fi	
+	else	
+		nvparse /app/web/${_scriptname}.htm
+	fi
+fi
+
+?>

@@ -1,0 +1,64 @@
+#!/bin/sh
+
+. /app/web/check.sh
+_session_id="`nvram get session_id`"
+_timestamp="`nvram get timestamp`"
+_scriptname="`basename ${SCRIPT_NAME}`"
+_session_user="`nvram get session_user`"
+check_lang
+
+if empty "${_session_id}" || check_timestamp "${_timestamp}" ||
+	neq "${_scriptname}" "upload_firmware" || neq "admin" "${_session_user}"; then
+	cat < "${1}" > /dev/null
+	nvram unset session_id
+	nvram unset timestamp
+	nvram unset session_user
+	nvram unset previous_page
+	header
+	nvparse /app/web/login.htm
+else 
+	fw_filename="`cat /proc/gxp/dev_info/dev_id |tr '[A-Z]' '[a-z]' |tr -d '-'`fw.bin"
+	nvram set :firmware_filename=${fw_filename}
+    nvram set :local_provision_status=0
+    nvram unset local_provision_status_string
+    if [ -n "`ps | grep provision | grep -v grep | grep -v cgi`" ]; then
+        nvram set :local_provision_status=1
+        nvram set :local_provision_status_string="Device already has another provision running!"
+		cat < "${1}" > /dev/null
+		header
+		nvparse /app/web/local_provision_status.htm
+		exit
+    fi
+	if [ -z $FILENAME -o "`nvram get local_provision_status`" = "1" ]; then
+		cat < "${1}" > /dev/null
+		header
+		nvparse /app/web/firmware_page.htm
+    else
+		FILENAME="$(echo "${FILENAME}"|tr '\\' '/')"
+		FILE="$(basename "${FILENAME}")"
+    	if [ -z "`echo ${FILE} | grep ${FILENAME}$`" ]; then
+			cat < "${1}" > /dev/null
+			header
+			nvparse /app/web/firmware_page.htm
+		else	
+			get_system_status
+			header
+		    if [ -z "`nvram get cur_call_cnt`" -o "`nvram get cur_call_cnt`" = "0" ]; then
+			    nvparse /app/web/pr_rs.htm
+			    cat < "${1}" > /tmp/${fw_filename}
+			    /sbin/prov_fw.sh -f file:///tmp/${fw_filename} > /dev/null 2>&1
+			    if [ $? -eq 0 ]; then
+				    nvram set :local_provision_status=0
+				    rm /tmp/${fw_filename} 
+			    else
+				    nvram set :local_provision_status=2
+				    nvram set :local_provision_status_string="Your firmware file is invalid, please use correct firmware!"
+				    rm /tmp/${fw_filename}
+			    fi
+		    else
+			    cat < "${1}" > /dev/null
+			    nvparse /app/web/firmware_page.htm
+		    fi
+		fi
+	fi	
+fi

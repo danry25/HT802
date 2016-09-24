@@ -1,0 +1,48 @@
+#!/bin/sh
+
+#sends syslog messages
+syslog()
+{
+	if [ -n "${SYSLOG_ENABLED}" -a "${SYSLOG_ENABLED}" != "0" ]; then
+	    if [ "$(nvram get 208)" != "5" ]; then
+			logger -p kern.info -t $(nvram get syslog_id) "$*"
+		else
+			logger -p kern.info -U -t "" "<30> $(nvram get syslog_id) $*"
+		fi
+	fi  
+}
+
+#gs_ata is just starting up
+while [ -f "/var/lock/.gs_ata_safe_stop" ]
+do
+	kill -0 `cat /var/lock/.gs_ata_safe_stop` 2 > /dev/null && {
+		syslog "Unsafe to reload program...Waiting."
+		sleep 5
+		continue
+	}   
+	break
+done
+
+local i=1 
+while [ "${i}" -ge 1 ] 
+do
+	call_cnt="`nvram get cur_call_cnt`"
+	if [ -z "${call_cnt}" -o "${call_cnt}" = "0" ]; then
+		ivr_cnt="`nvram get cur_ivr_cnt`"
+		if [ -z "${ivr_cnt}" -o "${ivr_cnt}" = "0" ]; then
+			break
+		fi  
+	fi  
+	i=$((${i}+1))
+	syslog "Reload waiting for ongoing calls to finish..."
+	sleep 5 
+done
+
+if [ -s "/var/run/gs_ata.pid" ]; then
+    kill -SIGUSR2 `cat /var/run/gs_ata.pid`
+else    
+    GS_ATA_PS="$(ps |grep gs_ata|grep -v grep|head -n 1|tr -s ' ' |cut -d' ' -f2)"
+    if [ -n "${GS_ATA_PS}" ]; then
+	    kill -SIGUSR2 ${GS_ATA_PS}
+    fi
+fi    

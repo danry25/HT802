@@ -1,0 +1,5 @@
+
+#Time Sync
+0 5 * * * /etc/rc.d/init.d/ntpc > /dev/null 2>&1
+
+

@@ -1,0 +1,78 @@
+#!/bin/sh
+
+#
+# Read Configuration File
+#
+if [ -r /etc/rc.conf ]; then
+       . /etc/rc.conf
+fi
+#Public variable
+if [ ${wan_ip_option} = 0 ]; then
+	WAN=eth0
+elif [ ${wan_ip_option} = 1 ]; then
+	WAN=eth0
+elif [ ${wan_ip_option} = 2 ]; then
+	WAN=ppp0
+else
+	WAN=eth0
+fi
+
+LAN=eth1
+
+WAN_IP=`ifconfig ${WAN} |grep -i "inet addr:" | cut -f2 -d: | cut -f1 -d" "`
+if [ -z $WAN_IP ];then
+	   echo "WAN_IP zero"
+       return 
+fi
+
+LAN_IP=`ifconfig ${LAN} |grep -i "inet addr:" | cut -f2 -d: | cut -f1 -d" "`
+
+
+###############################################################################
+
+### Flush the tables and go to the init state
+iptables -F
+iptables -t nat -F PREROUTING
+iptables -t nat -F POSTROUTING
+iptables -F INPUT
+iptables -F OUTPUT
+iptables -F FORWARD
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD ACCEPT
+
+iptables -t nat -A POSTROUTING -o $WAN -j MASQUERADE
+#iptables -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+
+#Port Forwarding
+i=1
+while [ "$i" -ge 1 -a "$i" -le $PORTFORWARD_NUM ]
+do
+	eval pforward_wan_port='$PORTFORWARD_WAN_PORT'${i}
+	eval pforward_lan_ip='$PORTFORWARD_LAN_IP'${i}
+	eval pforward_lan_port='$PORTFORWARD_LAN_PORT'${i}
+	eval pforward_proto='$PORTFORWARD_PROTO'${i}
+
+	if [ -n "${pforward_wan_port}" -a -n "${pforward_lan_port}" -a -n "$pforward_lan_ip" ]; then
+		case  ${pforward_proto} in
+		0)
+			iptables -t nat -A PREROUTING -p udp --dport ${pforward_wan_port} -d $WAN_IP -j DNAT --to ${pforward_lan_ip}:${pforward_lan_port}
+			;;
+		1)
+			iptables -t nat -A PREROUTING -p tcp --dport ${pforward_wan_port} -d $WAN_IP -j DNAT --to ${pforward_lan_ip}:${pforward_lan_port}
+			;;
+		2)
+			iptables -t nat -A PREROUTING -p udp --dport ${pforward_wan_port} -d $WAN_IP -j DNAT --to ${pforward_lan_ip}:${pforward_lan_port}
+			iptables -t nat -A PREROUTING -p tcp --dport ${pforward_wan_port} -d $WAN_IP -j DNAT --to ${pforward_lan_ip}:${pforward_lan_port}
+			;;
+		esac
+	fi
+
+    i=$(($i+1))
+done
+
+#####################enable DMZ#################################################
+
+#if [ -n "$DMZ_HOST" ]; then
+#  iptables -t nat -A PREROUTING  -p ALL -d $WAN_IP -j DNAT --to $DMZ_HOST
+#fi

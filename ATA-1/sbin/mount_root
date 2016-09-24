@@ -1,0 +1,277 @@
+#!/bin/sh
+
+test -f /bin/pub_functions && . /bin/pub_functions 
+
+if [ "`cat /proc/provision/provision_group`" = 1 ]; then
+    PROG_BLK_DEV="/dev/mtdblock`cat /proc/mtd | grep prog | cut -d: -f1 | cut -c 4- | head -1`"
+    LANG_BLK_DEV="/dev/mtdblock`cat /proc/mtd | grep lang | cut -d: -f1 | cut -c 4- | head -1`"
+else
+    PROG_BLK_DEV="/dev/mtdblock`cat /proc/mtd | grep prog | cut -d: -f1 | cut -c 4- | tail -1`"
+    LANG_BLK_DEV="/dev/mtdblock`cat /proc/mtd | grep lang | cut -d: -f1 | cut -c 4- | tail -1`"
+fi
+
+PREFIX=/ram
+
+required grep
+required tr
+required tar
+required head
+required hexdump
+required cut
+required dd
+required find
+
+mkvar() {
+    mkdir -p $PREFIX/var/lib
+    mkdir -p $PREFIX/var/lib/dbus
+    cp /etc/machine-id $PREFIX/var/lib/dbus/
+    mkdir -p $PREFIX/var/log $PREFIX/var/spool $PREFIX/var/run $PREFIX/var/lock $PREFIX/var/user
+}
+
+mount_unionfs() {
+    mount -t tmpfs tmpfs /ram
+    mkdir /ram/rom
+    mkdir /ram/ram
+    mkdir /ram/unionfs
+    cd /ram
+    ln -s rom/bin bin
+    ln -s rom/sbin sbin
+    ln-s rom/lib lib
+    cd /
+
+    umount /proc
+    umount /sys
+
+    pivot_root /ram /ram/rom
+    mount -t unionfs -o dirs=ram=rw:rom=ro unionfs unionfs
+    mkdir /unionfs/initramfs
+    pivot_root /unionfs /unionfs/initramfs
+
+    mount -t proc /proc
+    mount -t sys /sys
+
+    if [ ! -z "`prov_procheader /proc/provision/partition/prog |grep 43a78f39`" ]; then
+        mkdir /initramfs/app_rw
+        mkdir /initramfs/app
+
+        mount $PROG_BLK_DEV /initramfs/app
+        mount -t unionfs -o dirs=/initramfs/app_rw=rw:/initramfs/app=ro unionfs app
+    fi
+
+	mkvar
+}
+
+mount_tmpfs() {
+    info 2 "Mounting tmpfs to /ram"
+    mount -t tmpfs tmpfs /ram || warn "mount fail"
+
+    if mount | grep app; then
+        warn "/app already mounted"
+    else
+        if [ ! -z "`prov_procheader /proc/provision/partition/prog |grep 23c97af9`" ]; then
+            echo "mount $PROG_BLK_DEV /app"
+            mount $PROG_BLK_DEV /app && {
+                PROG_MOUNTED=true
+            }
+            if $PROG_MOUNTED; then
+                info 2 "App partition mounted"
+            else
+                warn "Mount app partition failed"
+            fi
+        fi
+        if [ ! -z "`prov_procheader /proc/provision/partition/lang |grep 23c97af9`" ]; then
+            mount $LANG_BLK_DEV /lang && {
+                LANG_MOUNTED=true
+                nvram set lang_loaded=1
+            }
+            if $LANG_MOUNTED; then
+                info 2 "Language partition mounted"
+            else
+                warn "Mount language partition failed"
+            fi
+        fi
+    fi
+
+    mkvar
+    mkdir -p /ram/usr
+    mkdir -p /ram/home 
+    mkdir -p /ram/root
+    mkdir -p /ram/tmp
+    mkdir -p /ram/app
+    mkdir -p /ram/data
+    mkdir -p /ram/media
+    mkdir -p /ram/core
+}
+
+unpack_skeleton(){
+    dst="$1"
+    info 2 "Copying /etc to $dst..."
+    test -d "$dst" || die "Destination $dst not found"
+    cp -a /etc $dst
+}
+
+make_links2rom(){
+    dst=$1
+    info 2 "Making symlinks... "
+    if [ -d $dst ]; then
+        cd $dst
+    else
+        cd /
+        return 0
+    fi
+
+    local dirs4link="lib bin sbin conf oem_profile country_profile lang"
+    for file in $dirs4link; do 
+        ln -sf /rom/$file $file
+        info 3 "Linking /rom/${file} to /${file}"
+    done
+
+    for file in $(cd /usr; ls;); do 
+        ln -sf /rom/usr/$file usr/$file
+        info 3 "Linking /rom/usr/${file} to /usr/${file}"
+    done
+
+    for file in $(cd /app; ls;); do 
+        ln -sf /rom/app/$file app/$file
+        info 3 "Linking /rom/app/${file} to /app/${file}"
+    done
+
+    rm -f app/bin
+    mkdir -p app/bin
+    for file in $(cd /app/bin; ls;); do 
+        ln -sf /rom/app/bin/$file app/bin/$file
+        info 3 "Linking /rom/app/bin/${file} to /app/bin/${file}"
+    done
+
+#    ln -sf /rom/guia/X11R6 usr/X11R6
+#    ln -sf /rom/guib/gtk usr/gtk
+
+#    ln -s /rom/guib/browser browser
+#    rm -f app/screensaver
+#    ln -s /rom/guia/screensaver app/screensaver
+#    rm -f app/pictures
+#    ln -s /rom/guia/pictures app/pictures
+#    rm -f app/pidgin
+#    ln -s /rom/guib/pidgin app/pidgin
+
+#    ln -s /rom/app/www www
+
+#    for file in $(cd /; { find $dirs4link -type f; find $dirs4link -type l; };); do 
+#        local dir=$(dirname $file)
+#        mkdir -p $dir
+#        info 4 "Linking $file to /rom/$file"
+#        ln -sf /rom/$file $file
+#    done
+#    cd usr
+#    local dirs4link="bin sbin lib"
+#    for file in $(cd /app; { find $dirs4link -type f; find $dirs4link -type l; };); do 
+#        local dir=$(dirname $file)
+#        mkdir -p $dir
+#        info 4 "Linking /usr/$file to /rom/app/$file"
+#        ln -sf /rom/app/$file $file
+#    done
+
+    cd /
+}
+
+make_devdir(){
+    dest=$1
+    cp -a /dev $dest
+}
+
+prepare_conf(){
+    nvparse_conf /conf/rc.conf > ${DST_CONF}/rc.conf
+
+
+#    nvparse /conf/udhcpd.conf > ${DST_CONF}/udhcpd.conf
+
+#    nvparse /conf/rc.iptables > ${DST_CONF}/rc.d/rc.iptables
+#    cp /conf/rc.iptables ${DST_CONF}/rc.d/rc.iptables
+#    chmod +x ${DST_CONF}/rc.d/rc.iptables
+
+#    nvparse /conf/rc.firewall > ${DST_CONF}/rc.d/rc.firewall
+#    cp /conf/rc.firewall ${DST_CONF}/rc.d/rc.firewall
+#    chmod +x ${DST_CONF}/rc.d/rc.firewall
+
+#    nvparse /conf/rc.dmz > ${DST_CONF}/rc.d/rc.dmz
+#    cp /conf/rc.dmz ${DST_CONF}/etc/rc.d/rc.dmz
+#    chmod +x ${DST_CONF}/etc/rc.d/rc.dmz
+}
+
+create_tmpfs_partition(){
+
+    info 2 "create tmpfs partition... "
+    unpack_skeleton /ram 
+#    mkdir -p /ram/nv
+#    cp /nv/udhcpd.leases /ram/nv
+    make_links2rom /ram
+
+    make_devdir /ram
+    mkdir -p /ram/proc
+    mkdir -p /ram/sys
+    rm -rf /ram/tmp
+    mkdir /ram/tmp
+#   chmod +t /ram/tmp
+    mkdir -p /ram/data
+#    chmod 755 /ram/data
+#    mkdir -p /ram/usb
+#    chmod 755 /ram/usb
+    DST_CONF='ram/etc'
+    prepare_conf
+}
+
+main(){
+#    echo -n "load nvram defaults... "
+    oem_id="`cat /proc/gxp/dev_info/hw_features/oem_id`"
+    
+    # Load Vonage defaults
+    if [ -z "`nvram get 2`" -a -n "`cat /proc/gxp/dev_info/security/password`" ]; then
+        nvram set 2="`cat /proc/gxp/dev_info/security/password | cut -b 1-10`"
+    fi
+    if [ -z "`nvram get 1359`" -a -n "`cat /proc/gxp/dev_info/security/xml_key`" ]; then
+        nvram set 1359="`cat /proc/gxp/dev_info/security/xml_key`"
+    fi
+    #hash
+    HASH="`nvram get 234 | hexdump`"
+    if [ -z "$HASH" -a -n "`cat /proc/gxp/dev_info/security/hash`" ]; then
+        nvram set 234="`cat /proc/gxp/dev_info/security/hash | cut -b 1-10`/"
+    fi   
+        
+    if [ ! -z "$oem_id" -a "$oem_id" != "0" -a -e "/oem_profile/$oem_id/oem_default_values" ]; then
+        nvdefault /oem_profile/$oem_id/oem_default_values
+    else
+        oem_id=0
+    fi
+
+    nvdefault /etc/default_values
+    nvram set :oem_id=$oem_id
+    echo "done"
+
+    if [ ! "`grep nfs /etc/mtab`" ]; then
+        if [ -n "`nvram get tftp_repl_server`" ] ; then
+            echo "File replacement enabled...mounting UnionFS root."
+            PREFIX=
+            mount_unionfs
+        else
+            mount_tmpfs
+            create_tmpfs_partition
+            umount /proc
+            mkdir -p /ram/rom
+            info 2 "Replacing /"
+            pivot_root /ram /ram/rom
+            info 3 "Remount /proc"
+            mkdir -p /proc
+            mount -t proc proc /proc
+            mount -t sys /sys
+        fi
+    else
+        DST_CONF='/etc'
+        mkdir -p /rom
+        ln -s /conf /rom/conf
+        prepare_conf
+        PREFIX=
+    fi
+}
+
+main $@
+

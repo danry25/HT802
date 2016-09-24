@@ -1,0 +1,861 @@
+<html>
+<head>
+<title>Grandstream Device Configuration</title>
+<style type="text/css">
+<!--
+.l{  font-family: Tahoma; font-size: 10pt; color: #000000; }
+a.l:Hover{  font-family: Tahoma; font-size: 10pt; color: #ffffff; }
+-->
+</style></head>
+<body bgcolor="#CCCCCC">
+<form action="update" method="post">
+<table width="870" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#336699">
+<tr><td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td height="48" valign="middle" bgcolor="#F3C47C" class="l" align="center"><strong><font color="#336699" size="3"><b>Grandstream Device Configuration</b></font></strong></td>
+</tr><tr><td height="20" valign="top" background="/backline.gif" bgcolor="#F3C47C" align="center">
+<table width="60%" cellpadding="0" cellspacing="0"><tr>
+<td bgcolor="#999999" align="center"><a href="index" class="l"><b>STATUS</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config2" class="l"><b>BASIC SETTINGS</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config" class="l"><b>ADVANCED SETTINGS</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a1" class="l"><b>FXS PORT1 </b></a></td>
+<td bgcolor="#336699" align="center" class="l"><b>FXS PORT2 </b></td>
+</tr></table>
+            </td>
+        </tr>
+        <tr bgcolor="#FFFFCC">
+          <td> <table width="100%" border=0 cellspacing=1 cellpadding=2>
+              <tr>
+                <td align=right><b>Account Active: </b></td>
+                <td>&nbsp; <input type=radio name="P401" value=0 <% 401 0 checked %>>
+                  No &nbsp; &nbsp;&nbsp; <input type=radio name="P401" value=1 <% 401 1 checked %>>
+                  Yes </td>
+              </tr>
+               <tr>
+                <td align=right><b>Primary SIP Server: </b></td>
+                <td>&nbsp; <input type=text name="P747" value="<% 747                                                                                             %>" maxlength=96 size=30>
+                  (e.g., sip.mycompany.com, or IP address) </td>
+              </tr>
+              </tr>
+                <td align=right><b>Failover SIP Server: </b></td>
+                <td>&nbsp; <input type=text name="P987" value="<% 987                                                                                             %>" maxlength=96 size=30>
+                  (Optional, used when primary server no response) </td>
+              </tr>
+              <tr>
+                <td align=right><b>Prefer Primary SIP Server: </b></td>
+                <td>&nbsp;
+                 <input type=radio name="P4568" value=0 <% 4568 0 checked %> > No &nbsp;&nbsp; &nbsp;
+                 <input type=radio name="P4568" value=1 <% 4568 1 checked %> > Yes &nbsp;&nbsp; &nbsp;
+                 ( yes - will register to Primary Server if Failover registration expires)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><b>Outbound Proxy: </b></td>
+                <td>&nbsp; <input type=text name="P748" value="<% 748                                                                                             %>" maxlength=96 size=30>
+                  (e.g., proxy.myprovider.com, or IP address, if any) </td>
+              </tr>
+              <tr>
+                <td align=right><b>SIP transport: </b></td>
+                <td>&nbsp; <input type=radio name="P830" value=0 <% 830 0 checked %>>
+                  UDP &nbsp; &nbsp; &nbsp; <input type=radio name="P830" value=1 <% 830 1 checked %>>
+                  TCP &nbsp; &nbsp; &nbsp; <input type=radio name="P830" value=2 <% 830 2 checked %>>
+                  TLS &nbsp;&nbsp;(default is UDP)</td>
+              </tr>
+              <tr>
+                <td align=right valign=top><b>NAT Traversal (STUN): </b></td>
+                <td>&nbsp;
+                 <input type=radio name="P730" value=0 <% 730 0 checked %> > No &nbsp;&nbsp; &nbsp;
+                 <input type=radio name="P730" value=2 <% 730 2 checked %> > No, but send keep-alive &nbsp;&nbsp;&nbsp;
+                 <input type=radio name="P730" value=1 <% 730 1 checked %> > Yes
+                </td>
+              </tr>
+              <tr>
+                <td align=right><b>SIP User ID: </b></td>
+                <td>&nbsp; <input type=text name="P735" value="<% 735                                                           %>" maxlength=64 size=30>
+                  (the user part of an SIP address) </td>
+              </tr>
+              <tr>
+                <td align=right><b>Authenticate ID: </b></td>
+                <td>&nbsp; <input type=text name="P736" value="<% 736                                                                                             %>" maxlength=96 size=30>
+                  (can be identical to or different from <b>SIP User ID</b>) </td>
+              </tr>
+              <tr>
+                <td align=right><b>Authenticate Password: </b></td>
+                <td>&nbsp; <input type=password name="P734" maxlength=64 size=30> (purposely not displayed for security protection)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><b>Name: </b></td>
+                <td>&nbsp; <input type=text name="P703" value="<% 703                                                          %>" maxlength=60 size=30>
+                  (optional, e.g., John Doe) </td>
+              </tr>
+              <tr>
+                <td colspan=2>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align=right><i>DNS Mode: </i></td>
+                <td>&nbsp; <input type=radio name="P702" value=0 <% 702 0 checked %>>
+                  A Record &nbsp; &nbsp;&nbsp; <input type=radio name="P702" value=1 <% 702 1 checked %>>
+                  SRV &nbsp; &nbsp;&nbsp; <input type=radio name="P702" value=2 <% 702 2 checked %>>
+                  NAPTR/SRV </td>
+              </tr>
+              <tr>
+                <td align=right><i>User ID is phone number: </i></td>
+                <td>&nbsp;&nbsp;<input type=radio name="P763" value=0 <% 763 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp;&nbsp;<input type=radio name="P763" value=1 <% 763 1 checked %>>
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>SIP Registration: </i></td>
+                <td>&nbsp;&nbsp;<input type=radio name="P731" value=0 <% 731 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp;&nbsp;<input type=radio name="P731" value=1 <% 731 1 checked %>>
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>Unregister On Reboot: </i></td>
+                <td>&nbsp;&nbsp;<input type=radio name="P752" value=0 <% 752 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp;&nbsp;<input type=radio name="P752" value=1 <% 752 1 checked %>>
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>Outgoing Call without Registration: </i></td>
+                <td>&nbsp;&nbsp;<input type=radio name="P813" value=0 <% 813 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp;&nbsp;<input type=radio name="P813" value=1 <% 813 1 checked %>>
+                  Yes </td>
+              </tr>
+               <tr>
+                <td align=right><i>Register Expiration: </i></td>
+                <td>&nbsp; <input type=text name="P732" value="<% 732 %>" maxlength=5 size=7>
+                  (in minutes. default 1 hour, max 45 days)</td>
+              </tr>
+              <tr>
+                <td align=right><i>SIP Registration Failure Retry Wait Time: </i></td>
+                <td>&nbsp; <input type=text name="P471" value="<% 471 %>" maxlength=5 size=7>
+                  (in seconds. Between 1-3600, default is 20)</td>
+              </tr>
+              <tr>
+                <td align=right><i>local SIP port: </i></td>
+                <td>&nbsp; <input type=text name="P740" value="<% 740 %>" maxlength=5 size=7>
+                  (default 5062)</td>
+              </tr>
+              <tr>
+                <td align=right><i>local RTP port: </i></td>
+                <td>&nbsp; <input type=text name="P739" value="<% 739 %>" maxlength=5 size=7>
+                  (1024-65535, default 5012)</td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Use random port: </i></td>
+                <td>&nbsp; <input type=radio name="P778" value=0 <% 778 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P778" value=1 <% 778 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Refer-To Use Target Contact: </i></td>
+                <td>&nbsp; <input type=radio name="P469" value=0 <% 469 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P469" value=1 <% 469 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Transfer on Conference Hangup: </i></td>
+                <td>&nbsp; <input type=radio name="P4561" value=0 <% 4561 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P4561" value=1 <% 4561 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Remove OBP from Route Header: </i></td>
+                <td>&nbsp; <input type=radio name="P4563" value=0 <% 4563 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P4563" value=1 <% 4563 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Support SIP Instance ID: </i></td>
+                <td>&nbsp; <input type=radio name="P489" value=0 <% 489 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P489" value=1 <% 489 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Validate Incoming SIP Message: </i></td>
+                <td>&nbsp; <input type=radio name="P4341" value=0 <% 4341 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P4341" value=1 <% 4341 1 checked %> >
+                  Yes </td>
+              </tr>
+          <tr>
+                <td align=right valign=top><i>Check SIP User ID for incoming INVITE: </i></td>
+                <td>&nbsp; <input type=radio name="P449" value=0 <% 449 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P449" value=1 <% 449 1 checked %> >
+                  Yes (no direct IP calling if Yes)</td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Allow Incoming SIP Messages <br> from SIP Proxy Only: </i></td>
+                <td>&nbsp; <input type=radio name="P743" value=0 <% 743 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P743" value=1 <% 743 1 checked %> >
+                  Yes (no direct IP calling if Yes)</td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>SIP T1 Timeout: </i></td>
+                <td>&nbsp;
+                  <select name="P440">
+                    <option value=50 <% 440 50  selected %>>0.5 sec</option>
+                    <option value=100 <% 440 100  selected %>>1 sec</option>
+                    <option value=200 <% 440 200  selected %>>2 sec</option>
+                    <option value=400 <% 440 400  selected %>>4 sec</option>
+                    <option value=800 <% 440 800  selected %>>8 sec</option>
+                    </select>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>SIP T2 Interval: </i></td>
+                <td>&nbsp;
+                  <select name="P441">
+                    <option value=200 <% 441 200  selected %>>2 sec</option>
+                    <option value=400 <% 441 400  selected %>>4 sec</option>
+                    <option value=800 <% 441 800  selected %>>8 sec</option>
+                    <option value=1600 <% 441 1600  selected %>>16 sec</option>
+                    <option value=3200 <% 441 3200  selected %>>32 sec</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>DTMF Payload Type: </i></td>
+                <td>&nbsp; <input type=text name="P779" value="<% 779 %>" maxlength=3 size=7>
+                </td>
+              </tr>
+<!--              <tr>
+                <td align=right valign=top><i>DTMF in audio: </i></td>
+                <td>&nbsp; <input type=radio name="P860" value=0 <% 860 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P860" value=1 <% 860 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>DTMF via RFC2833: </i></td>
+                <td>&nbsp; <input type=radio name="P861" value=0 <% 861 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P861" value=1 <% 861 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>DTMF via SIP INFO: </i></td>
+                <td>&nbsp; <input type=radio name="P862" value=0 <% 862 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P862" value=1 <% 862 1 checked %> >
+                  Yes </td>
+              </tr>
+-->
+              <tr>
+                <td align=right valign=top><i>Preferred DTMF method: </i><br>
+                  <i>(in listed order)</i></td>
+                <td>&nbsp;&nbsp;Priority 1: &nbsp; <select name="P860" >
+                    <option value=100  <% 860 100  selected %>>In-audio</option>
+                    <option value=101  <% 860 101  selected %>>RFC2833</option>
+                    <option value=102  <% 860 102  selected %>>SIP INFO</option>
+                   </select> <br> &nbsp;&nbsp;Priority 2: &nbsp; <select name="P861" >
+                    <option value=100  <% 861 100  selected %>>In-audio</option>
+                    <option value=101  <% 861 101  selected %>>RFC2833</option>
+                    <option value=102  <% 861 102  selected %>>SIP INFO</option>
+                   </select> <br> &nbsp;&nbsp;Priority 3: &nbsp; <select name="P862" >
+                    <option value=100  <% 862 100  selected %>>In-audio</option>
+                    <option value=101  <% 862 101  selected %>>RFC2833</option>
+                    <option value=102  <% 862 102  selected %>>SIP INFO</option>
+                 </select>
+              </tr>
+
+              <tr>
+                <td align=right><i>Send Hook Flash Event:</i></td>
+                <td>&nbsp; <input type=radio name="P774" value=0 <% 774 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P774" value=1 <% 774 1 checked %> >
+                  Yes &nbsp; (Hook-Flash will be sent as a DTMF event if set to Yes)
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Enable Call Features: </i></td>
+                <td>&nbsp; <input type=radio name="P751" value=0 <% 751 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P751" value=1 <% 751 1 checked %> >
+                  Yes (if Yes, call features using star codes will be supported locally) </td>
+              </tr>
+              <tr>
+                <td align=right><i>Offhook Auto-Dial: </i></td>
+                <td>&nbsp; <input type=text name="P771" value="<% 771                                                            %>" maxlength=64 size=30>
+                  (User ID/extension to dial automatically when offhook) </td>
+              </tr>
+              <tr>
+                <td align=right><i>Proxy-Require: </i></td>
+                <td>&nbsp; <input type=text name="P792" value="<% 792                                                          %>" maxlength=64 size=30></td>
+              </tr>
+              <tr>
+                <td align=right><i>Use NAT IP:</i></td>
+                <td>&nbsp; <input type=text name="P866" value="<% 866          %>" maxlength=16 size=30>
+                  (used in SIP/SDP message if specified) </td>
+              </tr>
+              <tr>
+                <td align=right valign=middle><i>Distinctive Ring Tone: </i></td>
+                <td>&nbsp;
+                  <select name="P880" >
+                    <option value=0  <% 880 0  selected %>>Ring Tone 1</option>
+                    <option value=1  <% 880 1  selected %>>Ring Tone 2</option>
+                    <option value=2  <% 880 2  selected %>>Ring Tone 3</option>
+                    <option value=3  <% 880 3  selected %>>Ring Tone 4</option>
+                    <option value=4  <% 880 4  selected %>>Ring Tone 5</option>
+                    <option value=5  <% 880 5  selected %>>Ring Tone 6</option>
+                    <option value=6  <% 880 6  selected %>>Ring Tone 7</option>
+                    <option value=7  <% 880 7  selected %>>Ring Tone 8</option>
+                    <option value=8  <% 880 8  selected %>>Ring Tone 9</option>
+                    <option value=9  <% 880 9  selected %>>Ring Tone 10</option>
+                  </select> &nbsp; used if incoming caller ID is <input type=text name="P881" value="<% 881                                                        %>" maxlength=64 size=30><br>
+                  &nbsp;
+                  <select name="P882" >
+                    <option value=0  <% 882 0  selected %>>Ring Tone 1</option>
+                    <option value=1  <% 882 1  selected %>>Ring Tone 2</option>
+                    <option value=2  <% 882 2  selected %>>Ring Tone 3</option>
+                    <option value=3  <% 882 3  selected %>>Ring Tone 4</option>
+                    <option value=4  <% 882 4  selected %>>Ring Tone 5</option>
+                    <option value=5  <% 882 5  selected %>>Ring Tone 6</option>
+                    <option value=6  <% 882 6  selected %>>Ring Tone 7</option>
+                    <option value=7  <% 882 7  selected %>>Ring Tone 8</option>
+                    <option value=8  <% 882 8  selected %>>Ring Tone 9</option>
+                    <option value=9  <% 882 9  selected %>>Ring Tone 10</option>
+                  </select> &nbsp; used if incoming caller ID is <input type=text name="P883" value="<% 883                                                        %>" maxlength=64 size=30><br>
+                  &nbsp;
+                  <select name="P884" >
+                    <option value=0  <% 884 0  selected %>>Ring Tone 1</option>
+                    <option value=1  <% 884 1  selected %>>Ring Tone 2</option>
+                    <option value=2  <% 884 2  selected %>>Ring Tone 3</option>
+                    <option value=3  <% 884 3  selected %>>Ring Tone 4</option>
+                    <option value=4  <% 884 4  selected %>>Ring Tone 5</option>
+                    <option value=5  <% 884 5  selected %>>Ring Tone 6</option>
+                    <option value=6  <% 884 6  selected %>>Ring Tone 7</option>
+                    <option value=7  <% 884 7  selected %>>Ring Tone 8</option>
+                    <option value=8  <% 884 8  selected %>>Ring Tone 9</option>
+                    <option value=9  <% 884 9  selected %>>Ring Tone 10</option>
+                  </select> &nbsp; used if incoming caller ID is <input type=text name="P885" value="<% 885                                                        %>" maxlength=64 size=30><br>
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Disable Call-Waiting: </i></td>
+                <td>&nbsp; <input type=radio name="P791" value=0 <% 791 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P791" value=1 <% 791 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Disable Call-Waiting Caller ID: </i></td>
+                <td>&nbsp; <input type=radio name="P823" value=0 <% 823 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P823" value=1 <% 823 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Disable Call-Waiting Tone: </i></td>
+                <td>&nbsp; <input type=radio name="P817" value=0 <% 817 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P817" value=1 <% 817 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Disable Reminder Ring for On-Hold Call: </i></td>
+                <td>&nbsp; <input type=radio name="P4361" value=0 <% 4361 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P4361" value=1 <% 4361 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>Disable Visual MWI:</i></td>
+                <td>&nbsp; <input type=radio name="P869" value=0 <% 869 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P869" value=1 <% 869 1 checked %>>
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>Ring Timeout: </i></td>
+                <td>&nbsp; <input type=text name="P816" value="<% 816 %>" maxlength=3 size=7>
+                  (10-300, default is 60 seconds)</td>
+              </tr>
+              <tr>
+                <td align=right><i>Delayed Call Forward Wait Time: </i></td>
+                <td>&nbsp; <input type=text name="P470" value="<% 470 %>" maxlength=3 size=7>
+                  (Allowed range 1-120, in seconds.)</td>
+              </tr>
+              <tr>
+                <td align=right><i>No Key Entry Timeout: </i></td>
+                <td>&nbsp; <input type=text name="P292" value="<% 292 %>" maxlength=5 size=7>
+                  (in seconds, default is 4 seconds)</td>
+              </tr>
+              <tr>
+                <td align=right><i>Early Dial: </i></td>
+                <td>&nbsp; <input type=radio name="P729" value=0 <% 729 0 checked %> >
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P729" value=1 <% 729 1 checked %>>
+                  Yes &nbsp; (use "Yes" only if proxy supports 484 response)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Dial Plan Prefix: </i></td>
+                <td>&nbsp; <input type=text name="P766" value="<% 766                         %>" maxlength=32 size=7>
+                  (this prefix string is added to each dialed number)</td>
+              </tr>
+              <tr>
+                <td align=right><i>Use # as Dial Key: </i></td>
+                <td>&nbsp; <input type=radio name="P772" value=0 <% 772 0 checked %> >
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P772" value=1 <% 772 1 checked %>>
+                  Yes &nbsp; (if set to Yes, "#" will function as the "(Re-)Dial" key)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Dial Plan:</i></td>
+                <td>&nbsp; <input type=text name="P4201" value="<% 4201                                                                                                                                                                                                                                                           %>" maxlength=1024 size=60>
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>SUBSCRIBE for MWI: </i></td>
+                <td>&nbsp; <input type=radio name="P709" value=0 <% 709 0 checked %> >
+                  No, do not send SUBSCRIBE for Message Waiting Indication<br>
+                  &nbsp; <input type=radio name="P709" value=1 <% 709 1 checked %> >
+                  Yes, send periodical SUBSCRIBE for Message Waiting Indication
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Send Anonymous: </i></td>
+                <td>&nbsp; <input type=radio name="P765" value=0 <% 765 0 checked %> >
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P765" value=1 <% 765 1 checked %> >
+                  Yes &nbsp; (caller ID will be blocked if set to Yes) </td>
+              </tr>
+              <tr>
+                <td align=right><i>Anonymous Call Rejection: </i></td>
+                <td>&nbsp; <input type=radio name="P446" value=0 <% 446 0 checked %> >
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P446" value=1 <% 446 1 checked %> >
+                  Yes &nbsp; </td>
+              </tr>
+              <tr>
+                  <td align=right valign=top><i>Special Feature: </i></td>
+                <td>&nbsp;
+                    <select name="P767">
+                        <option value=100 <% 767 100 selected %>>Standard</option>
+                        <option value=108 <% 767 108 selected %>>CBCOM</option>
+                        <option value=109 <% 767 109 selected %>>RNK</option>
+                        <option value=111 <% 767 111 selected %>>Huawei</option>
+                        <option value=113 <% 767 113 selected %>>MyDTMFCfg</option>
+                        <option value=115 <% 767 115 selected %>>RingTransfer</option>
+                    </select>
+                  </td>
+              </tr>
+
+              <tr>
+                <td align=right><i>Session Expiration: </i></td>
+                <td>&nbsp; <input type=text name="P434" value="<% 434 %>" maxlength=5 size=7>
+                  (in seconds. default 180 seconds)</td>
+              </tr>
+
+              <tr>
+                <td align=right><i>Min-SE: </i></td>
+                <td>&nbsp; <input type=text name="P427" value="<% 427 %>" maxlength=5 size=7>
+                  (in seconds. default and minimum 90 seconds)</td>
+              </tr>
+
+              <tr>
+                <td align=right><i>Caller Request Timer: </i></td>
+                <td>&nbsp; <input type=radio name="P428" value=0 <% 428 0 checked %> >
+                  No &nbsp; &nbsp; <input type=radio name="P428" value=1 <% 428 1 checked %> >
+                  Yes (Request for timer when making outbound calls)</td>
+              </tr>
+
+              <tr>
+                <td align=right><i>Callee Request Timer: </i></td>
+                <td>&nbsp; <input type=radio name="P429" value=0 <% 429 0 checked %> >
+                  No &nbsp; &nbsp; <input type=radio name="P429" value=1 <% 429 1 checked %> >
+                  Yes (When caller supports timer but did not request one)</td>
+              </tr>
+
+              <tr>
+                <td align=right><i>Force Timer: </i></td>
+                <td>&nbsp; <input type=radio name="P430" value=0 <% 430 0 checked %> >
+                  No &nbsp; &nbsp; <input type=radio name="P430" value=1 <% 430 1 checked %> >
+                  Yes (Use timer even when remote party does not support)</td>
+              </tr>
+
+              <tr>
+                <td align=right><i>UAC Specify Refresher: </i></td>
+                <td>&nbsp; <input type=radio name="P432" value=1 <% 432 1 checked %> >
+                  UAC &nbsp; <input type=radio name="P432" value=2 <% 432 2 checked %> >
+                  UAS &nbsp; &nbsp; <input type=radio name="P432" value=0 <% 432 0 checked %> >
+                  Omit (Recommended)</td>
+               </tr>
+
+              <tr>
+                <td align=right><i>UAS Specify Refresher: </i></td>
+                <td>&nbsp; <input type=radio name="P433" value=1 <% 433 1 checked %> >
+                  UAC &nbsp; <input type=radio name="P433" value=2 <% 433 2 checked %> >
+                  UAS (When UAC did not specify refresher tag)</td>
+               </tr>
+
+              <tr>
+                <td align=right><i>Force INVITE: </i></td>
+                <td>&nbsp; <input type=radio name="P431" value=0 <% 431 0 checked %> >
+                  No &nbsp; &nbsp; <input type=radio name="P431" value=1 <% 431 1 checked %> >
+                  Yes (Always refresh with INVITE instead of UPDATE)</td>
+              </tr>
+
+              <tr>
+                <td colspan=2>&nbsp;</td>
+              </tr>
+
+              <tr>
+                <td align=right valign=top><i>Preferred Vocoder: </i><br>
+                  <i>(in listed order)</i></td>
+                <td>&nbsp;&nbsp;choice 1: &nbsp; <select name="P757">
+                    <option value=0  <% 757 0  selected %>>PCMU</option>
+                    <option value=8  <% 757 8  selected %>>PCMA</option>
+                    <option value=4  <% 757 4  selected %>>G723</option>
+                    <option value=18 <% 757 18 selected %>>G729</option>
+                    <option value=2  <% 757 2  selected %>>G726-32</option>
+                    <option value=100  <% 757 100  selected %>>AAL2-G726-16</option>
+                    <option value=102  <% 757 102  selected %>>AAL2-G726-24</option>
+                    <option value=104  <% 757 104  selected %>>AAL2-G726-32</option>
+                    <option value=103  <% 757 103  selected %>>AAL2-G726-40</option>
+                    <option value=98 <% 757 98 selected %>>iLBC</option>
+                    <option value=99 <% 757 99 selected %>>G729E</option>
+                  </select> <br> &nbsp;&nbsp;choice 2: &nbsp; <select name="P758">
+                    <option value=0  <% 758 0  selected %>>PCMU</option>
+                    <option value=8  <% 758 8  selected %>>PCMA</option>
+                    <option value=4  <% 758 4  selected %>>G723</option>
+                    <option value=18 <% 758 18 selected %>>G729</option>
+                    <option value=2  <% 758 2  selected %>>G726-32</option>
+                    <option value=100  <% 758 100  selected %>>AAL2-G726-16</option>
+                    <option value=102  <% 758 102  selected %>>AAL2-G726-24</option>
+                    <option value=104  <% 758 104  selected %>>AAL2-G726-32</option>
+                    <option value=103  <% 758 103  selected %>>AAL2-G726-40</option>
+                    <option value=98 <% 758 98 selected %>>iLBC</option>
+                    <option value=99 <% 758 99 selected %>>G729E</option>
+                  </select> <br> &nbsp;&nbsp;choice 3: &nbsp; <select name="P759">
+                    <option value=0  <% 759 0  selected %>>PCMU</option>
+                    <option value=8  <% 759 8  selected %>>PCMA</option>
+                    <option value=4  <% 759 4  selected %>>G723</option>
+                    <option value=18 <% 759 18 selected %>>G729</option>
+                    <option value=2  <% 759 2  selected %>>G726-32</option>
+                    <option value=100  <% 759 100  selected %>>AAL2-G726-16</option>
+                    <option value=102  <% 759 102  selected %>>AAL2-G726-24</option>
+                    <option value=104  <% 759 104  selected %>>AAL2-G726-32</option>
+                    <option value=103  <% 759 103  selected %>>AAL2-G726-40</option>
+                    <option value=98 <% 759 98 selected %>>iLBC</option>
+                    <option value=99 <% 759 99 selected %>>G729E</option>
+                  </select> <br> &nbsp;&nbsp;choice 4: &nbsp; <select name="P760">
+                    <option value=0  <% 760 0  selected %>>PCMU</option>
+                    <option value=8  <% 760 8  selected %>>PCMA</option>
+                    <option value=4  <% 760 4  selected %>>G723</option>
+                    <option value=18 <% 760 18 selected %>>G729</option>
+                    <option value=2  <% 760 2  selected %>>G726-32</option>
+                    <option value=100  <% 760 100  selected %>>AAL2-G726-16</option>
+                    <option value=102  <% 760 102  selected %>>AAL2-G726-24</option>
+                    <option value=104  <% 760 104  selected %>>AAL2-G726-32</option>
+                    <option value=103  <% 760 103  selected %>>AAL2-G726-40</option>
+                    <option value=98 <% 760 98 selected %>>iLBC</option>
+                    <option value=99 <% 760 99 selected %>>G729E</option>
+                  </select> <br> &nbsp;&nbsp;choice 5: &nbsp; <select name="P761">
+                    <option value=0  <% 761 0  selected %>>PCMU</option>
+                    <option value=8  <% 761 8  selected %>>PCMA</option>
+                    <option value=4  <% 761 4  selected %>>G723</option>
+                    <option value=18 <% 761 18 selected %>>G729</option>
+                    <option value=2  <% 761 2  selected %>>G726-32</option>
+                    <option value=100  <% 761 100  selected %>>AAL2-G726-16</option>
+                    <option value=102  <% 761 102  selected %>>AAL2-G726-24</option>
+                    <option value=104  <% 761 104  selected %>>AAL2-G726-32</option>
+                    <option value=103  <% 761 103  selected %>>AAL2-G726-40</option>
+                    <option value=98 <% 761 98 selected %>>iLBC</option>
+                    <option value=99 <% 761 99 selected %>>G729E</option>
+                  </select> <br> &nbsp;&nbsp;choice 6: &nbsp; <select name="P762">
+                    <option value=0  <% 762 0  selected %>>PCMU</option>
+                    <option value=8  <% 762 8  selected %>>PCMA</option>
+                    <option value=4  <% 762 4  selected %>>G723</option>
+                    <option value=18 <% 762 18 selected %>>G729</option>
+                    <option value=2  <% 762 2  selected %>>G726-32</option>
+                    <option value=100  <% 762 100  selected %>>AAL2-G726-16</option>
+                    <option value=102  <% 762 102  selected %>>AAL2-G726-24</option>
+                    <option value=104  <% 762 104  selected %>>AAL2-G726-32</option>
+                    <option value=103  <% 762 103  selected %>>AAL2-G726-40</option>
+                    <option value=98 <% 762 98 selected %>>iLBC</option>
+                    <option value=99 <% 762 99 selected %>>G729E</option>
+                  </select> <br> &nbsp;&nbsp;choice 7: &nbsp; <select name="P814" >
+                    <option value=0  <% 814 0  selected %>>PCMU</option>
+                    <option value=8  <% 814 8  selected %>>PCMA</option>
+                    <option value=4  <% 814 4  selected %>>G723</option>
+                    <option value=18 <% 814 18 selected %>>G729</option>
+                    <option value=2  <% 814 2  selected %>>G726-32</option>
+                    <option value=100  <% 814 100  selected %>>AAL2-G726-16</option>
+                    <option value=102  <% 814 102  selected %>>AAL2-G726-24</option>
+                    <option value=104  <% 814 104  selected %>>AAL2-G726-32</option>
+                    <option value=103  <% 814 103  selected %>>AAL2-G726-40</option>
+                    <option value=98 <% 814 98 selected %>>iLBC</option>
+                    <option value=99 <% 814 99 selected %>>G729E</option>
+                  </select> <br> &nbsp;&nbsp;choice 8: &nbsp; <select name="P815" >
+                    <option value=0  <% 815 0  selected %>>PCMU</option>
+                    <option value=8  <% 815 8  selected %>>PCMA</option>
+                    <option value=4  <% 815 4  selected %>>G723</option>
+                    <option value=18 <% 815 18 selected %>>G729</option>
+                    <option value=2  <% 815 2  selected %>>G726-32</option>
+                    <option value=100  <% 815 100  selected %>>AAL2-G726-16</option>
+                    <option value=102  <% 815 102  selected %>>AAL2-G726-24</option>
+                    <option value=104  <% 815 104  selected %>>AAL2-G726-32</option>
+                    <option value=103  <% 815 103  selected %>>AAL2-G726-40</option>
+                    <option value=98 <% 815 98 selected %>>iLBC</option>
+                    <option value=99 <% 815 99 selected %>>G729E</option>
+                  </select>
+              </tr>
+<!--
+              <tr>
+                <td align=right><i>Voice Frames per TX: </i></td>
+                <td>&nbsp; <input type=text name="P737" value="<% 737 %>" maxlength=3 size=7>
+                  (up to 10/20/32/64 for G711/G726/G723/other codecs respectively)
+                </td>
+              </tr>
+-->
+              <tr>
+                <td align=right><i>G723 rate: </i></td>
+                <td>&nbsp; <input type=radio name="P749" value=0 <% 749 0 checked %> >
+                  6.3kbps encoding rate &nbsp; &nbsp; &nbsp; <input type=radio name="P749" value=1 <% 749 1 checked %> >
+                  5.3kbps encoding rate </td>
+              </tr>
+              <tr>
+                <td align=right><i>iLBC frame size: </i></td>
+                <td>&nbsp; <input type=radio name="P705" value=0 <% 705 0 checked %> >
+                  20ms &nbsp; &nbsp; &nbsp; <input type=radio name="P705" value=1 <% 705 1 checked %> >
+                  30ms </td>
+              </tr>
+              <tr>
+                <td align=right><i>iLBC payload type: </i></td>
+                <td>&nbsp; <input type=text name="P704" value="<% 704  %>" maxlength=5 size=7>
+                  (between 96 and 127, default is 97)</td>
+              </tr>
+              <tr>
+                <td align=right><i>AAL2-G726-16 payload type: </i></td>
+                <td>&nbsp; <input type=text name="P819" value="<% 819  %>" maxlength=5 size=7>
+                  (between 96 and 127, default is 100)</td>
+              </tr>
+              <tr>
+                <td align=right><i>AAL2-G726-24 payload type: </i></td>
+                <td>&nbsp; <input type=text name="P820" value="<% 820  %>" maxlength=5 size=7>
+                  (between 96 and 127, default is 99)</td>
+              </tr>
+              <tr>
+                <td align=right><i>AAL2-G726-32 payload type: </i></td>
+                <td>&nbsp; <input type=text name="P821" value="<% 821  %>" maxlength=5 size=7>
+                  (between 96 and 127, default is 104)</td>
+              </tr>
+              <tr>
+                <td align=right><i>AAL2-G726-40 payload type: </i></td>
+                <td>&nbsp; <input type=text name="P822" value="<% 822  %>" maxlength=5 size=7>
+                  (between 96 and 127, default is 103)</td>
+              </tr>
+              <tr>
+                <td align=right><i>G729E payload type: </i></td>
+                <td>&nbsp; <input type=text name="P818" value="<% 818  %>" maxlength=5 size=7>
+                  (between 96 and 127, default is 102)</td>
+              </tr>
+              <tr>
+                <td align=right><i>VAD: </i></td>
+                <td>&nbsp; <input type=radio name="P750" value=0 <% 750 0 checked %> >
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P750" value=1 <% 750 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>Symmetric RTP: </i></td>
+                <td>&nbsp; <input type=radio name="P460" value=0 <% 460 0 checked %> >
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P460" value=1 <% 460 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Fax mode: </i></td>
+                <td>&nbsp; <input type=radio name="P710" value=0 <% 710 0 checked %> >
+                  T.38 (Auto Detect)
+                  &nbsp; <input type=radio name="P710" value=1 <% 710 1 checked %> >
+                  Pass-Through
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Fax tone detection mode: </i></td>
+                <td>&nbsp; <input type=radio name="P895" value=1 <% 895 1 checked %> >
+                  Caller &nbsp; <input type=radio name="P895" value=0 <% 895 0 checked %> >
+                  Callee &nbsp; <input type=radio name="P895" value=2 <% 895 2 checked %> >
+                  Caller or Callee</td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Jitter buffer type: </i></td>
+                <td>&nbsp; <input type=radio name="P831" value=0 <% 831 0 checked %> > Fixed
+                  &nbsp; <input type=radio name="P831" value=1 <% 831 1 checked %> > Adaptive
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Jitter buffer length: </i></td>
+                <td>&nbsp; <input type=radio name="P832" value=0 <% 832 0 checked %> > Low
+                  &nbsp; <input type=radio name="P832" value=1 <% 832 1 checked %> > Medium
+                  &nbsp; <input type=radio name="P832" value=2 <% 832 2 checked %> > High
+                </td>
+              </tr>
+
+              <tr>
+                <td align=right valign=top><i>SRTP Mode: </i></td>
+                <td>&nbsp; <input type=radio name="P443" value=0 <% 443 0 checked %> >
+                  Disabled &nbsp; &nbsp; <input type=radio name="P443" value=1 <% 443 1 checked %> >
+                  Enabled but not forced &nbsp; <input type=radio name="P443" value=2 <% 443 2 checked %> >
+                  Enabled and forced </td>
+              </tr>
+
+              <tr>
+                <td colspan=2>&nbsp;</td>
+              </tr>
+
+              <tr>
+                <td align=right valign=top><i>SLIC Setting: </i></td>
+                <td>&nbsp;
+                    <select name="P864">
+                        <option value=0 <% 864 0 selected %>>USA</option>
+                        <option value=1 <% 864 1 selected %>>AUSTRIA</option>
+                        <option value=13 <% 864 13 selected %>>AUSTRALIA/NEW ZEALAND</option>
+                        <option value=2 <% 864 2 selected %>>BELGIUM</option>
+                        <option value=14 <% 864 14 selected %>>CHINA</option>
+                        <option value=3 <% 864 3 selected %>>FINLAND</option>
+                        <option value=4 <% 864 4 selected %>>FRANCE</option>
+                        <option value=5 <% 864 5 selected %>>GERMANY</option>
+                        <option value=6 <% 864 6 selected %>>GREECE</option>
+                        <option value=7 <% 864 7 selected %>>ITALY</option>
+                        <option value=8 <% 864 8 selected %>>JAPAN</option>
+                        <option value=9 <% 864 9 selected %>>NORWAY</option>
+                        <option value=10 <% 864 10 selected %>>SPAIN</option>
+                        <option value=11 <% 864 11 selected %>>SWEDEN</option>
+                        <option value=12 <% 864 12 selected %>>UK</option>
+                    </select>
+                </td>
+              </tr>
+              <tr>
+                  <td align=right valign=top><i>Caller ID Scheme: </i></td>
+                  <td>&nbsp;
+                    <select name="P863">
+                        <option value=0 <% 863 0 selected %>>Bellcore/Telcordia</option>
+                        <option value=1 <% 863 1 selected %>>ETSI-FSK during ringing</option>
+                        <option value=2 <% 863 2 selected %>>ETSI-FSK prior to ringing with DTAS</option>
+                        <option value=3 <% 863 3 selected %>>ETSI-FSK prior to ringing with LR+DTAS</option>
+                        <option value=4 <% 863 4 selected %>>ETSI-FSK prior to ringing with RP</option>
+                        <option value=5 <% 863 5 selected %>>ETSI-DTMF during ringing</option>
+                        <option value=6 <% 863 6 selected %>>ETSI-DTMF prior to ringing with DTAS</option>
+                        <option value=7 <% 863 7 selected %>>ETSI-DTMF prior to ringing with LR+DTAS</option>
+                        <option value=8 <% 863 8 selected %>>ETSI-DTMF prior to ringing with RP</option>
+                        <option value=9 <% 863 9 selected %>>SIN 227 - BT</option>
+                        <option value=10 <% 863 10 selected %>>NTT Japan</option>
+                        <option value=11 <% 863 11 selected %>>DTMF Denmark prior to ringing no DTAS no LR</option>
+                        <option value=12 <% 863 12 selected %>>DTMF Denmark prior to ringing with LR</option>
+                        <option value=13 <% 863 13 selected %>>DTMF Sweden/Finalnd prior to ringing with LR</option>
+                    </select>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><i>Polarity Reversal:</i></td>
+                <td>&nbsp; <input type=radio name="P865" value=0 <% 865 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P865" value=1 <% 865 1 checked %>>
+                  Yes &nbsp; (reverse polarity upon call establishment and termination)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Loop Current Disconnect:</i></td>
+                <td>&nbsp; <input type=radio name="P893" value=0 <% 893 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P893" value=1 <% 893 1 checked %>>
+                  Yes &nbsp; (loop current disconnect upon call termination)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Loop Current Disconnect Duration:</i></td>
+                <td>&nbsp; <input type=text name="P857" value="<% 857 %>" maxlength=5 size=6 > (In 100 - 10000 milliseconds range, default is 200)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Hook Flash Timing: </i></td>
+                <td>
+                &nbsp; In 40-2000 milliseconds range,  minimum: <input type=text name="P811" value="<% 811 %>" maxlength=4 size=6 >
+                &nbsp; &nbsp; &nbsp; maximum: <input type=text name="P812" value="<% 812 %>" maxlength=4 size=6 >
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>On Hook Timing:</i></td>
+                <td>&nbsp; <input type=text name="P834" value="<% 834 %>" maxlength=5 size=6 > (In 40-2000 milliseconds range, default is 400)
+                </td>
+              </tr>
+              <tr>
+                 <td align=right><i>Gain:</i></td>
+                 <td>&nbsp;
+                   <i>TX</i>
+                   <select name="P248">
+                     <option value=1 <% 248 1 selected %>>+6dB</option>
+                     <option value=2 <% 248 2 selected %>>+4dB</option>
+                     <option value=3 <% 248 3 selected %>>+2dB</option>
+                     <option value=0 <% 248 0 selected %>>0dB default</option>
+                     <option value=4 <% 248 4 selected %>>-2dB</option>
+                     <option value=5 <% 248 5 selected %>>-4dB</option>
+                     <option value=6 <% 248 6 selected %>>-6dB</option>
+                     <option value=7 <% 248 7 selected %>>-8dB</option>
+                     <option value=8 <% 248 8 selected %>>-10dB</option>
+                     <option value=9 <% 248 9 selected %>>-12dB</option>
+                   </select>&nbsp;
+                   <i>RX</i>
+                   <select name="P283">
+                     <option value=1 <% 283 1 selected %>>+6dB</option>
+                     <option value=2 <% 283 2 selected %>>+4dB</option>
+                     <option value=3 <% 283 3 selected %>>+2dB</option>
+                     <option value=0 <% 283 0 selected %>>0dB</option>
+                     <option value=4 <% 283 4 selected %>>-2dB</option>
+                     <option value=5 <% 283 5 selected %>>-4dB</option>
+                     <option value=6 <% 283 6 selected %>>-6dB default</option>
+                     <option value=7 <% 283 7 selected %>>-8dB</option>
+                     <option value=8 <% 283 8 selected %>>-10dB</option>
+                     <option value=9 <% 283 9 selected %>>-12dB</option>
+                   </select>
+                 </td>
+              </tr>
+
+              <tr>
+                 <td colspan=2>&nbsp;</td>
+              </tr>
+
+              <tr>
+                 <td align=right><b>Ring Tones</b></td>
+                 <td>(Syntax: c=on1/off1-on2/off2-on3/off3; [...])</td>
+              </tr>
+
+              <tr>
+                      <td align="right"><i>Ring Tone 1:</i></td>
+                      <td>&nbsp; <input type=text name="P4030" value="<% 4030                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+              </tr>
+              <tr>
+                      <td align="right"><i>Ring Tone 2:</i></td>
+                      <td>&nbsp; <input type=text name="P4031" value="<% 4031                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+              </tr>
+              <tr>
+                      <td align="right"><i>Ring Tone 3:</i></td>
+                      <td>&nbsp; <input type=text name="P4032" value="<% 4032                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>Ring Tone 4:</i></td>
+                      <td>&nbsp; <input type=text name="P4033" value="<% 4033                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>Ring Tone 5:</i></td>
+                      <td>&nbsp; <input type=text name="P4034" value="<% 4034                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>Ring Tone 6:</i></td>
+                      <td>&nbsp; <input type=text name="P4035" value="<% 4035                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>Ring Tone 7:</i></td>
+                      <td>&nbsp; <input type=text name="P4036" value="<% 4036                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>Ring Tone 8:</i></td>
+                      <td>&nbsp; <input type=text name="P4037" value="<% 4037                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>Ring Tone 9:</i></td>
+                      <td>&nbsp; <input type=text name="P4038" value="<% 4038                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>Ring Tone 10:</i></td>
+                      <td>&nbsp; <input type=text name="P4039" value="<% 4039                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+
+              <tr height=28 bgcolor="#F3C47C" align=center>
+                <td colspan=2> <input type="submit" name="update" value="Update">
+                  &nbsp;&nbsp; <input type="button" name="cancel" value="Cancel" onClick="document.location='login'">
+                  &nbsp;&nbsp; <input type="button" name="reboot" value="Reboot" onClick="document.location='rs'">
+                  <input name="gnkey" type=hidden value=0b82> </td>
+              </tr>
+            </table></td>
+        </tr>
+<tr><td bgcolor="#336699" align="center" class="l"><font size="1">All Rights Reserved Grandstream Networks, Inc. 2006-2014</font></td></tr>
+</table></td></tr></table>
+</form></body></html>

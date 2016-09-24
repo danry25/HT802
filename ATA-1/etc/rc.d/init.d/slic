@@ -1,0 +1,89 @@
+#!/bin/sh
+# Board support
+bsp_module="bsp_ht.ko"
+bsp_device="slic_bsp"
+bsp_alias_device="nuvoton_bsp"
+# TAPI
+tapi_module="drv_tapi.ko"
+# SLIC
+# Default HT8XX based on Nuvoton SLIC
+device="fxs"
+slic_module="drv_silabs.ko"
+slic_vendor="silabs"
+
+# HT8XX based on Silicon Labs SLIC
+case "$1" in
+  start)
+    echo Starting HT8XX SLIC BSP driver...
+
+    cd /app/lib
+
+    if [ -e /dev/${bsp_device} ]; then
+      rm -f /dev/${bsp_device}*
+    fi
+    major=122
+    insmod $bsp_module major_num=$major bsp_device=$bsp_device || exit 1
+    mknod /dev/${bsp_device} c $major 00
+    ln -s /dev/${bsp_device} /dev/${bsp_alias_device}
+
+    echo Starting TAPI device driver...
+    insmod $tapi_module || {
+        echo "load module $tapi_module failed!"
+        exit 1
+        }
+ 
+    echo Starting $slic_vendor device driver...
+    insmod $slic_module || {
+        echo "load module $module failed!"
+        exit 1
+        }
+
+    if [ -e /dev/${device}1 ]; then
+      rm -f /dev/${device}*
+    fi
+
+    major=121
+    mknod /dev/${device}00 c $major 00
+    mknod /dev/${device}01 c $major 01
+    mknod /dev/${device}02 c $major 02
+    mknod /dev/${device}03 c $major 03
+
+    cd /app/bin
+    ;;
+  stop)  
+    cd /app/lib
+
+    echo Stopping $slic_vendor device driver...
+    rmmod $slic_module
+
+    if [ -e /dev/${device}00 ]; then
+      rm -f /dev/${device}*
+    fi
+
+    echo Stopping TAPI device driver...
+    rmmod $tapi_module
+    
+    echo Stopping HT8XX SLIC BSP driver...
+    rmmod $bsp_module
+
+    if [ -e /dev/${bsp_alias_device} ]; then
+      rm -f /dev/${bsp_alias_device}*
+    fi
+
+    if [ -e /dev/${bsp_device} ]; then
+      rm -f /dev/${bsp_device}*
+    fi
+
+    cd /app/bin
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0

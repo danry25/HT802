@@ -1,0 +1,271 @@
+<META HTTP-EQUIV="Refresh" CONTENT="30; URL=/cgi-bin/index">
+<html>
+<head>
+<title>Grandstream Device Configuration</title>
+<script src="../scripts/jquery-min.js" type="text/javascript"></script>
+<script src="../scripts/jquery.validate.min.js" type="text/javascript"></script>
+<style type="text/css">
+<!--
+.l{  font-family: Tahoma; font-size: 10pt; color: #000000; }
+a.l:Hover{  font-family: Tahoma; font-size: 10pt; color: #ffffff; }
+-->
+</style></head><body bgcolor="#CCCCCC">
+<table width="870" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#336699">
+<tr><td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td height="48" valign="middle" bgcolor="#F3C47C" class="l" align="center"><strong><font color="#336699" size="3"><b>Grandstream Device Configuration</b></font></strong></td>
+</tr><tr><td height="20" valign="top" background="/backline.gif" bgcolor="#F3C47C" align="center">
+<table width="60%" cellpadding="0" cellspacing="0">
+<tr><td bgcolor="#336699" align="center" class="l"><b>STATUS</b></td>
+<td bgcolor="#999999" align="center"><a href="config2" class="l"><b>BASIC SETTINGS</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config" class="l"><b>ADVANCED SETTINGS</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a1" class="l"><b>FXS PORT1 </b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a2" class="l"><b>FXS PORT2 </b></a></td>
+</tr></table></td></tr><tr bgcolor="#FFFFCC">
+<td> <table width="100%" border=0 cellspacing=1 cellpadding=2>
+              <tr>
+                <td align=right><b>MAC Address: </b></td>
+                <td>&nbsp;
+                  <% 67              %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>IP Address: </b></td>
+                <td>&nbsp;
+                  <% 121        %>
+                   </td>
+              </tr>
+              <tr>
+                <td align=right><b>Product Model: </b></td>
+                <td>&nbsp;
+                  <% 89            %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>Hardware Version: </b></td>
+                <td>&nbsp;
+                  <% 917            %>
+				  &nbsp;&nbsp;&nbsp;Part Number --
+                  <% 1397            %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>Software Version: </b></td>
+                <td>&nbsp; Program--
+                  <% 68     %>
+                   &nbsp;&nbsp;&nbsp;Bootloader --
+                  <% 69     %>
+                   &nbsp;&nbsp;&nbsp;Core --
+                  <% 70     %>
+                   &nbsp;&nbsp;&nbsp;Base --
+                  <% 45     %>
+                  <br>&nbsp; CPE -- <% cpe_version     %> 
+                  </td>
+              </tr>
+               <tr>
+              	<td align=right><b>Software Status: </b></td>
+              	<td id=tdStatus>&nbsp;&nbsp;Unknown</td>
+              </tr> 
+               <tr> 
+
+              <tr>
+                <td align=right><b>System Up Time: </b></td>
+                <td>&nbsp;
+          <% 199                                      %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>NAT: </b></td>
+                <td>&nbsp;
+                  <% 80                                                          %>
+                   </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><b>Port Status: </b></td>
+                <td>
+                  <table border=1>
+                    <tr>
+                      <td>Port</td>
+                      <td>Hook</td>
+                      <td>User ID</td>
+                      <td>Registration</td>
+                    </tr>
+                    <tr>
+                      <td>FXS 1</td>
+                      <td><b><% 4901                       %></b></td>
+                      <td><b><% 35                         %></b></td>
+                      <td><b><% 4921                       %></b></td>
+                    </tr>
+                    <tr>
+                      <td>FXS 2</td>
+                      <td><b><% 4902                       %></b></td>
+                      <td><b><% 735                        %></b></td>
+                      <td><b><% 4922                       %></b></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><b>Port Options: </b></td>
+                <td>
+                  <table border=1>
+                    <tr>
+                      <td>Port</td>
+                      <td>DND</td>
+                      <td>&nbsp;Forward</td>
+                      <td>&nbsp;Busy Forward</td>
+                      <td>&nbsp;Delayed Forward</td>
+                    </tr>
+                    <tr>
+                      <td>FXS 1</td>
+                      <td><% dnd_0 0 No  %><% dnd_0 1 Yes  %></td>
+                      <td>&nbsp;<% forward_0                  %></td>
+                      <td>&nbsp;<% busyForward_0              %></td>
+                      <td>&nbsp;<% delayedForward_0           %></td>
+                    </tr>
+                    <tr>
+                      <td>FXS 2</td>
+                      <td><% dnd_1 0 No  %><% dnd_1 1 Yes  %></td>
+                      <td>&nbsp;<% forward_1                  %></td>
+                      <td>&nbsp;<% busyForward_1              %></td>
+                      <td>&nbsp;<% delayedForward_1           %></td>
+                    </tr>
+                  </table>
+                </td>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+              	<td align=right><b>Provision:</b></td>
+              	<td id="tdProvisionStatus">&nbsp;&nbsp;Unknown</td>
+              </tr>
+              <tr>
+              	<td align=right><b>Core Dump:</b></td>
+              	<td id="tdCoreDump">&nbsp;&nbsp;Unknown</td>
+              </tr>
+
+            </table>
+			<% hacked_pvalues %>
+			</td>
+        </tr>
+        <tr>
+<td bgcolor="#336699" align="center" class="l"><font size="1">All Rights Reserved Grandstream Networks, Inc. 2006-2015</font></td>
+</tr></table></td></tr></table>
+</body>
+<script type="text/javascript">
+function loadProcessStatus()
+{
+	var result = $.ajax({
+		url: '/cgi-bin/api-get_system_status',		
+		contentType: "application/json", 
+		async: false,
+		success: function(input) { 		
+			var rowFormat = "&nbsp;&nbsp;Running&nbsp;&nbsp;&nbsp;&nbsp;Mem:&nbsp;{0}";
+			if (input.results.length > 0)
+			{				
+				var found = false;
+				
+				$.each(input.results, function() {	
+					if (this.command == "ata")
+					{
+						found = true;
+						$("#tdStatus").html(jQuery.validator.format(rowFormat, this.vsz)); 						
+					}													
+				});	
+				
+				if (found == false)
+					$("#tdStatus").html("&nbsp;&nbsp;Stopped");	
+			}
+			else
+			{
+				$("#tdStatus").html("&nbsp;&nbsp;Stopped");
+			}				
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			$("#tdStatus").html("&nbsp;&nbsp;Error");									
+		}
+	});
+}
+
+function checkCoreDump()
+{
+	loadCoreDump();
+	setTimeout("checkCoreDump()", 10000);
+}
+
+function loadCoreDump()
+{
+	var dump = $.ajax({
+		url: '/cgi-bin/api-get_core_status',
+		contentType: "application/json",
+		success: function(input) {
+			//alert(input);
+			if (input.results.length > 0)
+			{
+				if (input.results[0].exist == "true")
+					$("#tdCoreDump").html("&nbsp;&nbsp;<input type=button value=Download onclick=\"document.location='\/cgi-bin\/download_core'\">");
+				else
+					$("#tdCoreDump").html("&nbsp;&nbsp;Clean");
+			}
+			else
+				$("#tdCoreDump").html("&nbsp;&nbsp;Clean");
+		},
+		error: function() {
+			$("#tdCoreDump").html("&nbsp;&nbsp;Error");
+		}
+	});	
+}
+
+function checkProcesses()
+{	
+	loadProcessStatus();
+	setTimeout("checkProcesses()", 10000);
+}
+
+function loadProvisionStatus()
+{
+	var result = $.ajax({
+		url: '/cgi-bin/api-get_provision_status',		
+		contentType: "application/json", 
+		success: function(input) { 		
+            var rowFormat = "&nbsp;&nbsp;{0}";
+			if (input.results.length > 0)
+			{				
+				var found = false;
+				
+				$.each(input.results, function() {	
+						found = true;
+						$("#tdProvisionStatus").html(jQuery.validator.format(rowFormat,this.status)); 						
+                });
+				
+				if (found == false)
+					$("#tdProvisionStatus").html("&nbsp;&nbsp;Stopped");	
+			}
+			else
+			{
+				$("#tdProvisionStatus").html("&nbsp;&nbsp;Stopped");
+			}				
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			$("#tdProvisionStatus").html("&nbsp;&nbsp;Error");									
+		}
+	});
+}
+
+function checkProvision()
+{	
+	loadProvisionStatus();
+	setTimeout("checkProvision()", 10000);
+}
+
+function initial()
+{
+	setTimeout("checkProcesses()", 1000); // delay loading
+	setTimeout("checkCoreDump()", 1000);
+	setTimeout("checkProvision()", 1000);
+}
+
+initial();
+
+</script>
+</html>

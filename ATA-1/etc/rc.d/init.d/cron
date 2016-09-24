@@ -1,0 +1,26 @@
+#!/bin/sh
+
+killall -9 crond > /dev/null 2>&1
+if [ -f /var/spool/.cron_last_execution_times ]; then
+	rm /var/spool/.cron_last_execution_times
+fi
+
+echo "2 60 /etc/rc.d/init.d/ntpc >/dev/null 2>&1" > /var/spool/cron/crontabs/root
+# create a random offset for the minute
+randomhex=`dd if=/dev/urandom bs=1 count=2 2>/dev/null | hexdump | head -1|cut -d' ' -f2- |tr '[a-f]' '[A-F]'`
+randomdec=`echo $((0x${randomhex}))`
+crontab_minute=$((${randomdec}% 60))
+
+# Periodic Upgrade
+if [ "`nvram get 194`" = "1" ]; then
+	echo "0 ${crontab_minute} `nvram get 285` * * *  /sbin/provision_cron.sh >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
+elif [ "`nvram get 194`" = "2" ]; then
+	echo "0 ${crontab_minute} `nvram get 285` * * `nvram get 286`  /sbin/provision_cron.sh >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
+elif [ "`nvram get 194`" = "3" ]; then
+	echo "2 `nvram get 193` /sbin/provision_cron.sh >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
+else
+	echo "Periodic upgrade disabled."
+fi
+
+#start crond
+/usr/sbin/crond

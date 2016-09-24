@@ -1,0 +1,21 @@
+#!/usr/bin/haserl
+#!/bin/ash
+<? 
+
+RESULT=$(echo `ps | grep -v grep | egrep "gs_ata" | sed -r 's/<//g' \
+				| awk '{printf("{\"vsz\": \"%d\", \"command\": \"%s\"},\n", $3, $5)}' \
+				| sed -r 's/\/app\/bin\/gs_//g' \
+				| sed '$s/.$//'`)
+								
+HEADER="Content-Type: application/json\r\n\r\n"
+HEADER="Expires: $(date)\r\n$HEADER"
+HEADER="Cache-Control: no-cache, must-revalidate\r\n$HEADER"
+
+
+FormatTop="{\"results\":["
+FormatBottom="]}"
+
+echo -en $HEADER
+echo "$FormatTop$RESULT$FormatBottom"
+
+?>

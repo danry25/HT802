@@ -1,0 +1,44 @@
+#Primary SIP Proxy Server(P47)
+47
+#SIP Outbound Proxy (P48)
+48
+#Upgrade Transport (P212)
+212
+#Automatic Periodic Provision (P194)
+194
+#Provision Mode (P238)
+238
+#Authenticate Configuration File (P240)
+240
+#Firmware Key (P242)
+242
+#Firmware Path (P192)
+192
+#Firmware Prefix (P232)
+232
+#Firmware Postfix (P233)
+233
+#Configuration Path (P237)
+237
+#Configuration Prefix (P234)
+234
+#Configuration Postfix (P235)
+235
+#Lock Keypad Update (P88)
+88
+#Primary SIP Proxy (profile 2, 3: P747,547)
+547
+747
+#SIP Outbound Proxy (profile 2,3: P548, 748)
+548
+748
+#Failover SIP Server (P967, 987, 997 for profile 1,2,3)
+967
+987
+997
+#XML Config File Password
+1359
+#HTTP/HTTPS User Name
+1360
+#HTTP/HTTPS Password
+1361

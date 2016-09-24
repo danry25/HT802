@@ -1,0 +1,105 @@
+#!/bin/sh
+
+if [ -r /etc/rc.conf ]; then
+        . /etc/rc.conf
+fi
+
+WAN=`nvram get wan_device` 
+
+checkpid() {
+	local i
+
+	for i in $*; do
+		[ -d "/proc/$i" ] || return 1
+	done
+	return 0
+}
+
+start() {
+#iptables -F
+	/etc/rc.d/init.d/wan_disconnect 
+	/sbin/ifconfig $WAN > /dev/urandom
+	if [ -n "${dhcpc_host}" ]; then
+		dhcpc_host="-H ${dhcpc_host}"
+	fi
+	if [ -n "${dhcpc_domain}" ]; then
+		dhcpc_domain="-D ${dhcpc_domain}"
+	fi
+	
+	DHCP_EXTRA_OPTIONS="-a -R -b -o -O subnet -O router -O dns -O hostname -O domain -O broadcast -O vendor -O vivs "
+	
+	if [ -n "`nvram get 143`" ] ; then
+		if [ `nvram get 143` = 1 ] ; then
+		  DHCP_EXTRA_OPTIONS=$DHCP_EXTRA_OPTIONS'-O timezone '
+		fi
+	fi
+	
+	if [ -n "`nvram get 144`" ] ; then
+		if [ `nvram get 144` = 1 ] ; then
+		  DHCP_EXTRA_OPTIONS=$DHCP_EXTRA_OPTIONS'-O ntpsrv '
+		fi
+	fi
+	
+	if [ -n "`nvram get 145`" ] ; then
+		if [ `nvram get 145` = 1 ] ; then
+		  DHCP_EXTRA_OPTIONS=$DHCP_EXTRA_OPTIONS'-O tftp '
+		fi
+	fi
+
+	if [ -n "`nvram get 1411`" ] ; then
+		if [ `nvram get 1411` = 1 ] ; then
+		  DHCP_EXTRA_OPTIONS=$DHCP_EXTRA_OPTIONS'-O sipsrv '
+		fi
+	fi
+
+	# Dynamic defaults go here
+	# Set DHCP Vendor Class ID if it is reset
+	#do not set 148 as it could lead to reboot loop - Bug 15393
+	dect="$(cat /proc/gxp/dev_info/hw_features/dect)"
+	oem_id="$(cat /proc/gxp/dev_info/hw_features/oem_id)"
+	dhcpc_clientid="$(nvram get 148)"
+	if [ -z "${dhcpc_clientid}" -o "${dhcpc_clientid}" = "0" -o "${dect}" = "1" -a "${dhcpc_clientid}" = "DP7XX" -a "${oem_id}" != "0" -o "${dect}" = "0" -a "${dhcpc_clientid}" = "HT8XX" -a "${oem_id}" != "0" ]; then
+		dhcpc_clientid="`cat /proc/gxp/dev_info/hw_features/vendor` `cat /proc/gxp/dev_info/dev_alias` dslforum.org"
+	else
+		dhcpc_clientid="${dhcpc_clientid} dslforum.org"
+	fi
+
+	udhcpc $DHCP_EXTRA_OPTIONS -i $WAN ${dhcpc_host} ${dhcpc_domain} -V "${dhcpc_clientid}" -p /var/run/udhcpc.pid 
+}
+
+killproc() {
+	pid=
+	if [ -f /var/run/$1.pid ]; then
+		local line p
+		read line < /var/run/$1.pid
+		kill -9 $line
+	fi
+	rm -f /var/run/$1.pid
+	ifconfig $WAN 0.0.0.0
+}
+
+stop() {
+	killproc udhcpc
+}	
+
+restart() {
+	stop
+	start
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		restart
+		;;
+	*)
+		echo $"Usage $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit $?

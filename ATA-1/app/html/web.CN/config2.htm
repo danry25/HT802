@@ -1,0 +1,399 @@
+<html>
+<head>
+<title>潮流网络产品配置</title>
+<style type="text/css">
+<!--
+.l{  font-family: Tahoma; font-size: 10pt; color: #000000; }
+a.l:Hover{  font-family: Tahoma; font-size: 10pt; color: #ffffff; }
+-->
+</style></head>
+<body bgcolor="#CCCCCC">
+<form name=basic_form action="update" method="post">
+<table width="870" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#336699">
+<tr><td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td height="48" valign="middle" bgcolor="#F3C47C" class="l" align="center"><strong><font color="#336699" size="3"><b>潮流网络产品配置</b></font></strong></td>
+</tr><tr><td height="20" valign="top" background="/backline.gif" bgcolor="#F3C47C" align="center">
+<table width="60%" cellpadding="0" cellspacing="0"><tr>
+<td height="16" bgcolor="#999999" align="center"><a href="index" class="l"><b>状态</b></a></td>
+<td bgcolor="#336699" align="center" class="l"><b>基本设置</b></td>
+<td bgcolor="#999999" align="center"><a href="config" class="l"><b>高级设置</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a1" class="l"><b>FXS端口1</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a2" class="l"><b>FXS端口2</b></a></td>
+                </tr>
+              </table>
+            </td>
+        </tr>
+<!-- <% web_update 0 --> %> 
+		<tr bgcolor="#FFFFCC">
+		 <td align=center><hr color="#000000" noshade><b><p style="color:#ff0000">配置已修改，请按“生效”以启用新配置。</p></b><hr color="#000000" noshade></td> 
+		</tr>
+<% web_update 0 <!-- %> -->
+        <tr bgcolor="#FFFFCC">
+          <td align=right valign=top> <table  align="top" width=100% border=0 cellspacing=1 cellpadding=2>
+              <tr>
+                <td align=right><b>普通用户密码: </b></td>
+                <td>&nbsp; <input type="password" name="P196" maxlength=30 size=30>
+                  (出于安全考虑不显示密码) </td>
+              </tr>
+              <tr>
+                <td align=right><b>Web端口: </b></td>
+                <td>&nbsp; <input type=text name="P901" value="<% 901 %>" maxlength=5 size=7>
+                  (HTTP服务默认端口为80) </td>
+              </tr>
+              <tr>
+                <td align=right><b>Telnet服务器: </b></td>
+                <td>&nbsp; <input type=radio name="P276" value=1 <% 276 1 checked %>>No &nbsp;&nbsp; &nbsp; <input type=radio name="P276" value=0 <% 276 0 checked %>>Yes</td>
+              </tr>
+<!--              
+              <tr>
+                <td align=right><b>HTTP访问权限: </b></td>
+                <td>&nbsp; <input type=radio name="P190" value=0 <% 190 0 checked %>>No &nbsp;&nbsp; &nbsp; <input type=radio name="P190" value=1 <% 190 1 checked %>>Yes</td>
+              </tr>
+-->
+              <tr>
+                <td align=right valign=top><b>IP地址: </b></td>
+                <td>
+                 <table width="95%" border=0 cellspacing=1 cellpadding=1>
+                  <tr>
+                   <td>
+                    <table width="100%" border=0 cellspacing=1 cellpadding=1>
+                     <tr>
+                      <td><input TYPE="radio" NAME="P8" VALUE=0 <% 8 0 checked %>>
+                              DHCP动态地址分配
+                              <br>
+                       <table width="100%">
+                        <tr>
+                         <td width="6%">&nbsp;</td>
+                         <td width="27%">DHCP主机名:</td>
+                         <td colspan=3><input type=text name="P146" value="<% 146                                                         %>" maxlength=32 size=30> (可选的)</td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>DHCP厂家类别名:</td>
+                         <td><input type=text name="P148" value="<% 148                                                         %>" maxlength=32 size=30> (可选的)</td>
+                        </tr>
+                       </table>
+                      </td>
+                     </tr>
+                     <tr>
+                      <td><input TYPE="radio" NAME="P8" VALUE=2 <% 8 2 checked %>>
+                              使用PPPoE
+                            <br>
+                       <table width=100%>
+                        <tr>
+                         <td width="6%">&nbsp;</td>
+                         <td width="27%">PPPoE帐户名:</td>
+                         <td><input type=text name="P82" value="<% 82                                                          %>" maxlength=64 size=30></td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>PPPoE密码:</td>
+                         <td><input type="password" name="P83" value="<% 83                         %>" maxlength=32 size=30></td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>PPPoE服务名:</td>
+                         <td><input type=text name="P269" value="<% 269                                                          %>" maxlength=64 size=30></td>
+                        </tr>
+                       </table>
+					   <table>
+					    <tr>
+						 <td>
+						  <table>
+						   <tr>
+						    <td>
+                              &nbsp;&nbsp;首选DNS服务器 1: &nbsp;
+							</td>
+							<td>
+                              <input type=text name="P92" value="<% 92 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P93" value="<% 93 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P94" value="<% 94 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P95" value="<% 95 %>" maxlength=3 size=3>
+							</td>
+						   </tr> 
+					       <tr>
+						    <td>
+                              &nbsp;&nbsp;首选DNS服务器 2: &nbsp;
+							</td>
+							<td>
+                              <input type=text name="P5026" value="<% 5026 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P5027" value="<% 5027 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P5028" value="<% 5028 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P5029" value="<% 5029 %>" maxlength=3 size=3>
+							</td>
+						   </tr> 
+					       <tr>
+						    <td>
+                              &nbsp;&nbsp;首选DNS服务器 3: &nbsp;
+							</td>
+							<td>
+                              <input type=text name="P5030" value="<% 5030 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P5031" value="<% 5031 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P5032" value="<% 5032 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P5033" value="<% 5033 %>" maxlength=3 size=3>
+							</td>
+						   </tr> 
+					       <tr>
+						    <td>
+                              &nbsp;&nbsp;首选DNS服务器 4: &nbsp;
+							</td>
+							<td>
+                              <input type=text name="P5034" value="<% 5034 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P5035" value="<% 5035 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P5036" value="<% 5036 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P5037" value="<% 5037 %>" maxlength=3 size=3>
+							</td>
+						   </tr> 
+					      </table> 	  
+                         </td>
+                        </tr>
+					   </table> 	  
+                      </td>
+                     </tr>
+                     <tr>
+                      <td><input TYPE="radio" NAME="P8" VALUE=1 <% 8 1 checked %>>
+                              静态地址配置: <br>
+                       <table width="100%">
+                        <tr>
+                         <td width="6%">&nbsp;</td>
+                         <td width="27%">IP地址: </td>
+                         <td><input type=text name="P9"  value="<% 9  %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P10" value="<% 10 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P11" value="<% 11 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P12" value="<% 12 %>" maxlength=3 size=3>
+                         </td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>子网掩码: </td>
+                         <td><input type=text name="P13" value="<% 13 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P14" value="<% 14 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P15" value="<% 15 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P16" value="<% 16 %>" maxlength=3 size=3>
+                         </td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>默认网关: </td>
+                         <td><input type=text name="P17" value="<% 17 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P18" value="<% 18 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P19" value="<% 19 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P20" value="<% 20 %>" maxlength=3 size=3>
+                         </td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>DNS服务器1: </td>
+                         <td><input type=text name="P21" value="<% 21 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P22" value="<% 22 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P23" value="<% 23 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P24" value="<% 24 %>" maxlength=3 size=3>
+                         </td>
+                        </tr>
+                        <tr>
+                         <td>&nbsp;</td>
+                         <td>DNS服务器2: </td>
+                         <td><input type=text name="P25" value="<% 25 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P26" value="<% 26 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P27" value="<% 27 %>" maxlength=3 size=3>
+                              <b>.</b><input type=text name="P28" value="<% 28 %>" maxlength=3 size=3>
+                         </td>
+                        </tr>
+                       </table>
+                      </td>
+                     </tr>
+                    </table>
+                   </td>
+                 </tr>
+                </table>
+               </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><b>时区: </b></td>
+                <td>&nbsp; <select name="P64">
+                    <option value="TZA+12" <% 64 TZA+12    selected %>>
+                        GMT-12:00 (国际日期变更线以西)</option>
+                    <option value="TZB+11" <% 64 TZB+11    selected %>>
+                        GMT-11:00 (中途岛, 萨摩亚)</option>
+                    <option value="HAW10" <% 64 HAW10     selected %>>
+                        GMT-10:00 (美国夏威夷时间)</option>
+                    <option value="AKST9AKDT" <% 64 AKST9AKDT selected %>>
+                        GMT-09:00 (美国阿拉斯加时间)</option>
+                    <option value="PST8PDT" <% 64 PST8PDT   selected %>>
+                        GMT-08:00 (美国太平洋时间, 洛杉矶)</option>
+                    <option value="PST8PDT,M4.1.0,M10.5.0" <% 64 PST8PDT,M4.1.0,M10.5.0 selected %>>
+                        GMT-08:00 (下加利福尼亚州)</option>
+                    <option value="MST7MDT" <% 64 MST7MDT   selected %>>
+                        GMT-07:00 (美国山地时间, 丹佛)</option>
+                    <option value="MST7" <% 64 MST7      selected %>>
+                        GMT-07:00 (山地时 (亚利桑那州, 无夏令时))</option>
+                    <option value="MST7MDT,M4.1.0,M10.5.0" <% 64 MST7MDT,M4.1.0,M10.5.0 selected %>>
+                        GMT-07:00 (奇瓦瓦，拉巴斯，马萨特兰)</option>
+                    <option value="CST6CDT" <% 64 CST6CDT  selected %>>
+                        GMT-06:00 (中部时间)</option>
+                    <option value="CST+6" <% 64 CST+6     selected %>>
+                        GMT-06:00 (中美洲)</option>
+                    <option value="CST6CDT,M4.1.0,M10.5.0" <% 64 CST6CDT,M4.1.0,M10.5.0 selected %>>
+                        GMT-06:00 (瓜达拉哈拉，墨西哥城，蒙特雷)</option>
+                    <option value="EST5EDT" <% 64 EST5EDT   selected %>>
+                        GMT-05:00 (东部时间)</option>
+                    <option value="EST5" <% 64 EST5   selected %>>
+                        GMT-05:00 (东部时间无夏令时)</option>
+                    <option value="TZf+4:30" <% 64 TZf+4:30  selected %>>
+                        GMT-04:30 (加拉加斯)</option>
+                    <option value="AST4ADT" <% 64 AST4ADT   selected %>>
+                        GMT-04:00 (大西洋时间)</option>
+                    <option value="AST4ADT,M4.1.0/00:01:00,M10.5.0/00:01:00" <% 64 AST4ADT,M4.1.0/00:01:00,M10.5.0/00:01:00 selected %>>
+                        GMT-04:00 (大西洋时间 (新不伦瑞克省))</option>
+                    <option value="NST+3:30NDT+2:30,M4.1.0/00:01:00,M10.5.0/00:01:00" <% 64 NST+3:30NDT+2:30,M4.1.0/00:01:00,M10.5.0/00:01:00 selected %>>
+                        GMT-03:30 (纽芬兰时间)</option>
+                    <option value="TZK+3" <% 64 TZK+3     selected %>>
+                        GMT-03:00 (格陵兰)</option>
+                    <option value="BRST+3BRDT+2,M10.3.0,M2.3.0" <% 64 BRST+3BRDT+2,M10.3.0,M2.3.0 selected %>>
+                        GMT-03:00 (巴西, 圣保罗)</option>
+                    <option value="UTC+3" <% 64 UTC+3     selected %>>
+                        GMT-02:00 (阿根廷)</option>
+                    <option value="TZL+2" <% 64 TZL+2     selected %>>
+                        GMT-02:00 (中大西洋)</option>
+                    <option value="TZM+1" <% 64 TZM+1     selected %>>
+                        GMT-01:00 (亚速尔群岛, 佛得角群岛)</option>
+                    <option value="TZN+0" <% 64 TZN+0     selected %>>
+                        GMT (爱丁堡, 卡萨布兰卡, 蒙罗维亚)</option>
+                    <option value="GMT+0BST-1,M3.5.0/01:00:00,M10.5.0/02:00:00" <% 64 GMT+0BST-1,M3.5.0/01:00:00,M10.5.0/02:00:00 selected %>>
+                        GMT (伦敦, 英国)</option>
+                    <option value="WET-0WEST-1,M3.5.0/01:00:00,M10.5.0/02:00:00" <% 64 WET-0WEST-1,M3.5.0/01:00:00,M10.5.0/02:00:00 selected %>>
+                        GMT (里斯本, 葡萄牙)</option>
+                    <option value="GMT+0IST-1,M3.5.0/01:00:00,M10.5.0/02:00:00" <% 64 GMT+0IST-1,M3.5.0/01:00:00,M10.5.0/02:00:00 selected %>>
+                        GMT (都柏林, 爱尔兰)</option>
+                    <option value="TZO-1" <% 64 TZO-1     selected %>>
+                        GMT+01:00 (巴黎, 维也纳, 华沙)</option>
+                    <option value="CET-1CEST-2,M3.5.0/02:00:00,M10.5.0/03:00:00" <% 64 CET-1CEST-2,M3.5.0/02:00:00,M10.5.0/03:00:00 selected %>>
+                        GMT+01:00 (罗马, 巴黎, 马德里, 布拉格, 柏林, 布达佩斯, 阿姆斯特丹, 巴塞罗那)</option>
+                    <option value="TZO-1" <% 64 TZO-1     selected %>>
+                        GMT+01:00 (布鲁塞尔, 比利时)</option>
+                    <option value="TZP-2" <% 64 TZP-2     selected %>>
+                        GMT+02:00 (以色列, 开罗, 雅典, 伊斯坦布尔, 布加勒斯特)</option>
+                    <option value="EET-2EEST-3,M3.5.0/03:00:00,M10.5.0/04:00:00" <% 64 EET-2EEST-3,M3.5.0/03:00:00,M10.5.0/04:00:00 selected %>>
+                        GMT+02:00 (赫尔辛基, 雅典, 塔林)</option>
+                    <option value="EET-2EEST,M3.5.0/3,M10.5.0/4" <% 64 EET-2EEST,M3.5.0/3,M10.5.0/4 selected %>>
+                        GMT+02:00 (基辅, 乌克兰)</option>
+                    <option value="TZQ-3" <% 64 TZQ-3     selected %>>
+                        GMT+03:00 (科威特, 伊拉克, 伊朗, 内罗毕)</option>
+                    <option value="MSK-3MSD,M3.5.0/2,M10.5.0/3" <% 64 MSK-3MSD,M3.5.0/2,M10.5.0/3 selected %>>
+                        GMT+03:00 (莫斯科, 俄罗斯)</option>
+                    <option value="MST-3MDT,M3.5.0/2,M10.5.0/3" <% 64 MST-3MDT,M3.5.0/2,M10.5.0/3 selected %>>
+                        GMT+03:00 (圣彼得堡, 俄罗斯)</option>
+                    <option value="TZR-4" <% 64 TZR-4     selected %>>
+                        GMT+04:00 (阿布扎比, 巴库)</option>
+                    <option value="TZS-5" <% 64 TZS-5     selected %>>
+                        GMT+05:00 (伊斯兰堡, 叶卡特琳堡, 卡拉奇, 塔什干)</option>
+                    <option value="TZT-5:30" <% 64 TZT-5:30  selected %>>
+                        GMT+05:30 (金奈, 新德里, 孟买)</option>
+                    <option value="TZU-5:45" <% 64 TZU-5:45  selected %>>
+                        GMT+05:45 (加德满都)</option>
+                    <option value="TZV-6" <% 64 TZV-6     selected %>>
+                        GMT+06:00 (阿拉木图, 阿斯塔纳, 达卡, 新西伯利亚)</option>
+                    <option value="TZW-6:30" <% 64 TZW-6:30  selected %>>
+                        GMT+06:30 (仰光)</option>
+                    <option value="TZX-7" <% 64 TZX-7     selected %>>
+                        GMT+07:00 (曼谷, 河内, 克拉斯诺亚尔斯克)</option>
+                    <option value="WIB-7" <% 64 WIB-7     selected %>>
+                        GMT+07:00 (雅加达)</option>
+                    <option value="TZY-8" <% 64 TZY-8     selected %>>
+                        GMT+08:00 (北京, 台北, 吉隆坡, 伊尔库次克)</option>
+                    <option value="SGT-8" <% 64 SGT-8     selected %>>
+                        GMT+08:00 (新加坡)</option>
+                    <option value="ULAT-8" <% 64 ULAT-8    selected %>>
+                        GMT+08:00 (乌兰巴托, 蒙古)</option>
+                    <option value="WST-8" <% 64 WST-8     selected %>>
+                        GMT+08:00 (珀斯)</option>
+                    <option value="TZZ-9" <% 64 TZZ-9     selected %>>
+                        GMT+09:00 (日本, 韩国, 雅库茨克)</option>
+                    <option value="CST-9:30CDT-10:30,M10.5.0/02:00:00,M3.5.0/03:00:00" <% 64 CST-9:30CDT-10:30,M10.5.0/02:00:00,M3.5.0/03:00:00 selected %>>
+                        GMT+09:30 (阿德莱德)</option>
+                    <option value="CST-9:30" <% 64 CST-9:30  selected %>>
+                        GMT+09:30 (达尔文)</option>
+                    <option value="TZb-10" <% 64 TZb-10    selected %>>
+                        GMT+10:00 (关岛)</option>
+                    <option value="EST-10EDT-11,M10.1.0/02:00:00,M3.5.0/03:00:00" <% 64 EST-10EDT-11,M10.1.0/02:00:00,M3.5.0/03:00:00 selected %>>
+                        GMT+10:00 (霍巴特)</option>
+                    <option value="EST-10EDT-11,M10.5.0/02:00:00,M3.5.0/03:00:00" <% 64 EST-10EDT-11,M10.5.0/02:00:00,M3.5.0/03:00:00 selected %>>
+                        GMT+10:00 (悉尼, 墨尔本, 堪培拉)</option>
+                    <option value="EST-10" <% 64 EST-10    selected %>>
+                        GMT+10:00 (布里斯班)</option>
+                    <option value="TZc-11" <% 64 TZc-11    selected %>>
+                        GMT+11:00 (马加丹, 所罗门群岛, 新喀里多尼亚)</option>
+                    <option value="NZST-12NZDT-13,M10.1.0/02:00:00,M3.3.0/03:00:00" <% 64 NZST-12NZDT-13,M10.1.0/02:00:00,M3.3.0/03:00:00 selected %>>
+                        GMT+12:00 (奥克兰, 惠灵顿)</option>
+                    <option value="TZd-12" <% 64 TZd-12    selected %>>
+                        GMT+12:00 (斐济)</option>
+                    <option value="TZe-13" <% 64 TZe-13    selected %>>
+                        GMT+13:00 (努库阿洛法)</option>
+                        
+                    <option value=customize <% 64 customize selected %>>使用自定义时区</option>
+                  </select> </td>
+              </tr>
+              <tr>
+                <td align=right><i>自定义时区:</i></td>
+                <td>&nbsp;
+
+                  <input type=text name="P246" value="<% 246                                %>" maxlength=100 size=33>
+                  (比如: MTZ+6MDT+5,M4.1.0,M11.1.0) </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>允许使用DHCP服务器设置时区:</i></td>
+				<td>&nbsp; <input type=radio name="P143" value=0 <% 143 0 checked %>>
+				No &nbsp;&nbsp; &nbsp; <input type=radio name="P143" value=1 <% 143 1 checked %>>
+				Yes &nbsp;</td>
+              </tr>
+
+              <tr>
+                <td align=right valign=top><b>语言: </b></td>
+                <td>&nbsp; <select name="P342">
+                    <option value=0 <% 342 0 selected %>>英语 English</option>
+                    <option value=4 <% 342 4 selected %>>中文 Chinese</option>
+                    <option value=10 <% 342 10 selected %>> 西班牙语 Spanish IVR</option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+<script type="text/javascript">
+var A="<% session_user %>" ;
+var B=<% 88 %> ;
+if( B != 1 &&  A == "user" )
+{
+	document.write( "<td align=right valign=top><b>ISP数据复位: </b></td>" ) ;
+	document.write( "<td><table><tr><td><input type=\"button\" name=\"reset_unit\" value=\"Reset\" onClick=\"document.location='unit_reset?reset_type=1'\"></td></tr></table></td>" ) ;
+}
+else if( B != 1 && A == "admin" )
+{
+    document.write( "<td align=right valign=top><b>复位类型: </b></td>" ) ;
+    document.write( "<td><table><tr><td><select name=\"reset_type\"><option value=1 selected >ISP数据复位</option>" ) ;
+	if( B == 0 )
+	{
+        document.write( "<option value=2 >VOIP数据复位</option><option value=0 >全部数据复位</option>" ) ;
+	}
+    document.write( "</select></td><td><input type=\"button\" name=\"reset_unit\" value=\"Reset\" onClick=\"document.location='unit_reset?reset_type='+document.basic_form.reset_type.value\">" ) ;
+	document.write( "</td></tr></table></td>" ) ;
+}
+</script>
+			  </tr>
+
+              <tr>
+              </tr>
+              <tr>
+                <td colspan=2>&nbsp;</td>
+              </tr>
+              <tr height=28 bgcolor="#F3C47C" align=center>
+                <td colspan=2> <input type="submit" name="update" value="保存">
+                  &nbsp;&nbsp; <input type="submit" name="apply" value="生效">
+                  &nbsp;&nbsp; <input type="button" name="cancel" value="取消" onClick="document.location='login'">
+                  &nbsp;&nbsp; <input type="button" name="reboot" value="重启" onClick="document.location='rs'">
+                  <input name="gnkey" type=hidden value=0b82> </td>
+              </tr>
+</table></td>
+</tr>
+<tr><td bgcolor="#336699" align="center" class="l"><font size="1">版权所有 潮流网络 2006-2014</font></td></tr></table></td>
+</tr></table>
+</form></body></html>

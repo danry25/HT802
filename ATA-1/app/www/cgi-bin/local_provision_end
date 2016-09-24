@@ -1,0 +1,20 @@
+#!/bin/sh
+
+. /app/web/check.sh
+_session_id="`nvram get session_id`"
+_timestamp="`nvram get timestamp`"
+_scriptname="`basename ${SCRIPT_NAME}`"
+
+header
+if [ "`nvram get local_image_corrupted`" = "1" ]; then
+	nvparse /app/web/firmware_corrupted.htm
+	nvram unset local_image_corrupted
+else 
+	if [ "`nvram get local_image_corrupted`" = "0" ]; then
+		nvparse /app/web/firmware_page.htm
+		nvram unset local_image_corrupted
+	else
+		nvparse /app/web/login.htm
+	fi
+fi
+

@@ -1,0 +1,61 @@
+﻿<html>
+<head>
+<title>Configuração de Dispositivo Grandstream</title>
+<style type="text/css">
+<!--
+.l{  font-family: Tahoma; font-size: 10pt; color: #000000; }
+a.l:Hover{  font-family: Tahoma; font-size: 10pt; color: #ffffff; }
+-->
+</style>
+<script language="javascript">
+function send_onclick(frmName)	{
+
+	var bolSubmit, filename ;
+	bolSubmit = true;
+
+	filename = frmName.firmware_file.value.replace(/^.*(\\|\/|\:)/, '');
+	if (filename == "") {
+		alert("Você deve digitar um nome de arquivo");
+		bolSubmit = false;
+	}
+	else if( filename != "<% firmware_filename %>" )
+	{
+    	alert( "Arquivo inválido. Ficheiro deve ser <% firmware_filename %>" ) ;
+		bolSubmit = false;
+	}
+	return bolSubmit ;
+}
+</script>
+</head>
+<body bgcolor="#CCCCCC">
+<form name="form1" action="upload_firmware" method="post" enctype="multipart/form-data" style=margin-bottom:0 onSubmit="return send_onclick(form1);">
+<table width="870" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#336699">
+<tr><td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td height="48" valign="middle" bgcolor="#F3C47C" class="l" align="center"><strong><font color="#336699" size="3"><b>Configuração de Dispositivo Grandstream</b></font></strong></td>
+</tr><tr><td height="20" valign="top" background="/backline.gif" bgcolor="#F3C47C" align="center">
+<table width="60%" cellpadding="0" cellspacing="0"><tr>
+<td bgcolor="#999999" align="center"><a href="index" class="l"><b>ESTADO</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config2" class="l"><b>CONFIG BÁSICAS</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config" class="l"><b>OPÇÕES AVANÇADAS</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a1" class="l"><b>PORTA FXS1</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a2" class="l"><b>PORTA FXS2</b></a></td>
+</tr></table>
+<table width="870" border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#336699">
+<tr><td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr bgcolor="#FFFFCC">
+          <td> <table width="100%" border="0" align="center" cellspacing="0" cellpadding="0">
+		  	  <tr>&nbsp;</tr>
+              <tr>
+                <td align=right>Carregar Firmware do diretório local:</td>
+                <td align=left>&nbsp; <input name="firmware_file" type="file" > 
+                  </td> <td></td>
+              </tr>
+		  	  <tr><td>&nbsp;</td></tr>
+            </table></td></tr>
+        <tr bgcolor="#F3C47C" align=center><td> <input name="Upload" type=submit value="Carregar Firmware"</td></tr>
+<tr><td bgcolor="#336699" align="center" class="l"><font size="1">Todos os Direitos Reservados Grandstream Networks, Inc. 2006-2015</font></td></tr>
+</table></td></tr></table>
+</td></tr>
+</table></td></tr></table>
+</form>
+</body></html>

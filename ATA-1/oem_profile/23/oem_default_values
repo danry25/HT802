@@ -1,0 +1,150 @@
+# Primary SIP Server:Remote SIP port					   
+47=ccivr.vonage.net:5066
+747=ccivr.vonage.net:5066
+
+# NTP server
+30=time.vonage.net
+
+# SIP Registration = No
+31=0
+731=0
+
+# Offhook Auto-Dial
+71=670
+771=670
+4210=670
+4211=670
+4212=670
+4213=670
+
+# Offhook Auto-Dial Delay
+4045=0
+4046=0
+
+# Firmware Server
+192=httpconfig.vonage.net
+
+# Upgrade frequency
+193=60
+
+# Automatic Upgrade
+194=3
+
+# Config Server
+237=httpconfig.vonage.net
+
+# DNS Servers:
+# DNS Failover Server 1st
+92=216
+93=115
+94=20
+95=38
+
+# DNS Failover Server 2nd
+5026=69
+5027=59
+5028=252
+5029=182
+
+# DNS Failover Server 3rd
+5030=69
+5031=59
+5032=234
+5033=69
+
+# DNS Failover Server 4th
+5034=216
+5035=115
+5036=21
+5037=29
+
+# Admin Password:
+# HT8XX will be getting this from the fact cfg file. Once factory support is ready we can remove from oem defaults
+2=ERgTbCLo
+
+# Vonage Special Feature:
+198=121
+767=121
+
+# Vonage Firmware Encryption Key:
+242=de395fe3e08d8a47984de86e36b37eb0
+
+# Enable/Disable check network connectivity via DNS
+1564=1
+
+# Firmware Update
+238=2
+
+# Outgoing call without Registration
+109=1
+813=1
+
+# Local SIP port
+40=5060
+740=5062
+
+# Use First Matching Vocoder in 200OK SDP
+4363=1
+4364=1
+
+# Preferred Vocoder Choice 1
+57=0
+757=0
+
+# Preferred Vocoder Choice 2
+58=98
+758=98
+
+# Preferred Vocoder Choice 3
+59=18
+759=18
+
+# Preferred Vocoder Choice 4
+60=0
+760=0
+
+# Preferred Vocoder Choice 5
+61=0
+761=0
+
+# Preferred Vocoder Choice 6
+62=0
+762=0
+
+# G723 rate
+49=0
+749=0
+
+# iLBC Frame Size
+97=1
+705=1
+
+# iLBC payload type
+96=114
+704=114
+
+# Local RTP port
+39=10054
+739=10056
+
+# Keypad update
+88=2
+
+# blind xfer code
+1651=#90
+
+# Internet Connectivity Site
+4209=httpconfig.vonage.net
+
+# Allow DHCP Option 66 to override server. 0 - No, 1 - Yes. 
+# When set to Yes(1), it will override the configured provision path and method.
+145=0
+
+# Authenticate Config File = Yes
+240=0
+
+# Quick Configuration Provisioning Interval
+20510=2
+
+# Disable Attended Transfer
+1376=1

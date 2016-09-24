@@ -1,0 +1,127 @@
+﻿<html>
+<head>
+<title>Configuração de Dispositivo Grandstream</title>
+<style type="text/css">
+<!--
+.l{  font-family: Tahoma; font-size: 10pt; color: #000000; }
+a.l:Hover{  font-family: Tahoma; font-size: 10pt; color: #ffffff; }
+-->
+</style></head>
+<body bgcolor="#CCCCCC">
+<form action="update" method="post" style=margin-bottom:0>
+<table width="870" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#336699">
+<tr><td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td height="48" valign="middle" bgcolor="#F3C47C" class="l" align="center"><strong><font color="#336699" size="3"><b>Configuração de Dispositivo Grandstream</b></font></strong></td>
+</tr><tr><td height="20" valign="top" background="/backline.gif" bgcolor="#F3C47C" align="center">
+<table width="60%" cellpadding="0" cellspacing="0"><tr>
+<td bgcolor="#336699" align="center" class="l"><b>ESTADO</b></td>
+<td bgcolor="#999999" align="center"><a href="config2" class="l"><b>CONFIG BÁSICAS</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config" class="l"><b>OPÇÕES AVANÇADAS</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a1" class="l"><b>PORTA FXS1</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a2" class="l"><b>PORTA FXS2</b></a></td>
+</tr></table></td></tr><tr bgcolor="#FFFFCC">
+<td> <table width="100%" border=0 cellspacing=1 cellpadding=2>
+              <tr>
+                <td align=right><b>Endereço MAC: </b></td>
+                <td>&nbsp;
+                  <% 67              %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>Endereço IP: </b></td>
+                <td>&nbsp;
+                  <% 121        %>
+                   </td>
+              </tr>
+              <tr>
+                <td align=right><b>Modelo de Produto: </b></td>
+                <td>&nbsp;
+                  <% 89            %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>Versão de Hardware: </b></td>
+                <td>&nbsp;
+                  <% 917            %>
+				  &nbsp;&nbsp;&nbsp;Número da Peça --
+                  <% 1397            %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>Versão de Software: </b></td>
+                <td>&nbsp; Program--
+                  <% 68     %>
+                   &nbsp;&nbsp;&nbsp;Bootloader --
+                  <% 69     %>
+                   &nbsp;&nbsp;&nbsp;Core --
+                  <% 70     %>
+                   &nbsp;&nbsp;&nbsp;Base --
+                  <% 45     %>
+                  <br>&nbsp; CPE -- <% cpe_version     %> 
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>Disponibilidade do Sistema: </b></td>
+                <td>&nbsp;
+          <% 199                                      %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>Conexão PPPoE Ativa: </b></td>
+                <td>&nbsp;
+          <% 211  %>
+                  </td>
+              </tr>
+              <tr>
+                <td align=right><b>NAT: </b></td>
+                <td>&nbsp;
+                  <% 80                                                          %>
+                   </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><b>Status da porta: </b></td>
+                <td>
+                  <table border=1>
+                    <tr>
+                      <td>Porta</td>
+                      <td>Gancho</td>
+                      <td>Registro</td>
+                      <td>Não Perturbe</td>
+                      <td>Desvio de Chamada</td>
+                      <td>Desvio em Ocupado</td>
+                      <td>Desvio em Atraso</td>
+                    </tr>
+                    <tr>
+                      <td>FXS 1</td>
+                      <td><b><% 4901 %></b></td>
+                      <td><b><% 4921 %></b></td>
+                      <td><% dnd_0 0 Não %><% dnd_0 1 Sim %></td>
+                      <td>&nbsp;<% forward_0 %></td>
+                      <td>&nbsp;<% busyForward_0 %></td>
+                      <td>&nbsp;<% delayedForward_0 %></td>
+                    </tr>
+                    <tr>
+                      <td>FXS 2</td>
+                      <td><b><% 4902 %></b></td>
+                      <td><b><% 4922 %></b></td>
+                      <td><% dnd_1 0 Não %><% dnd_1 1 Sim %></td>
+                      <td>&nbsp;<% forward_1 %></td>
+                      <td>&nbsp;<% busyForward_1  %></td>
+                      <td>&nbsp;<% delayedForward_1 %></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+			<% hacked_pvalues %>
+			</td>
+        </tr>
+        <tr>
+<td bgcolor="#336699" align="center" class="l"><font size="1">Todos os Direitos Reservados Grandstream Networks, Inc. 2006-2015</font></td>
+</tr></table></td></tr></table>
+</body>
+</html>

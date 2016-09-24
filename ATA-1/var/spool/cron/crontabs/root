@@ -1,0 +1,2 @@
+2 60 /etc/rc.d/init.d/ntpc >/dev/null 2>&1
+2 60 /sbin/provision_cron.sh >/dev/null 2>&1

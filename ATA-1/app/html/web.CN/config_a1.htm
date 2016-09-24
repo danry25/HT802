@@ -1,0 +1,981 @@
+﻿<html>
+<head>
+<title>潮流网络产品配置</title>
+<style type="text/css">
+<!--
+.l{  font-family: Tahoma; font-size: 10pt; color: #000000; }
+a.l:Hover{  font-family: Tahoma; font-size: 10pt; color: #ffffff; }
+-->
+</style></head>
+<body bgcolor="#CCCCCC">
+<form action="update" method="post">
+<table width="870" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#336699">
+<tr><td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td height="48" valign="middle" bgcolor="#F3C47C" class="l" align="center"><strong><font color="#336699" size="3"><b>潮流网络产品配置</b></font></strong></td>
+</tr><tr><td height="20" valign="top" background="/backline.gif" bgcolor="#F3C47C" align="center">
+<table width="60%" cellpadding="0" cellspacing="0"><tr>
+<td bgcolor="#999999" align="center"><a href="index" class="l"><b>状态</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config2" class="l"><b>基本设置</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config" class="l"><b>高级设置</b></a></td>
+<td bgcolor="#336699" align="center" class="l"><b>FXS端口1</b></td>
+<td bgcolor="#999999" align="center"><a href="config_a2" class="l"><b>FXS端口2 </b></a></td>
+</tr></table>
+        </td>
+        </tr>
+<!-- <% web_update 0 --> %> 
+		<tr bgcolor="#FFFFCC">
+		 <td align=center><hr color="#000000" noshade><b><p style="color:#ff0000">配置已修改，请按“生效”以启用新配置。</p></b><hr color="#000000" noshade></td> 
+		</tr>
+<% web_update 0 <!-- %> -->
+        <tr bgcolor="#FFFFCC">
+          <td> <table width="100%" border=0 cellspacing=1 cellpadding=2>
+              <tr>
+                <td align=right><b>帐户开关: </b></td>
+                <td>&nbsp; <input type=radio name="P271" value=0 <% 271 0 checked %>>
+                  No &nbsp; &nbsp;&nbsp; <input type=radio name="P271" value=1 <% 271 1 checked %>>
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><b>主SIP服务器: </b></td>
+                <td>&nbsp; <input type=text name="P47" value="<% 47                                                                                             %>" maxlength=96 size=30>
+                  (例如，sip.mycompany.com, 或是IP地址) </td>
+              </tr>
+              <tr>
+                <td align=right><b>次SIP服务器: </b></td>
+                <td>&nbsp; <input type=text name="P967" value="<% 967                                                                                             %>" maxlength=96 size=30>
+                  (可选项, 仅当主SIP服务器不响应时用) </td>
+              </tr>
+              <tr>
+                <td align=right><b>优先主SIP服务器: </b></td>
+                <td>&nbsp;
+                 <input type=radio name="P4567" value=0 <% 4567 0 checked %> > No &nbsp;&nbsp; &nbsp;
+                 <input type=radio name="P4567" value=1 <% 4567 1 checked %> > Yes  &nbsp;&nbsp; &nbsp;
+                 ( yes - 次服务器过期后，注册主服务器)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><b>呼出代理服务器: </b></td>
+                <td>&nbsp; <input type=text name="P48" value="<% 48                                                                                             %>" maxlength=96 size=30>
+                  (例如，proxy.myprovider.com, 或是IP地址) </td>
+              </tr>
+              <tr>
+                <td align=right><b>SIP传输协议: </b></td>
+                <td>&nbsp; <input type=radio name="P130" value=0 <% 130 0 checked %>>
+                  UDP &nbsp; &nbsp; &nbsp; <input type=radio name="P130" value=1 <% 130 1 checked %>>
+                  TCP &nbsp; &nbsp; &nbsp; <input type=radio name="P130" value=2 <% 130 2 checked %>>
+                  TLS &nbsp;&nbsp;(默认UDP)</td>
+              </tr>
+              <tr>
+                <td align=right><b>NAT穿透: </b></td>
+                <td>&nbsp;
+                 <input type=radio name="P52" value=0 <% 52 0 checked %> > No &nbsp;&nbsp; &nbsp;
+                 <input type=radio name="P52" value=2 <% 52 2 checked %> > 保持发心跳报文 &nbsp;&nbsp;&nbsp;
+                 <input type=radio name="P52" value=1 <% 52 1 checked %> > STUN &nbsp;&nbsp;&nbsp;
+                 <input type=radio name="P52" value=3 <% 52 3 checked %> > UPnP
+                </td>
+              </tr>
+              <tr>
+                <td align=right><b>SIP用户ID: </b></td>
+                <td>&nbsp; <input type=text name="P35" value="<% 35                                                           %>" maxlength=64 size=30>
+                  (SIP地址的用户部分) </td>
+              </tr>
+              <tr>
+                <td align=right><b>认证ID: </b></td>
+                <td>&nbsp; <input type=text name="P36" value="<% 36                                                                                             %>" maxlength=96 size=30>
+                  (根据需要，可以和SIP用户ID相同，也可以不同) </td>
+              </tr>
+              <tr>
+                <td align=right><b>认证密码: </b></td>
+                <td>&nbsp; <input type=password name="P34" maxlength=64 size=30> (出于安全考虑不显示密码)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><b>名字: </b></td>
+                <td>&nbsp; <input type=text name="P3" value="<% 3                                                          %>" maxlength=60 size=30>
+                  (可选项, 比如：John Doe) </td>
+              </tr>
+              <tr>
+                <td colspan=2>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align=right><i>DNS模式: </i></td>
+                <td>&nbsp; <input type=radio name="P103" value=0 <% 103 0 checked %>>
+                  A Record&nbsp; &nbsp;&nbsp; <input type=radio name="P103" value=1 <% 103 1 checked %>>
+                  SRV &nbsp; &nbsp;&nbsp; <input type=radio name="P103" value=2 <% 103 2 checked %>>
+                  NAPTR/SRV</td>
+              </tr>
+<!--
+              <tr>
+                <td align=right><i>用户ID设置为电话号码: </i></td>
+                <td>&nbsp;&nbsp;<input type=radio name="P63" value=0 <% 63 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp;&nbsp;<input type=radio name="P63" value=1 <% 63 1 checked %>>
+                  Yes </td>
+              </tr>
+-->
+              <tr>
+                <td align=right valign=top><i>Tel URI: </i></td>
+                <td>&nbsp;
+                    <select name="P63">
+                        <option value=0 <% 63 0 selected %>>关闭</option>
+                        <option value=1 <% 63 1 selected %>>用户ID为电话号码</option>
+                        <option value=2 <% 63 2 selected %>>开启</option>
+                    </select>
+                </td>
+              </tr>
+
+              <tr>
+                <td align=right><i>SIP注册: </i></td>
+                <td>&nbsp;&nbsp;<input type=radio name="P31" value=0 <% 31 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp;&nbsp;<input type=radio name="P31" value=1 <% 31 1 checked %>>
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>重启后移除上次注册消息: </i></td>
+                <td>&nbsp;&nbsp;<input type=radio name="P81" value=0 <% 81 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp;&nbsp;<input type=radio name="P81" value=1 <% 81 1 checked %>>
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>非注册拨打模式: </i></td>
+                <td>&nbsp;&nbsp;<input type=radio name="P109" value=0 <% 109 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp;&nbsp;<input type=radio name="P109" value=1 <% 109 1 checked %>>
+                  Yes &nbsp; </td>
+              </tr>
+              <tr>
+                <td align=right><i>注册有效期: </i></td>
+                <td>&nbsp; <input type=text name="P32" value="<% 32 %>" maxlength=5 size=7>
+                  (以分钟为单位，默认一小时，最大值为45天)</td>
+              </tr>
+              <tr>
+                <td align=right><i>注册期限内重新注册等待时间: </i></td>
+                <td>&nbsp; <input type=text name="P2330" value="<% 2330 %>" maxlength=5 size=7>
+                  (以秒为单位. 默认值为0)</td>
+              </tr>
+              <tr>
+                <td align=right><i>重注册等待时间: </i></td>
+                <td>&nbsp; <input type=text name="P138" value="<% 138 %>" maxlength=5 size=7>
+                  (以秒为单位，默认20秒，最大值为3600秒)</td>
+              </tr>
+              <tr>
+                <td align=right><i>第三层QoS:</i></td>
+                <td>
+                  &nbsp; <input type=text name="P5046" value="<% 5046  %>" maxlength=2 size=7>
+                  SIP DSCP (以十进制表示Diff-Serv值, 默认值为24)<br>
+                  &nbsp; <input type=text name="P5050" value="<% 5050  %>" maxlength=2 size=7> 
+                  音频 DSCP (以十进制表示Diff-Serv值, 默认值为46)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>本地SIP端口: </i></td>
+                <td>&nbsp; <input type=text name="P40" value="<% 40 %>" maxlength=5 size=7>
+                  (默认5060)</td>
+              </tr>
+              <tr>
+                <td align=right><i>本地RTP端口: </i></td>
+                <td>&nbsp; <input type=text name="P39" value="<% 39 %>" maxlength=5 size=7>
+                  (1024-65535之间的偶数, 默认5004)</td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>使用随机SIP端口: </i></td>
+                <td>&nbsp; <input type=radio name="P20501" value=0 <% 20501 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P20501" value=1 <% 20501 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>使用随机RTP端口: </i></td>
+                <td>&nbsp; <input type=radio name="P20505" value=0 <% 20505 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P20505" value=1 <% 20505 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>Refer-To使用目标Contact: </i></td>
+                <td>&nbsp; <input type=radio name="P135" value=0 <% 135 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P135" value=1 <% 135 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>会议发起者将通话转移: </i></td>
+                <td>&nbsp; <input type=radio name="P4560" value=0 <% 4560 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P4560" value=1 <% 4560 1 checked %> >
+                  Yes </td>
+              </tr>
+            <tr>
+                <td align=right><i>关闭Bellcore方式三方会议</i></td>
+                <td>&nbsp; <input type=radio name="P4830" value=0 <% 4830 0 checked %> >
+                  No &nbsp;&nbsp;&nbsp;<input type=radio name="P4830" value=1 <% 4830 1 checked %> >
+                  Yes &nbsp;(使用*23编码方式三方会议)
+                </td>
+            </tr>
+              <tr>
+                <td align=right valign=top><i>从Route Header移除OBP: </i></td>
+                <td>&nbsp; <input type=radio name="P4562" value=0 <% 4562 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P4562" value=1 <% 4562 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>支持SIP Instance ID: </i></td>
+                <td>&nbsp; <input type=radio name="P288" value=0 <% 288 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P288" value=1 <% 288 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>检验SIP消息: </i></td>
+                <td>&nbsp; <input type=radio name="P4340" value=0 <% 4340 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P4340" value=1 <% 4340 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>检查来电INVITE的SIP用户ID: </i></td>
+                <td>&nbsp; <input type=radio name="P258" value=0 <% 258 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P258" value=1 <% 258 1 checked %> >
+                  Yes (没有直接IP呼叫)</td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>验证来电INVITE: </i></td>
+                <td>&nbsp; <input type=radio name="P2346" value=0 <% 2346 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P2346" value=1 <% 2346 1 checked %> >
+                  Yes</td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>只接受从SIP服务器传来的SIP消息: </i></td>
+                <td>&nbsp; <input type=radio name="P243" value=0 <% 243 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P243" value=1 <% 243 1 checked %> >
+                  Yes (没有直接IP呼叫)</td>
+              </tr>
+              <tr>
+                <td align=right><i>使用 Privacy Header: </i></td>
+                <td>&nbsp; <input type=radio name="P2338" value=0 <% 2338 0 checked %> >
+                  Default &nbsp;&nbsp;  &nbsp; <input type=radio name="P2338" value=1 <% 2338 1 checked %> >
+                  No &nbsp;&nbsp;  &nbsp; <input type=radio name="P2338" value=2 <% 2338 2 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>使用 P-Preferred-Identity Header: </i></td>
+                <td>&nbsp; <input type=radio name="P2339" value=0 <% 2339 0 checked %> >
+                  Default &nbsp;&nbsp;  &nbsp; <input type=radio name="P2339" value=1 <% 2339 1 checked %> >
+                  No &nbsp;&nbsp;  &nbsp; <input type=radio name="P2339" value=2 <% 2339 2 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>SIP注册请求中的Contact头域使用: </i></td>
+                <td>&nbsp; <input type=radio name="P4437" value=0 <% 4437 0 checked %> >
+                  局域网地址 &nbsp;&nbsp; &nbsp; <input type=radio name="P4437" value=1 <% 4437 1 checked %> >
+                  广域网地址 </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>SIP T1 超时: </i></td>
+                <td>&nbsp;
+                  <select name="P209">
+                    <option value=50 <% 209 50  selected %>>0.5秒</option>
+                    <option value=100 <% 209 100  selected %>>1秒</option>
+                    <option value=200 <% 209 200  selected %>>2秒</option>
+                    <option value=400 <% 209 400  selected %>>4秒</option>
+                    <option value=800 <% 209 800  selected %>>8秒</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>SIP T2 间隔:</i></td>
+                <td>&nbsp;
+                  <select name="P250">
+                    <option value=200 <% 250 200  selected %>>2秒</option>
+                    <option value=400 <% 250 400  selected %>>4秒</option>
+                    <option value=800 <% 250 800  selected %>>8秒</option>
+                    <option value=1600 <% 250 1600  selected %>>16秒</option>
+                    <option value=3200 <% 250 3200  selected %>>32秒</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>SIP Timer D:</i></td>
+                <td>&nbsp; <input type=text name="P2387" value="<% 2387 %>"
+                   maxlength=3 size=4> &nbsp;&nbsp;(0 - 64 秒. 默认为 0)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>DTMF有效负荷类型: </i></td>
+                <td>&nbsp; <input type=text name="P79" value="<% 79 %>" maxlength=3 size=7>
+                </td>
+              </tr>
+<!--              <tr>
+                <td align=right valign=top><i>音频(DTMF): </i></td>
+                <td>&nbsp; <input type=radio name="P850" value=0 <% 850 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P850" value=1 <% 850 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>RFC2833(DTMF）: </i></td>
+                <td>&nbsp; <input type=radio name="P851" value=0 <% 851 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P851" value=1 <% 851 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>SIP-INFO(DTMF): </i></td>
+                <td>&nbsp; <input type=radio name="P852" value=0 <% 852 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P852" value=1 <% 852 1 checked %> >
+                  Yes </td>
+              </tr>
+-->
+              <tr>
+                <td align=right valign=top><i>优先 DTMF: </i><br>
+                  <i>(in listed order)</i></td>
+                <td>&nbsp;&nbsp;第 1: &nbsp; <select name="P850" >
+                    <option value=100  <% 850 100  selected %>>音频</option>
+                    <option value=101  <% 850 101  selected %>>RFC2833</option>
+                    <option value=102  <% 850 102  selected %>>SIP INFO</option>
+                   </select> <br> &nbsp;&nbsp;第 2: &nbsp; <select name="P851" >
+                    <option value=100  <% 851 100  selected %>>音频</option>
+                    <option value=101  <% 851 101  selected %>>RFC2833</option>
+                    <option value=102  <% 851 102  selected %>>SIP INFO</option>
+                   </select> <br> &nbsp;&nbsp;第 3: &nbsp; <select name="P852" >
+                    <option value=100  <% 852 100  selected %>>音频</option>
+                    <option value=101  <% 852 101  selected %>>RFC2833</option>
+                    <option value=102  <% 852 102  selected %>>SIP INFO</option>
+                 </select>
+              </tr>
+              
+              <tr>
+                <td align=right><i>关闭DTMF协商</i></td>
+                <td>&nbsp; <input type=radio name="P4825" value=0 <% 4825 0 checked %> >
+                  No &nbsp;(协商DTMF)<input type=radio name="P4825" value=1 <% 4825 1 checked %> >
+                  Yes &nbsp; (使用上述DTMF优先序列,不协商)
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>产生连续RFC2833事件: </i></td>
+                <td>&nbsp; <input type=radio name="P4433" value=0 <% 4433 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P4433" value=1 <% 4433 1 checked %> >
+                  Yes (产生RFC2833事件直到按键被释放) </td>
+              </tr>
+              <tr>
+                <td align=right><i>发送拍叉(Flash)信号:</i></td>
+                <td>&nbsp; <input type=radio name="P74" value=0 <% 74 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P74" value=1 <% 74 1 checked %> >
+                  Yes &nbsp; (如果设置为Yes， 拍叉将会作为一个DTMF事件发送)
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>开启*号呼叫功能: </i></td>
+                <td>&nbsp; <input type=radio name="P191" value=0 <% 191 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P191" value=1 <% 191 1 checked %> >
+                  Yes (如果设置为Yes，本机使用*号编码功能将被启用) </td>
+              </tr>
+              <tr>
+                <td align=right><i>摘机自动拨号: </i></td>
+                <td>&nbsp; <input type=text name="P71" value="<% 71                                                            %>" maxlength=64 size=30 >
+                  (摘机将自动拨打填写的号码) </td>
+              </tr>
+              <tr>
+                <td align=right><i>摘机自动拨号延迟: </i></td>
+                <td>&nbsp; <input type=text name="P4045" value="<% 4045 %>" maxlength=2 size=7>
+                  (0-60 秒, 默认为0)</td>
+              </tr>
+              <tr>
+                <td align=right><i>Proxy-Require: </i></td>
+                <td>&nbsp; <input type=text name="P197" value="<% 197                                                          %>" maxlength=64 size=30 ></td>
+              </tr>
+              <tr>
+                <td align=right><i>使用NAT IP:</i></td>
+                <td>&nbsp; <input type=text name="P101" value="<% 101          %>" maxlength=16 size=30>
+                  (如果是指定，则用在SIP/SDP消息中) </td>
+              </tr>
+              <tr>
+                <td align=right><i>使用 SIP User-Agent Header:</i></td>
+                <td>&nbsp; <input type=text name="P4834" value="<% 4834                                                                                                                                                                                                                                                           %>" maxlength=1024 size=60>
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=middle><i>自定义铃声: </i></td>
+                <td>&nbsp;
+                  <select name="P870" >
+                    <option value=0  <% 870 0  selected %>>自定义铃声 1</option>
+                    <option value=1  <% 870 1  selected %>>自定义铃声 2</option>
+                    <option value=2  <% 870 2  selected %>>自定义铃声 3</option>
+                    <option value=3  <% 870 3  selected %>>自定义铃声 4</option>
+                    <option value=4  <% 870 4  selected %>>自定义铃声 5</option>
+                    <option value=5  <% 870 5  selected %>>自定义铃声 6</option>
+                    <option value=6  <% 870 6  selected %>>自定义铃声 7</option>
+                    <option value=7  <% 870 7  selected %>>自定义铃声 8</option>
+                    <option value=8  <% 870 8  selected %>>自定义铃声 9</option>
+                    <option value=9  <% 870 9  selected %>>自定义铃声 10</option>
+                  </select> &nbsp; 将被使用在主叫是 <input type=text name="P871" value="<% 871                                                        %>" maxlength=64 size=30><br>
+                  &nbsp;
+                  <select name="P872" >
+                    <option value=0  <% 872 0  selected %>>自定义铃声 1</option>
+                    <option value=1  <% 872 1  selected %>>自定义铃声 2</option>
+                    <option value=2  <% 872 2  selected %>>自定义铃声 3</option>
+                    <option value=3  <% 872 3  selected %>>自定义铃声 4</option>
+                    <option value=4  <% 872 4  selected %>>自定义铃声 5</option>
+                    <option value=5  <% 872 5  selected %>>自定义铃声 6</option>
+                    <option value=6  <% 872 6  selected %>>自定义铃声 7</option>
+                    <option value=7  <% 872 7  selected %>>自定义铃声 8</option>
+                    <option value=8  <% 872 8  selected %>>自定义铃声 9</option>
+                    <option value=9  <% 872 9  selected %>>自定义铃声 10</option>
+                  </select> &nbsp; 将被使用在主叫是 <input type=text name="P873" value="<% 873                                                        %>" maxlength=64 size=30><br>
+                  &nbsp;
+                  <select name="P874" >
+                    <option value=0  <% 874 0  selected %>>自定义铃声 1</option>
+                    <option value=1  <% 874 1  selected %>>自定义铃声 2</option>
+                    <option value=2  <% 874 2  selected %>>自定义铃声 3</option>
+                    <option value=3  <% 874 3  selected %>>自定义铃声 4</option>
+                    <option value=4  <% 874 4  selected %>>自定义铃声 5</option>
+                    <option value=5  <% 874 5  selected %>>自定义铃声 6</option>
+                    <option value=6  <% 874 6  selected %>>自定义铃声 7</option>
+                    <option value=7  <% 874 7  selected %>>自定义铃声 8</option>
+                    <option value=8  <% 874 8  selected %>>自定义铃声 9</option>
+                    <option value=9  <% 874 9  selected %>>自定义铃声 10</option>
+                  </select> &nbsp; 将被使用在主叫是 <input type=text name="P875" value="<% 875                                                        %>" maxlength=64 size=30><br>
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>关闭呼叫等待: </i></td>
+                <td>&nbsp; <input type=radio name="P91" value=0 <% 91 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P91" value=1 <% 91 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>关闭呼叫等待中显主叫: </i></td>
+                <td>&nbsp; <input type=radio name="P714" value=0 <% 714 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P714" value=1 <% 714 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>关闭呼叫等待音: </i></td>
+                <td>&nbsp; <input type=radio name="P186" value=0 <% 186 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P186" value=1 <% 186 1 checked %> >
+                  Yes </td>
+              </tr>
+              
+              <tr>
+                <td align=right><i>关闭话柄掉机提醒音: </i></td>
+                <td>&nbsp; <input type=radio name="P4793" value=0 <% 4793 0 checked %>>
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P4793" value=1 <% 4793 1 checked %>>
+                  Yes &nbsp; (没有话柄掉机提醒音) </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>关闭On-Hold Call的提醒铃声: </i></td>
+                <td>&nbsp; <input type=radio name="P4360" value=0 <% 4360 0 checked %> >
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P4360" value=1 <% 4360 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>关闭消息等待提示(MWI):</i></td>
+                <td>&nbsp; <input type=radio name="P855" value=0 <% 855 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P855" value=1 <% 855 1 checked %>>
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>SIP URI中的#不替换成%23:</i></td>
+                <td>&nbsp; <input type=radio name="P1406" value=0 <% 1406 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P1406" value=1 <% 1406 1 checked %>>
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>强制SDP内只显示一行m line:</i></td>
+                <td>&nbsp; <input type=radio name="P137" value=0 <% 137 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P137" value=1 <% 137 1 checked %>>
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>振铃超时: </i></td>
+                <td>&nbsp; <input type=text name="P185" value="<% 185 %>" maxlength=3 size=7>
+                  (10-300, 默认是60秒)</td>
+              </tr>
+              <tr>
+                <td align=right><i>延时转移等待时间: </i></td>
+                <td>&nbsp; <input type=text name="P139" value="<% 139 %>"  maxlength=3 size=7>
+                  (允许的范围是1-120秒之间)</td>
+              </tr>
+              <tr>
+                <td align=right><i>拨号超时时间: </i></td>
+                <td>&nbsp; <input type=text name="P85" value="<% 85 %>" maxlength=5 size=7>
+                  (以秒为单位，默认4秒)</td>
+              </tr>
+              <tr>
+                <td align=right><i>立即发送: </i></td>
+                <td>&nbsp; <input type=radio name="P29" value=0 <% 29 0 checked %> >
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P29" value=1 <% 29 1 checked %>>
+                  Yes &nbsp; (仅当代理服务器支持484响应时用Yes )
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>拨号规则前缀: </i></td>
+                <td>&nbsp; <input type=text name="P66" value="<% 66                         %>" maxlength=32 size=7>
+                  (这个前缀串被加到每个所拨号码的前面)</td>
+              </tr>
+              <tr>
+                <td align=right><i>使用#作为拨号键: </i></td>
+                <td>&nbsp; <input type=radio name="P72" value=0 <% 72 0 checked %> >
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P72" value=1 <% 72 1 checked %>>
+                  Yes &nbsp; (如果设置为Yes，#号键将起重拨键的功能)  </td>
+              </tr>
+              <tr>
+                <td align=right><i>拨号规则 :</i></td>
+                <td>&nbsp; <input type=text name="P4200" value="<% 4200                                                                                                                                                                                                                                                           %>" maxlength=1024 size=60>
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>SUBSCRIBE消息等待提示(MWI): </i></td>
+                <td>&nbsp; <input type=radio name="P99" value=0 <% 99 0 checked %> >
+                  否，不发送SUBSCRIBE<br>
+                  &nbsp; <input type=radio name="P99" value=1 <% 99 1 checked %> >
+                  是，发送周期性SUBSCRIBE
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>匿名发送 : </i></td>
+                <td>&nbsp; <input type=radio name="P65" value=0 <% 65 0 checked %> >
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P65" value=1 <% 65 1 checked %> >
+                  Yes &nbsp; (如果设置为Yes，用户ID将被屏蔽) </td>
+              </tr>
+              <tr>
+                <td align=right><i>拒绝匿名呼叫: </i></td>
+                <td>&nbsp; <input type=radio name="P129" value=0 <% 129 0 checked %> >
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P129" value=1 <% 129 1 checked %> >
+                  Yes &nbsp; </td>
+              </tr>
+              <tr>
+                  <td align=right valign=top><i>特殊功能: </i></td>
+                <td>&nbsp;
+                    <select name="P198">
+                        <option value=100 <% 198 100 selected %>>Standard</option>
+                        <option value=102 <% 198 102 selected %>>BroadSoft</option>
+                        <option value=108 <% 198 108 selected %>>CBCOM</option>
+                        <option value=109 <% 198 109 selected %>>RNK</option>
+                        <option value=111 <% 198 111 selected %>>Huawei</option>
+                        <option value=113 <% 198 113 selected %>>China Mobile</option>
+                        <option value=114 <% 198 114 selected %>>ZTE IMS</option>
+                        <option value=119 <% 198 119 selected %>>PhonePower</option>
+                        <option value=120 <% 198 120 selected %>>TELEKOM SA</option>
+                        <option value=121 <% 198 121 selected %>>Vonage</option>
+                        <option value=122 <% 198 122 selected %>>Metaswitch</option>
+                    </select>
+                  </td>
+              </tr>
+
+              <tr>
+                <td align=right><i>会话生命周期 (Session-Timer): </i></td>
+                <td>&nbsp; <input type=text name="P260" value="<% 260 %>" maxlength=5 size=7>
+                  (以秒为单位，默认180秒)</td>
+              </tr>
+
+              <tr>
+                <td align=right><i>Min-SE: </i></td>
+                <td>&nbsp; <input type=text name="P261" value="<% 261 %>" maxlength=5 size=7>
+                  (以秒为单位，最小为90秒)</td>
+              </tr>
+
+              <tr>
+                <td align=right><i>主叫请求Session-Timer: </i></td>
+                <td>&nbsp; <input type=radio name="P262" value=0 <% 262 0 checked %> >
+                  No &nbsp; &nbsp; <input type=radio name="P262" value=1 <% 262 1 checked %> >
+                  Yes (以主叫模式发送Session-Timer)</td>
+              </tr>
+
+              <tr>
+                <td align=right><i>被叫请求Session-Timer: </i></td>
+                <td>&nbsp; <input type=radio name="P263" value=0 <% 263 0 checked %> >
+                  No &nbsp; &nbsp; <input type=radio name="P263" value=1 <% 263 1 checked %> >
+                  Yes (以被叫模式回应Session-Timer)</td>
+              </tr>
+
+              <tr>
+                <td align=right><i>强制Session-Timer: </i></td>
+                <td>&nbsp; <input type=radio name="P264" value=0 <% 264 0 checked %> >
+                  No &nbsp; &nbsp; <input type=radio name="P264" value=1 <% 264 1 checked %> >
+                  Yes (即使远程方不支持也启用Session-Timer)</td>
+              </tr>
+
+              <tr>
+                <td align=right><i>UAC指定更新: </i></td>
+                <td>&nbsp; <input type=radio name="P266" value=1 <% 266 1 checked %> >
+                  UAC &nbsp; <input type=radio name="P266" value=2 <% 266 2 checked %> >
+                  UAS &nbsp; &nbsp; <input type=radio name="P266" value=0 <% 266 0 checked %> >
+                  Omit (推荐)</td>
+               </tr>
+
+              <tr>
+                <td align=right><i>UAS指定更新: </i></td>
+                <td>&nbsp; <input type=radio name="P267" value=1 <% 267 1 checked %> >
+                  UAC &nbsp; <input type=radio name="P267" value=2 <% 267 2 checked %> >
+                  UAS (当UAC没有指定更新标记)</td>
+               </tr>
+
+              <tr>
+                <td align=right><i>强制INVITE: </i></td>
+                <td>&nbsp; <input type=radio name="P265" value=0 <% 265 0 checked %> >
+                  No &nbsp; &nbsp; <input type=radio name="P265" value=1 <% 265 1 checked %> >
+                  Yes (强制发送INVITE而不是UPDATE)</td>
+              </tr>
+
+<!--
+              <tr>
+                <td align=right><i>传真结束后发送Re-INVITE: </i></td>
+                <td>&nbsp; <input type=radio name="P4367" value=0 <% 4367 0 checked %> >
+                  No &nbsp; &nbsp; <input type=radio name="P4367" value=1 <% 4367 1 checked %> >
+                  Yes </td>
+              </tr>
+-->
+
+              <tr>
+                <td align=right><i>开启 100rel: </i></td>
+                <td>&nbsp; <input type=radio name="P272" value=0 <% 272 0 checked %> >
+                  No &nbsp; &nbsp; <input type=radio name="P272" value=1 <% 272 1 checked %> >
+                  Yes </td>
+              </tr>
+               
+               <tr>
+                <td align=right><i>在初始注册消息中包含Auth Header: </i></td>
+                <td>&nbsp; <input type=radio name="P2359" value=0 <% 2359 0 checked %> >
+                  No &nbsp; &nbsp; <input type=radio name="P2359" value=1 <% 2359 1 checked %> >
+                  Yes </td>
+              </tr>
+
+              <tr>
+                <td colspan=2>&nbsp;</td>
+              </tr>
+
+              <tr>
+                <td align=right><i>使用第一个匹配的语音编码(在 200OK SDP 中): </i></td>
+                <td>&nbsp; <input type=radio name="P4363" value=0 <% 4363 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P4363" value=1 <% 4363 1 checked %>>
+                  Yes </td>
+              </tr>
+
+              <tr>
+                <td align=right valign=top><i>优先的语音编码: </i><br>
+                  <i>(下拉菜单中)</i></td>
+                <td>&nbsp;&nbsp;第1: &nbsp; <select name="P57" >
+                    <option value=0  <% 57 0  selected %>>PCMU</option>
+                    <option value=8  <% 57 8  selected %>>PCMA</option>
+                    <option value=4  <% 57 4  selected %>>G723</option>
+                    <option value=18 <% 57 18 selected %>>G729</option>
+                    <option value=2  <% 57 2  selected %>>G726-32</option>
+                    <option value=98 <% 57 98 selected %>>iLBC</option>
+                  </select> <br> &nbsp;&nbsp;第2: &nbsp; <select name="P58" >
+                    <option value=0  <% 58 0  selected %>>PCMU</option>
+                    <option value=8  <% 58 8  selected %>>PCMA</option>
+                    <option value=4  <% 58 4  selected %>>G723</option>
+                    <option value=18 <% 58 18 selected %>>G729</option>
+                    <option value=2  <% 58 2  selected %>>G726-32</option>
+                    <option value=98 <% 58 98 selected %>>iLBC</option>
+                  </select> <br> &nbsp;&nbsp;第3: &nbsp; <select name="P59" >
+                    <option value=0  <% 59 0  selected %>>PCMU</option>
+                    <option value=8  <% 59 8  selected %>>PCMA</option>
+                    <option value=4  <% 59 4  selected %>>G723</option>
+                    <option value=18 <% 59 18 selected %>>G729</option>
+                    <option value=2  <% 59 2  selected %>>G726-32</option>
+                    <option value=98 <% 59 98 selected %>>iLBC</option>
+                  </select> <br> &nbsp;&nbsp;第4: &nbsp; <select name="P60" >
+                    <option value=0  <% 60 0  selected %>>PCMU</option>
+                    <option value=8  <% 60 8  selected %>>PCMA</option>
+                    <option value=4  <% 60 4  selected %>>G723</option>
+                    <option value=18 <% 60 18 selected %>>G729</option>
+                    <option value=2  <% 60 2  selected %>>G726-32</option>
+                    <option value=98 <% 60 98 selected %>>iLBC</option>
+                  </select> <br> &nbsp;&nbsp;第5: &nbsp; <select name="P61" >
+                    <option value=0  <% 61 0  selected %>>PCMU</option>
+                    <option value=8  <% 61 8  selected %>>PCMA</option>
+                    <option value=4  <% 61 4  selected %>>G723</option>
+                    <option value=18 <% 61 18 selected %>>G729</option>
+                    <option value=2  <% 61 2  selected %>>G726-32</option>
+                    <option value=98 <% 61 98 selected %>>iLBC</option>
+                  </select> <br> &nbsp;&nbsp;第6: &nbsp; <select name="P62" >
+                    <option value=0  <% 62 0  selected %>>PCMU</option>
+                    <option value=8  <% 62 8  selected %>>PCMA</option>
+                    <option value=4  <% 62 4  selected %>>G723</option>
+                    <option value=18 <% 62 18 selected %>>G729</option>
+                    <option value=2  <% 62 2  selected %>>G726-32</option>
+                    <option value=98 <% 62 98 selected %>>iLBC</option>
+                 </select>
+              </tr>
+              <tr>
+                <td align=right><i>语音帧数/传输: </i></td>
+                <td>&nbsp; <input type=text name="P37" value="<% 37 %>" maxlength=3 size=7>
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>G723 速率: </i></td>
+                <td>&nbsp; <input type=radio name="P49" value=0 <% 49 0 checked %> >
+                  6.3kbps 编码速率 &nbsp; &nbsp; &nbsp; <input type=radio name="P49" value=1 <% 49 1 checked %> >
+                  5.3kbps 编码速率 </td>
+              </tr>
+              <tr>
+                <td align=right><i>iLBC语音编码帧字节的大小: </i></td>
+                <td>&nbsp; <input type=radio name="P97" value=0 <% 97 0 checked %> >
+                  20毫秒 &nbsp; &nbsp; &nbsp; <input type=radio name="P97" value=1 <% 97 1 checked %> >
+                  30毫秒 </td>
+              </tr>
+              <tr>
+                <td align=right><i>iLBC 有效载荷类型: </i></td>
+                <td>&nbsp; <input type=text name="P96" value="<% 96  %>" maxlength=5 size=7>
+                  (在96到127之间, 默认97)</td>
+              </tr>
+              <tr>
+                <td align=right><i>语音检测(VAD): </i></td>
+                <td>&nbsp; <input type=radio name="P50" value=0 <% 50 0 checked %> >
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P50" value=1 <% 50 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>对称RTP: </i></td>
+                <td>&nbsp; <input type=radio name="P291" value=0 <% 291 0 checked %> >
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P291" value=1 <% 291 1 checked %> >
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>传真模式: </i></td>
+                <td>&nbsp; <input type=radio name="P228" value=0 <% 228 0 checked %> >
+                  T.38 (自动检测)
+                  &nbsp; <input type=radio name="P228" value=1 <% 228 1 checked %> >
+                  透传
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>传真振铃检测后发送Re-INVITE: </i></td>
+                <td>&nbsp; <input type=radio name="P4416" value=1 <% 4416 1 checked %> >
+                  开启 &nbsp; <input type=radio name="P4416" value=0 <% 4416 0 checked %> >
+                  关闭</td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>抖动缓冲类型: </i></td>
+                <td>&nbsp; <input type=radio name="P133" value=0 <% 133 0 checked %> >
+                  固定 &nbsp; <input type=radio name="P133" value=1 <% 133 1 checked %> >
+                  自适应 </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>抖动缓冲长度: </i></td>
+                <td>&nbsp; <input type=radio name="P132" value=0 <% 132 0 checked %> >
+                  低 &nbsp; &nbsp; <input type=radio name="P132" value=1 <% 132 1 checked %> >
+                  中 &nbsp; <input type=radio name="P132" value=2 <% 132 2 checked %> >
+                  高 </td>
+              </tr>
+
+              <tr>
+                <td align=right valign=top><i>SRTP模式: </i></td>
+                <td>&nbsp; <input type=radio name="P183" value=0 <% 183 0 checked %> >
+                  关闭 &nbsp; &nbsp; <input type=radio name="P183" value=1 <% 183 1 checked %> >
+                  激活但不强制 &nbsp; <input type=radio name="P183" value=2 <% 183 2 checked %> >
+                  强制激活 </td>
+              </tr>
+
+              <tr>
+                <td colspan=2>&nbsp;</td>
+              </tr>
+
+              <tr>
+                <td align=right valign=top><i>SLIC设置: </i></td>
+                <td>&nbsp;
+                    <select name="P854">
+                        <option value=0 <% 854 0 selected %>>美国 1 (贝尔标准 600 ohms)</option>
+                        <option value=3 <% 854 3 selected %>>美国 2 (贝尔标准 600 ohms + 2.16uF)</option>
+                        <option value=11 <% 854 11 selected %>>澳大利亚</option>
+                        <option value=5 <% 854 5 selected %>>中国 (中心局端)</option>
+                        <option value=6 <% 854 6 selected %>>中国 (交换机端)</option>
+                        <option value=4 <% 854 4 selected %>>欧洲标准CTR21</option>
+                        <option value=9 <% 854 9 selected %>>德国</option>
+                        <option value=8 <% 854 8 selected %>>印度/新西兰</option>
+                        <option value=2 <% 854 2 selected %>>日本 (中心局端)</option>
+                        <option value=7 <% 854 7 selected %>>日本 (交换机端)</option>
+                        <option value=1 <% 854 1 selected %>>标准 900 ohms</option>
+                        <option value=10 <% 854 10 selected %>>英国</option>
+                    </select>
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>来电显示机制: </i></td>
+                <td>&nbsp;
+                    <select name="P853">
+                        <option value=0 <% 853 0 selected %>>Bellcore/Telcordia</option>
+                        <option value=1 <% 853 1 selected %>>ETSI-FSK during ringing</option>
+                        <option value=2 <% 853 2 selected %>>ETSI-FSK prior to ringing with DTAS</option>
+                        <option value=3 <% 853 3 selected %>>ETSI-FSK prior to ringing with LR+DTAS</option>
+                        <option value=4 <% 853 4 selected %>>ETSI-FSK prior to ringing with RP</option>
+                        <option value=5 <% 853 5 selected %>>ETSI-DTMF during ringing</option>
+                        <option value=6 <% 853 6 selected %>>ETSI-DTMF prior to ringing with DTAS</option>
+                        <option value=7 <% 853 7 selected %>>ETSI-DTMF prior to ringing with LR+DTAS</option>
+                        <option value=8 <% 853 8 selected %>>ETSI-DTMF prior to ringing with RP</option>
+                        <option value=9 <% 853 9 selected %>>SIN 227 - BT</option>
+                        <option value=10 <% 853 10 selected %>>NTT Japan</option>
+                        <option value=11 <% 853 11 selected %>>DTMF Denmark prior to ringing no DTAS no LR</option>
+                        <option value=12 <% 853 12 selected %>>DTMF Denmark prior to ringing with LR</option>
+                        <option value=13 <% 853 13 selected %>>DTMF Sweden/Finalnd prior to ringing with LR</option>
+						<option value=14 <% 853 14 selected %>>DTMF Brazil</option>
+                    </select>
+                </td>
+              </tr>
+
+              <tr>
+                 <td align=right><i>DTMF来电显示:</i></td>
+                 <td>&nbsp;
+                   <i>起始音</i>
+                   <select name="P4661">
+                     <option value=0 <% 4661 0 selected %>>Default</option>
+                     <option value=1 <% 4661 1 selected %>>A</option>
+                     <option value=2 <% 4661 2 selected %>>B</option>
+                     <option value=3 <% 4661 3 selected %>>C</option>
+                     <option value=4 <% 4661 4 selected %>>D</option>
+                     <option value=5 <% 4661 5 selected %>>#</option>
+                   </select>&nbsp;&nbsp;
+                   <i>结束音</i>
+                   <select name="P4662">
+                     <option value=0 <% 4662 0 selected %>>Default</option>
+                     <option value=1 <% 4662 1 selected %>>A</option>
+                     <option value=2 <% 4662 2 selected %>>B</option>
+                     <option value=3 <% 4662 3 selected %>>C</option>
+                     <option value=4 <% 4662 4 selected %>>D</option>
+                     <option value=5 <% 4662 5 selected %>>#</option>
+                   </select>
+                 </td>
+              </tr>
+
+              <tr>
+                <td align=right><i>极性转换:</i></td>
+                <td>&nbsp; <input type=radio name="P205" value=0 <% 205 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P205" value=1 <% 205 1 checked %>>
+                  Yes &nbsp; (基于呼叫建立和结束的极性转换)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>回路电流拆线:</i></td>
+                <td>&nbsp; <input type=radio name="P892" value=0 <% 892 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P892" value=1 <% 892 1 checked %>>
+                  Yes &nbsp; (呼叫结束后回路电流拆线)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>回路电流拆线时间:</i></td>
+                <td>&nbsp; <input type=text name="P856" value="<% 856 %>" maxlength=5 size=6 > (在100-10000毫秒范围内, 默认200毫秒)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>开启瞬间挂断:</i></td>
+                <td>&nbsp; <input type=radio name="P4424" value=0 <% 4424 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P4424" value=1 <% 4424 1 checked %>>
+                  Yes &nbsp;
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>瞬间挂断时间: </i></td>
+                <td>
+                &nbsp; 在40-2000毫秒范围内，最小值为: <input type=text name="P251" value="<% 251 %>" maxlength=4 size=6 >
+                &nbsp; 最大值为: <input type=text name="P252" value="<% 252 %>" maxlength=4 size=6 >
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>摘机间隔时间:</i></td>
+                <td>&nbsp; <input type=text name="P833" value="<% 833 %>" maxlength=5 size=6 > (在40-2000毫秒范围内, 默认400)
+                </td>
+              </tr>
+              <tr>
+                 <td align=right><i>增益:</i></td>
+                 <td>&nbsp;
+                   <i>TX</i>
+                   <select name="P247">
+                     <option value=1 <% 247 1 selected %>>+6dB</option>
+                     <option value=2 <% 247 2 selected %>>+4dB</option>
+                     <option value=3 <% 247 3 selected %>>+2dB</option>
+                     <option value=0 <% 247 0 selected %>>0dB default</option>
+                     <option value=4 <% 247 4 selected %>>-2dB</option>
+                     <option value=5 <% 247 5 selected %>>-4dB</option>
+                     <option value=6 <% 247 6 selected %>>-6dB</option>
+                     <option value=7 <% 247 7 selected %>>-8dB</option>
+                     <option value=8 <% 247 8 selected %>>-10dB</option>
+                     <option value=9 <% 247 9 selected %>>-12dB</option>
+                   </select>&nbsp;
+                   <i>RX</i>
+                   <select name="P249">
+                     <option value=1 <% 249 1 selected %>>+6dB</option>
+                     <option value=2 <% 249 2 selected %>>+4dB</option>
+                     <option value=3 <% 249 3 selected %>>+2dB</option>
+                     <option value=0 <% 249 0 selected %>>0dB</option>
+                     <option value=4 <% 249 4 selected %>>-2dB</option>
+                     <option value=5 <% 249 5 selected %>>-4dB</option>
+                     <option value=6 <% 249 6 selected %>>-6dB default</option>
+                     <option value=7 <% 249 7 selected %>>-8dB</option>
+                     <option value=8 <% 249 8 selected %>>-10dB</option>
+                     <option value=9 <% 249 9 selected %>>-12dB</option>
+                   </select>
+                 </td>
+              </tr>
+              <tr>
+                <td align=right><i>关闭线路回声消除 (LEC): </i></td>
+                <td>&nbsp; <input type=radio name="P824" value=0 <% 824 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P824" value=1 <% 824 1 checked %>>
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>关闭网络回声抑制: </i></td>
+                <td>&nbsp; <input type=radio name="P4441" value=0 <% 4441 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P4441" value=1 <% 4441 1 checked %>>
+                  Yes </td>
+              </tr>
+              <tr>
+                <td align=right><i>振铃频率: </i></td>
+                <td>&nbsp; <input type=text name="P4429" value="<% 4429 %>" maxlength=2 size=7>
+                  (15-60 Hz, 缺省为20 Hz )</td>
+              </tr>
+
+              <tr>
+                 <td colspan=2>&nbsp;</td>
+              </tr>
+
+              <tr>
+                 <td align=right><b>振铃铃音</b></td>
+                 <td>(语法: c=on1/off1-on2/off2-on3/off3;)</td>
+              </tr>
+
+              <tr>
+                      <td align="right"><i>振铃铃音 1:</i></td>
+                      <td>&nbsp; <input type=text name="P4010" value="<% 4010                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+              </tr>
+              <tr>
+                      <td align="right"><i>振铃铃音 2:</i></td>
+                      <td>&nbsp; <input type=text name="P4011" value="<% 4011                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+              </tr>
+              <tr>
+                      <td align="right"><i>振铃铃音 3:</i></td>
+                      <td>&nbsp; <input type=text name="P4012" value="<% 4012                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>振铃铃音 4:</i></td>
+                      <td>&nbsp; <input type=text name="P4013" value="<% 4013                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>振铃铃音 5:</i></td>
+                      <td>&nbsp; <input type=text name="P4014" value="<% 4014                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>振铃铃音 6:</i></td>
+                      <td>&nbsp; <input type=text name="P4015" value="<% 4015                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>振铃铃音 7:</i></td>
+                      <td>&nbsp; <input type=text name="P4016" value="<% 4016                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>振铃铃音 8:</i></td>
+                      <td>&nbsp; <input type=text name="P4017" value="<% 4017                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>振铃铃音 9:</i></td>
+                      <td>&nbsp; <input type=text name="P4018" value="<% 4018                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+               <tr>
+                      <td align="right"><i>振铃铃音 10:</i></td>
+                      <td>&nbsp; <input type=text name="P4019" value="<% 4019                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+               </tr>
+
+
+            <tr height=28 bgcolor="#F3C47C" align=center>
+                <td colspan=2> <input type="submit" name="update" value="保存">
+                  &nbsp;&nbsp; <input type="submit" name="apply" value="生效">
+                  &nbsp;&nbsp; <input type="button" name="cancel" value="取消" onClick="document.location='login'">
+                  &nbsp;&nbsp; <input type="button" name="reboot" value="重启" onClick="document.location='rs'">
+                  <input name="gnkey" type=hidden value=0b82> </td>
+              </tr>
+             </table></td>
+            </tr>
+<tr><td bgcolor="#336699" align="center" class="l"><font size="1">版权所有 潮流网络 2006-2014</font></td></tr>
+</table></td></tr></table>
+</form></body></html>

@@ -1,0 +1,32 @@
+#!/bin/sh
+
+#will wait for a connection to the network before running provision.
+
+IP=
+check_wan()
+{
+	IP=
+	WAN="$(nvram get wan_device)"
+    #check if device has and ip address
+	if [ -n "${WAN}" ]; then
+		IP="$(ifconfig ${WAN} 2>/dev/null|grep "inet addr"|tr -s " "|cut -d':' -f2|cut -d' ' -f1)"
+	fi
+	#check if cable is uplugged
+	STATE="$(cat /sys/class/net/eth0/operstate)"
+	if [ "${STATE}" = "down" ]; then
+		IP=
+	fi	
+}
+
+check_wan
+
+while [ -z "${IP}" ]
+do	
+	if [ -z "${IP}" ]; then
+		sleep 5
+	fi
+	check_wan
+	nvram set :ini_prov=1
+done	
+
+/sbin/provision &

@@ -1,0 +1,176 @@
+#!/bin/sh
+
+
+if [ -r /etc/rc.conf ]; then
+	. /etc/rc.conf
+fi
+
+if [ -r /etc/funcs.sh ]; then
+    . /etc/funcs.sh
+fi
+
+# Public Variable
+WAN=eth0
+
+#
+# Setup Interface Addresses
+#
+/sbin/ifconfig lo 127.0.0.1 netmask 255.0.0.0
+
+#
+# Host Name Settings
+#
+/etc/rc.d/rc.host
+
+RESOLV_CONF="/etc/resolv.conf"
+echo > ${RESOLV_CONF}
+echo search "`hostname`" >> ${RESOLV_CONF}
+
+ISP_DNS="`nvram get 25800`" #use preferred DNS or ISP's DNS first?
+if [ "${ISP_DNS}x" = "x" -o "${ISP_DNS}" = "0" ]; then  #default - u
+    if [ -n "${wan_preferred_dns1}" -a "${wan_preferred_dns1}" != "..." -a  "${wan_preferred_dns1}" != "0.0.0.0" \
+	     -a -n "`nvram get 92`" -a "`nvram get 92`" != "0" ]; then
+    	echo nameserver ${wan_preferred_dns1} >> ${RESOLV_CONF}
+	    export PREFERRED_DNS_SERVER=${wan_preferred_dns1}
+    fi
+    if [ -n "${wan_preferred_dns2}" -a "${wan_preferred_dns2}" != "..." -a  "${wan_preferred_dns2}" != "0.0.0.0" \
+	     -a -n "`nvram get 5026`" -a "`nvram get 5026`" != "0" ]; then
+    	echo nameserver ${wan_preferred_dns2} >> ${RESOLV_CONF}
+	    if [ -z "${PREFERRED_DNS_SERVER}" ]; then
+		    export PREFERRED_DNS_SERVER=${wan_preferred_dns2}
+    	fi
+    fi
+    if [ -n "${wan_preferred_dns3}" -a "${wan_preferred_dns3}" != "..." -a  "${wan_preferred_dns3}" != "0.0.0.0" \
+	     -a -n "`nvram get 5030`" -a "`nvram get 5030`" != "0" ]; then
+    	echo nameserver ${wan_preferred_dns3} >> ${RESOLV_CONF}
+	    if [ -z "${PREFERRED_DNS_SERVER}" ]; then
+		    export PREFERRED_DNS_SERVER=${wan_preferred_dns3}
+    	fi
+    fi
+    if [ -n "${wan_preferred_dns4}" -a "${wan_preferred_dns4}" != "..." -a  "${wan_preferred_dns4}" != "0.0.0.0" \
+	     -a -n "`nvram get 5034`" -a "`nvram get 5034`" != "0" ]; then
+    	echo nameserver ${wan_preferred_dns4} >> ${RESOLV_CONF}
+	    if [ -z "${PREFERRED_DNS_SERVER}" ]; then
+    		export PREFERRED_DNS_SERVER=${wan_preferred_dns4}
+	    fi
+    fi
+else
+    if [ -n "${wan_preferred_dns4}" -a "${wan_preferred_dns4}" != "..." -a  "${wan_preferred_dns4}" != "0.0.0.0" \
+	     -a -n "`nvram get 5034`" -a "`nvram get 5034`" != "0" ]; then
+    	echo nameserver ${wan_preferred_dns4} >> ${RESOLV_CONF}
+    	export PREFERRED_DNS_SERVER=${wan_preferred_dns4}
+    fi
+    if [ -n "${wan_preferred_dns3}" -a "${wan_preferred_dns3}" != "..." -a  "${wan_preferred_dns3}" != "0.0.0.0" \
+	     -a -n "`nvram get 5030`" -a "`nvram get 5030`" != "0" ]; then
+    	echo nameserver ${wan_preferred_dns3} >> ${RESOLV_CONF}
+	    if [ -z "${PREFERRED_DNS_SERVER}" ]; then
+		    export PREFERRED_DNS_SERVER=${wan_preferred_dns3}
+    	fi
+    fi
+    if [ -n "${wan_preferred_dns2}" -a "${wan_preferred_dns2}" != "..." -a  "${wan_preferred_dns2}" != "0.0.0.0" \
+	     -a -n "`nvram get 5026`" -a "`nvram get 5026`" != "0" ]; then
+    	echo nameserver ${wan_preferred_dns2} >> ${RESOLV_CONF}
+	    if [ -z "${PREFERRED_DNS_SERVER}" ]; then
+		    export PREFERRED_DNS_SERVER=${wan_preferred_dns2}
+    	fi
+    fi
+    if [ -n "${wan_preferred_dns1}" -a "${wan_preferred_dns1}" != "..." -a  "${wan_preferred_dns1}" != "0.0.0.0" \
+	     -a -n "`nvram get 92`" -a "`nvram get 92`" != "0" ]; then
+    	echo nameserver ${wan_preferred_dns1} >> ${RESOLV_CONF}
+	    if [ -z "${PREFERRED_DNS_SERVER}" ]; then
+	        export PREFERRED_DNS_SERVER=${wan_preferred_dns1}
+	    fi
+    fi
+fi    
+echo "options rotate" >> ${RESOLV_CONF}
+
+/sbin/ifconfig $WAN up
+
+nvram set :211="Disabled"
+# WAN Interface Setup
+nvram set :wan_device=$WAN
+# if we had root mounted via nfs, do not change network setting on wan port
+if [ ! "`grep nfs /etc/mtab`" ]; then
+    #if VLAN tag is defined, or if any priority is set apply it
+    if [ ! ${vlan_tag} = 0 -o ! ${qos_priority} = 0 -o ! ${qos_priority_rtp} = 0 -o ! ${qos_priority_sip} = 0 ]; then
+        /sbin/ifconfig $WAN 0.0.0.0
+        /sbin/vconfig add $WAN $vlan_tag
+        WAN=${WAN}.${vlan_tag}
+        nvram set :wan_device=$WAN
+
+        # This is for legacy usage. The p87 will not be exposed via webUI and will be used
+        # by customers who want to preserve the old mechanism and redirect all trafic with same QoS
+        if [ ! ${qos_priority} = 0 ]; then
+            for i in `busybox seq 0 15` ; do
+                /sbin/vconfig set_egress_map $WAN $i ${qos_priority}
+            done
+        fi
+    fi
+
+    #802.1X support
+    if [ "${dot1x_mode}" = "1" ]; then
+        echo "Enabling 802.1x support ...."
+        /sbin/xsupplicant -i eth0 >/dev/null
+    fi
+
+    #factory mode
+    if [ "x${FACTORYMODE}" = "x1" ]; then
+        wan_ip_option=1
+        nvram set 276=0  #enable telnet
+        wan_static_ipaddr=192.168.0.160
+        wan_static_netmask=255.255.255.0
+        wan_static_default_gw=192.168.0.1
+        echo > ${RESOLV_CONF}
+        echo search "`hostname`" >> ${RESOLV_CONF}
+        echo nameserver ${wan_static_default_gw} >> ${RESOLV_CONF}
+    fi
+
+    case  ${wan_ip_option} in
+    1)
+        echo "Setting fixed WAN IP Address ...."
+        /etc/rc.d/init.d/wan_disconnect
+        /sbin/ifconfig $WAN ${wan_static_ipaddr} netmask ${wan_static_netmask}
+
+        /sbin/route add default gw ${wan_static_default_gw}
+
+		if [ "$(cat /sys/class/net/eth0/operstate)" != "down" ]; then
+        	echo start led_wan_dhcp_ok > /proc/gxp/led_patterns
+            echo start led_error_wan_dhcp > /proc/gxp/led_patterns
+		fi
+        /etc/rc.d/rc.service
+        ;;
+    *)
+        if [ -f /usr/share/udhcpc/default.script ]; then
+            echo "Starting DHCP Client ...."
+            /etc/rc.d/init.d/udhcpc start
+        fi
+        ;;
+    esac
+else
+    # root mounted via NFS...just start services
+    #echo start led_wan_dhcp_ok > /proc/gxp/led_patterns
+    # for NFS support manualy add the dns resolutions
+    /sbin/route add default gw 192.168.254.2
+    echo nameserver 192.168.254.2 >> $RESOLV_CONF
+    echo nameserver 173.254.235.85 >> $RESOLV_CONF
+    echo nameserver 173.254.235.86 >> $RESOLV_CONF
+    /etc/rc.d/rc.service
+fi
+
+#in case dhcpc failed and is till trying, so can not save wan ip here, just save the device name
+#nvram set :121="`ifconfig $WAN|grep \"inet addr\"|cut -d \" \" -f12|cut -d \":\" -f2`"
+nvram set :wan_device=$WAN
+
+#Vonage wants the ARP queries from gs_ata to be at least one minute.
+#This increases the cache life time and hopefully prevent ARP queries from other programs e.g. syslogd to 
+#send out ARP queries before one minute. 
+echo 60 > /proc/sys/net/ipv4/neigh/eth0/base_reachable_time  #default 30
+echo 120 > /proc/sys/net/ipv4/neigh/eth0/gc_stale_time       #default 60
+echo 60 > /proc/sys/net/ipv4/neigh/default/base_reachable_time  #default 30
+echo 120 > /proc/sys/net/ipv4/neigh/default/gc_stale_time       #default 60
+echo 60 > /proc/sys/net/ipv4/neigh/default/gc_interval       #default 30
+echo 1 > /proc/sys/net/ipv4/conf/eth0/arp_accept             #default 0
+echo 256 > /proc/sys/net/ipv4/neigh/default/gc_thresh1       #default 128
+echo 1024 > /proc/sys/net/ipv4/neigh/default/gc_thresh2       #default 512
+echo 2048 > /proc/sys/net/ipv4/neigh/default/gc_thresh3       #default 1024
+

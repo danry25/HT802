@@ -1,0 +1,299 @@
+<html>
+<head>
+<title>Grandstream Device Configuration</title>
+<style type="text/css">
+<!--
+.l{  font-family: Tahoma; font-size: 10pt; color: #000000; }
+a.l:Hover{  font-family: Tahoma; font-size: 10pt; color: #ffffff; }
+-->
+</style></head>
+<body bgcolor="#CCCCCC">
+<form action="update" method="post" style=margin-bottom:0 autocomplete="off">
+<table width="870" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#336699">
+<tr><td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td height="48" valign="middle" bgcolor="#F3C47C" class="l" align="center"><strong><font color="#336699" size="3"><b>Grandstream Device Configuration</b></font></strong></td>
+</tr><tr><td height="20" valign="top" background="/backline.gif" bgcolor="#F3C47C" align="center">
+<table width="60%" cellpadding="0" cellspacing="0"><tr>
+<td bgcolor="#999999" align="center"><a href="index" class="l"><b>STATUS</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config2" class="l"><b>BASIC SETTINGS</b></a></td>
+<td bgcolor="#336699" align="center" class="l"><b>ADVANCED SETTINGS</b></td>
+<td bgcolor="#999999" align="center"><a href="config_a1" class="l"><b>FXS PORT1 </b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a2" class="l"><b>FXS PORT2 </b></a></td>
+</tr></table>
+            </td>
+        </tr>
+<!-- <% web_update 0 --> %> 
+		<tr bgcolor="#FFFFCC">
+		 <td align=center><hr color="#000000" noshade><b><p style="color:#ff0000">Configuration changed. Click Apply to save settings.</p></b><hr color="#000000" noshade></td> 
+		</tr>
+<% web_update 0 <!-- %> -->
+        <tr bgcolor="#FFFFCC">
+          <td> <table width="100%" border=0 cellspacing=1 cellpadding=2>
+              <tr>
+                <td align=right><b>Admin Password: </b></td>
+                <td>&nbsp; <input type="password" name="P2" maxlength=30 size=30 autocomplete="new-password" readonly onfocus="javascript:this.removeAttribute('readonly');this.select();">
+                  (purposely not displayed for security protection) </td>
+              </tr>
+              <tr>
+                <td align=right><i>Layer 3 QoS: </i></td>
+                <td>&nbsp; <input type=text name="P38" value="<% 38  %>" maxlength=5 size=7>
+                  (Diff-Serv or Precedence value)</td>
+              </tr>
+              <tr>
+                <td align=right><i>STUN server is :</i></td>
+                <td>&nbsp; <input type=text name="P76" value="<% 76                                                            %>" maxlength=64 size=32>
+                  (URI or IP:port) </td>
+              </tr>
+              <tr>
+                <td align=right><i>Keep-alive Interval: </i></td>
+                <td>&nbsp; <input type=text name="P84" value="<% 84 %>" maxlength=5 size=7>
+                  (in seconds, default 20 seconds)</td>
+              </tr>
+              <tr>
+                <td align=right><i>Use STUN to detect network connectivity: </i></td>
+                <td>&nbsp;
+                   <input type=radio name="P474" value=0 <% 474 0 checked %> > No &nbsp; <br> &nbsp
+                   <input type=radio name="P474" value=1 <% 474 1 checked %> > Yes, total STUN response misses
+                   <input type=text name="P475" value="<% 475 %>" maxlength=3 size=3> to restart DHCP (mininum=3)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Use DNS to detect network connectivity: </i></td>
+                <td>&nbsp;
+                   <input type=radio name="P1564" value=0 <% 1564 0 checked %> > No &nbsp; &nbsp;
+                   <input type=radio name="P1564" value=1 <% 1564 1 checked %> > Yes
+                </td>
+              </tr>
+              <tr>
+              <tr>
+                <td align=right><i>Telnet Server: </i></td>
+                <td>&nbsp; <input type=radio name="P276" value=1 <% 276 1 checked %>>No &nbsp;&nbsp; &nbsp; <input type=radio name="P276" value=0 <% 276 0 checked %>>Yes</td>
+              </tr>
+                <td align=right valign=top><i>Firmware Upgrade and Provisioning: </i></td>
+                <td>&nbsp; Upgrade Via
+                       &nbsp; &nbsp; <input type=radio name="P212" value=0 <% 212 0 checked %>> TFTP &nbsp; &nbsp; <input type=radio name="P212" value=1 <% 212 1 checked %>> HTTP &nbsp; &nbsp; <input type=radio name="P212" value=2 <% 212 2 checked %>> HTTPS
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Firmware Server Path: <input type=text name="P192" value="<% 192                                                            %>" maxlength=128 size=40>
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Config Server Path: <input type=text name="P237" value="<% 237                                                            %>" maxlength=128 size=40><br>
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; XML Config File Password: <input type=password name="P1359" maxlength=40 size=40>
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; HTTP/HTTPS User Name: <input type=text name="P1360" value="<% 1360                                                            %>" maxlength=40 size=40>
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; HTTP/HTTPS Password: <input type=password name="P1361" maxlength=40 size=40><br>
+                          <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Firmware File Prefix:  <input type=text name="P232" value="<% 232                         %>" maxlength=32 size=7>
+                               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Firmware File Postfix: <input type=text name="P233" value="<% 233                         %>" maxlength=32 size=7>
+                          <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Config File Prefix: &nbsp; &nbsp;  <input type=text name="P234" value="<% 234                         %>" maxlength=32 size=7>
+                               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Config File Postfix: &nbsp; &nbsp; <input type=text name="P235" value="<% 235                         %>" maxlength=32 size=7> <br>
+                  <br> &nbsp; Allow DHCP Option 66 to override server:
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                       &nbsp; &nbsp; <input type=radio name="P145" value=0 <% 145 0 checked %>> No
+                       &nbsp; &nbsp; <input type=radio name="P145" value=1 <% 145 1 checked %>> Yes
+                  <br>
+                  <br> &nbsp; Automatic Upgrade:
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                       &nbsp; &nbsp; <input type=radio name="P194" value=0 <% 194 0 checked %>> No
+                               &nbsp; &nbsp; <input type=radio name="P194" value=3 <% 194 3 checked %>> Yes, every
+                               <input type=text name="P193" value="<% 193 %>" maxlength=7 size=7> minutes(60-5256000).
+                          <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                               &nbsp; &nbsp; <input type=radio name="P194" value=1 <% 194 1 checked %>> Yes, daily at hour
+                               <input type=text name="P285" value="<% 285 %>" maxlength=2 size=2>(0-23).&nbsp;&nbsp;
+                               <input type=radio name="P194" value=2 <% 194 2 checked %>> Yes, weekly on day
+                               <input type=text name="P286" value="<% 286 %>" maxlength=1 size=2>(0-6).
+                  <br>
+                          <br> &nbsp; &nbsp; <input type=radio name="P238" value=0 <% 238 0 checked %>> Always Check for New Firmware at Boot up
+                          <br> &nbsp; &nbsp; <input type=radio name="P238" value=1 <% 238 1 checked %>> Check New Firmware only when F/W pre/suffix changes
+                          <br> &nbsp; &nbsp; <input type=radio name="P238" value=2 <% 238 2 checked %>> Always Skip the Firmware Check
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Authenticate Conf File: </i></td>
+                <td>&nbsp; <input type=radio name="P240" value=0 <% 240 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P240" value=1 <% 240 1 checked %>>
+                  Yes &nbsp; (cfg file would be authenticated before acceptance if set to Yes) </td>
+              </tr>
+              <tr>
+                <td align=right><i>SIP TLS Certificate: </i></td>
+                <td>&nbsp; <textarea name="P280" rows="10" cols="64"></textarea></td>
+              </tr>
+              <tr>
+                <td align=right><i>SIP TLS Private Key: </i></td>
+                <td>&nbsp; <textarea name="P279" rows="10" cols="64"></textarea></td>
+              </tr>
+              <tr>
+                <td align=right><i>SIP TLS Private Key Password: </i></td>
+                <td>&nbsp; <input type=password name="P281" maxlength=64 size=64></td>
+              </tr>
+
+              <tr>
+                <td align=right><i>ACS URL: </i></td>
+                <td>&nbsp; <input type=text name="P4503" value="<% 4503                                                                                             %>" maxlength=96 size=30></td>
+              </tr>
+              <tr>
+                <td align=right><i>ACS Username: </i></td>
+                <td>&nbsp; <input type=text name="P4504" value="<% 4504                                                           %>" maxlength=64 size=30></td>
+              </tr>
+              <tr>
+                <td align=right><i>ACS Password: </i></td>
+                <td>&nbsp; <input type=password name="P4505" maxlength=64 size=30></td>
+              </tr>
+              <tr>
+                <td align=right><i>Periodic Inform Enable: </i></td>
+                <td>&nbsp; <input type=radio name="P4506" value=0 <% 4506 0 checked %>>
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P4506" value=1 <% 4506 1 checked %>>
+                  Yes &nbsp; </td>
+              </tr>
+              <tr>
+                <td align=right><i>Periodic Inform Interval: </i></td>
+                <td>&nbsp; <input type=text name="P4507" value="<% 4507 %>" maxlength=5 size=7></td>
+              </tr>
+              <tr>
+                <td align=right><i>Connection Request Username: </i></td>
+                <td>&nbsp; <input type=text name="P4511" value="<% 4511                                                           %>" maxlength=64 size=30></td>
+              </tr>
+              <tr>
+                <td align=right><i>Connection Request Password: </i></td>
+                <td>&nbsp; <input type=password name="P4512" maxlength=64 size=30></td>
+              </tr>
+              <tr>
+                <td align=right><i>CPE SSL Certificate: </i></td>
+                <td>&nbsp; <textarea name="P8220" rows="10" cols="64"></textarea></td>
+              </tr>
+              <tr>
+                <td align=right><i>CPE SSL Private Key: </i></td>
+                <td>&nbsp; <textarea name="P8221" rows="10" cols="64"></textarea></td>
+              </tr>
+              <tr>
+                <td align="right"><i>System Ring Cadence:</i></td>
+                <td>&nbsp; <input type=text name="P4040" value="<% 4040                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+              </tr>
+              <tr>
+                <td align="right"><i>Call Progress Tones:</i></td>
+                <td>
+                  <table>
+                    <tr>
+                      <td align="left"><i>Dial Tone:</i></td>
+                      <td>&nbsp; <input type=text name="P4000" value="<% 4000                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+                    </tr>
+                    <tr>
+                      <td align="left"><i>Ringback Tone:</i></td>
+                      <td>&nbsp; <input type=text name="P4001" value="<% 4001                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+                    </tr>
+                    <tr>
+                      <td align="left"><i>Busy Tone:</i></td>
+                      <td>&nbsp; <input type=text name="P4002" value="<% 4002                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+                    </tr>
+                    <tr>
+                      <td align="left"><i>Reorder Tone:</i></td>
+                      <td>&nbsp; <input type=text name="P4003" value="<% 4003                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+                    </tr>
+                    <tr>
+                      <td align="left"><i>Confirmation Tone:</i></td>
+                      <td>&nbsp; <input type=text name="P4004" value="<% 4004                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+                    </tr>
+                    <tr>
+                      <td align="left"><i>Call Waiting Tone:</i></td>
+                      <td>&nbsp; <input type=text name="P4005" value="<% 4005                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+                    </tr>
+                  </table>
+                  Syntax: <font face="Courier New">f1=<font color="#000099">val</font>[,f2=<font color="#000099">val</font>[,c=<font color="#000099">on1</font>/<font color="#000099">off1</font>[-<font color="#000099">on2</font>/<font color="#000099">off2</font>[-<font color="#000099">on3</font>/<font color="#000099">off3</font>]]]];</font>
+                    <br>(Frequencies are in Hz and cadence on and off are in ms)<br>
+                </td>
+              </tr>
+<!---
+              <tr>
+                <td align=right><i>Allow DHCP option 120 to override SIP servers: </i></td>
+                <td>&nbsp; <input type=radio name="P1141" value=0 <% 1141 0 checked %>> No
+				    &nbsp; <input type=radio name="P1141" value=1 <% 1141 1 checked %>> Yes
+                </td>
+              </tr>
+-->
+              <tr>
+                <td align="right"><i>Feature Activation Codes:<br>(* or # followed by 1-5 digits)</i></td>
+                <td>
+                  <table>
+                    <tr>
+                      <td align="left"><i>Blind Transfer Code:</i></td>
+                      <td>&nbsp; <input type=text name="P1651" value="<% 1651                 %>" maxlength=6 size=10></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <tr>
+                <td align=right><i>Lock Keypad Update: </i></td>
+                <td>&nbsp; <input type=radio name="P88" value=0 <% 88 0 checked %>>
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P88" value=1 <% 88 1 checked %>>
+                  Yes &nbsp; (configuration update via keypad is disabled if set to Yes) </td>
+              </tr>
+              <tr>
+                <td align=right><i>Disable Voice Prompt: </i></td>
+                <td>&nbsp; <input type=radio name="P253" value=0 <% 253 0 checked %>>
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P253" value=1 <% 253 1 checked %>>
+                  Yes &nbsp; (voice prompt is disabled if set to Yes) </td>
+              </tr>
+              <tr>
+                <td align=right><i>Disable Direct IP Call: </i></td>
+                <td>&nbsp; <input type=radio name="P277" value=0 <% 277 0 checked %>>
+
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P277" value=1 <% 277 1 checked %>>
+                  Yes &nbsp; (direct IP call is disabled if set to Yes) </td>
+              </tr>
+              <tr>
+                <td align=right><i>Disable Attended Transfer: </i></td>
+                <td>&nbsp; <input type=radio name="P1376" value=0 <% 1376 0 checked %>>
+
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P1376" value=1 <% 1376 1 checked %>>
+                  Yes &nbsp; (attended transfers are disabled if set to Yes) </td>
+              </tr>
+              <tr>
+                <td align=right><i>NTP Server: </i></td>
+                <td>&nbsp; <input type=text name="P30" value="<% 30                                                            %>" maxlength=64 size=30>
+                  (URI or IP address) </td>
+              </tr>
+              <tr>
+                <td align=right><i>Allow DHCP option 42 to override NTP server: </i></td>
+                <td>&nbsp; <input type=radio name="P144" value=0 <% 144 0 checked %>> No
+				    &nbsp; <input type=radio name="P144" value=1 <% 144 1 checked %>> Yes
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Syslog Server: </i></td>
+                <td>&nbsp; <input type=text name="P207" value="<% 207                                                        %>" maxlength=64 size=30></td>
+              </tr>
+              <tr>
+                <td align=right><i>Syslog Level: </i></td>
+                <td>&nbsp;
+                  <select name="P208">
+                    <option value=5 <% 208 5 selected %>>EXTRA DEBUG</option>
+                    <option value=1 <% 208 1 selected %>>DEBUG</option>
+                    <option value=2 <% 208 2 selected %>>INFO</option>
+                    <option value=3 <% 208 3 selected %>>WARNING</option>
+                    <option value=4 <% 208 4 selected %>>ERROR</option>
+                    <option value=0 <% 208 0 selected %>>NONE</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Send SIP Log: </i></td>
+                <td>&nbsp; <input type=radio name="P1387" value=0 <% 1387 0 checked %>> No
+				    &nbsp; <input type=radio name="P1387" value=1 <% 1387 1 checked %>> Yes
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>Download Device Configuration: </i></td>
+                <td><input type="button" name="Download" value="Download" onClick="document.location='/cgi-bin/download_cfg'"></td>
+              </tr>
+              <tr>
+                <td align=right><i>Upload firmware: </i></td>
+                <td><input type="button" name="Upload" value="Upload from local directory" onClick="document.location='firmware_page'"></td>
+              </tr>
+              <tr height=28 bgcolor="#F3C47C" align=center>
+                <td colspan=2> <input type="submit" name="update" value="Update">
+                  &nbsp;&nbsp; <input type="submit" name="apply" value="Apply">
+                  &nbsp;&nbsp; <input type="button" name="cancel" value="Cancel" onClick="document.location='login'">
+                  &nbsp;&nbsp; <input type="button" name="reboot" value="Reboot" onClick="document.location='rs'">
+                  <input name="gnkey" type=hidden value=0b82> </td>
+              </tr>
+            </table></td>
+        </tr>
+<tr><td bgcolor="#336699" align="center" class="l"><font size="1">All Rights Reserved Grandstream Networks, Inc. 2006-2015</font></td></tr>
+</table></td></tr></table>
+</form>
+</body></html>

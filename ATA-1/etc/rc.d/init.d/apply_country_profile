@@ -1,0 +1,102 @@
+#!/bin/sh
+country_profile=`nvram get 400`
+current_country_profile=`nvram get current_country_profile`
+
+BACKUP_PREFIX="___"
+
+save_previous_nvram() {
+    local FILENAME=${1}
+    local nvram_filename="/tmp/nvram_for_backup"
+    # remove commetns and duplicate nvram entries. Truncate the values and put only
+    # single pvalue per line 
+    nvparse_conf ${FILENAME} | sort | uniq | cut -d"=" -f1 > ${nvram_filename}
+    cat ${nvram_filename} | while read LINE
+    do
+        # skip empty lines
+        if [ -z ${LINE} ]; then
+#            echo "Skip empty lines"
+            continue
+        fi
+
+        backup_pvalue="${BACKUP_PREFIX}${LINE}"
+        backup_val=`nvram get ${backup_pvalue}`
+        # if the value is already backed up then skip it 
+        if [ "x${backup_val}" != "x" ]; then
+#            echo "Already saved ${backup_pvalue}=${backup_val}"
+            continue
+        fi
+
+        backup_val=`nvram get ${LINE}`
+        #if the nvram value is empty do not back it up
+        if [ -n ${backup_val} ]; then
+#            echo "Saving ${LINE}=${backup_val} --> ${backup_pvalue}=${backup_val}"
+            nvram set ${backup_pvalue}=${backup_val}
+        fi
+    done
+}
+
+revert_default_nvram() {
+    local FILENAME=${1}
+    local nvram_filename="/tmp/nvram_for_revert"
+    if [ "${FILENAME}" = "all" ]; then
+#        echo "Reverting ALL backed up values"
+        # get all backup values from the nvram 
+        nvram show | grep "${BACKUP_PREFIX}" | cut -d"=" -f1 | cut -b4- > ${nvram_filename}
+    else
+#        echo "Reverting ONLY backed up values for ${FILENAME}"
+        # remove commetns and duplicate nvram entries. Truncate the values and put only
+        # single pvalue per line
+        nvparse_conf ${FILENAME} | sort | uniq | cut -d"=" -f1 > ${nvram_filename}
+    fi
+
+    cat ${nvram_filename} | while read LINE
+    do
+        # skip empty lines
+        if [ -z ${LINE} ]; then
+#            echo "Skip empty lines"
+            continue
+        fi
+
+        backup_pvalue="${BACKUP_PREFIX}${LINE}"
+        backup_val=`nvram get ${backup_pvalue}`
+#        echo "Reverting ${backup_pvalue}=${backup_val} --> ${LINE}=${backup_val}"
+        nvram set ${LINE}=${backup_val}
+        nvram unset ${backup_pvalue}
+    done
+}
+
+#
+# Start Here
+#
+if [ "${country_profile}" = ""  ]; then
+    return
+fi
+
+if [ ${country_profile} != 0 -a -e /country_profile/country_profile_values.${country_profile} ]; then
+    # Apply profile values ONLY once.
+    if [ "${country_profile}" != "${current_country_profile}" -o -z "${current_country_profile}" ]; then
+        if [ "${current_country_profile}" != 0 -a -n "${current_country_profile}" ]; then
+            echo "Reverting country specific profile values for ${current_country_profile}"
+            revert_default_nvram /country_profile/country_profile_values.${current_country_profile}
+        fi
+
+        echo "Loading country specific profile values for ${country_profile}"
+
+        # make a copy of the nvram values we are about to change
+        save_previous_nvram /country_profile/country_profile_values.${country_profile}
+
+        # remove commetns and duplicate nvram entries.
+        nvparse_conf /country_profile/country_profile_values.${country_profile} > /etc/country_profile_values
+
+        # load the country specific nvram values
+        nvload /etc/country_profile_values
+        nvram set current_country_profile=${country_profile}
+    else
+        echo "Country specific profile for ${country_profile} already enabled "
+    fi
+elif [ "${current_country_profile}" != 0 -a -n "${current_country_profile}" ]; then
+    echo "Disabling country specific profile values for ${current_country_profile}."
+    revert_default_nvram all 
+    nvram set current_country_profile=0
+fi
+

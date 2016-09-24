@@ -1,0 +1,36 @@
+#!/bin/sh
+led_module="gs_led_patterns.ko"
+
+case "$1" in
+  start)
+    echo Starting HT8XX LED Pattern driver ...
+
+    cd /lib/modules
+
+    insmod $led_module || exit 1
+    
+    echo start led_no_registration 0 > /proc/gxp/led_patterns
+    echo start led_power_normal > /proc/gxp/led_patterns
+
+    cd -
+    ;;
+  stop)  
+    echo Stopping HT8XX LED Pattern driver...
+
+    cd /lib/modules
+
+    rmmod $led_module
+
+    cd -
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0

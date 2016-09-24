@@ -1,0 +1,54 @@
+#
+# Country specific deployment values for China
+#
+
+#China Country Specific
+#1. Dial Tone:f1=450@-13,f2=0@-13,c=0/0;
+#2. Ring Back Tone:450@-19,f2=0@-19,c=1000/4000;
+#3. Call-Waiting Tone:450@-13,f2=0@-13,c=300/10000-300/10000-0/0;
+#4. IVR Language: Chinese
+#5. SLIC Settinig:China
+#6. WebUI Language Chinese
+
+#
+# [ CPT ]
+#
+
+#1. Dial Tone
+4000=f1=450@-13,f2=0@-13,c=0/0;
+
+#2. Ring Back Tone
+4001=f1=450@-19,f2=0@-19,c=1000/4000;
+
+# Busy tone 
+4002=f1=450@-24,f2=0@-24,c=350/350;
+
+# Fast Busy
+4003=f1=450@-24,f2=0@-24,c=350/350;
+
+#3. Call-Waiting Tone
+4005=f1=450@-13,f2=0@-13,c=400/4000-400/4000-0/0;
+
+#
+# [ Language ]
+#
+
+#4. IVR Language: Chinese
+342=4
+
+#5. LCD disply
+1362=zh
+
+#6. WebUI Language Chinese
+
+
+#
+# [ SLIC ]
+#
+
+# SLIC Settings for Profile 1-4
+854=5
+864=5
+564=5
+4335=5
+

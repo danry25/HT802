@@ -1,0 +1,304 @@
+<html>
+<head>
+<title>潮流网络产品配置</title>
+<style type="text/css">
+<!--
+.l{  font-family: Tahoma; font-size: 10pt; color: #000000; }
+a.l:Hover{  font-family: Tahoma; font-size: 10pt; color: #ffffff; }
+-->
+</style></head>
+<body bgcolor="#CCCCCC">
+<form action="update" method="post" style=margin-bottom:0>
+<table width="870" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#336699">
+<tr><td valign="top"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td height="48" valign="middle" bgcolor="#F3C47C" class="l" align="center"><strong><font color="#336699" size="3"><b>潮流网络产品配置</b></font></strong></td>
+</tr><tr><td height="20" valign="top" background="/backline.gif" bgcolor="#F3C47C" align="center">
+<table width="60%" cellpadding="0" cellspacing="0"><tr>
+<td bgcolor="#999999" align="center"><a href="index" class="l"><b>状态</b></a></td>
+<td bgcolor="#999999" align="center"><a href="config2" class="l"><b>基本设置</b></a></td>
+<td bgcolor="#336699" align="center" class="l"><b>高级设置</b></td>
+<td bgcolor="#999999" align="center"><a href="config_a1" class="l"><b>FXS端口1 </b></a></td>
+<td bgcolor="#999999" align="center"><a href="config_a2" class="l"><b>FXS端口2 </b></a></td>
+</tr></table>
+            </td>
+        </tr>
+<!-- <% web_update 0 --> %> 
+		<tr bgcolor="#FFFFCC">
+		 <td align=center><hr color="#000000" noshade><b><p style="color:#ff0000">配置已修改，请按“生效”以启用新配置。</p></b><hr color="#000000" noshade></td> 
+		</tr>
+<% web_update 0 <!-- %> -->
+        <tr bgcolor="#FFFFCC">
+          <td> <table width="100%" border=0 cellspacing=1 cellpadding=2>
+              <tr>
+                <td align=right><b>管理员密码: </b></td>
+                <td>&nbsp; <input type="password" name="P2" maxlength=30 size=30>
+                  (出于安全考虑不显示密码) </td>
+              </tr>
+              <tr>
+                <td align="right"><i>第二层QoS:</i></td>
+                <td>
+                  <table>
+                    <tr>
+                      <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;802.1Q/VLAN 标记 </td>
+                      <td>&nbsp; <input type=text name="P51" value="<% 51  %>" maxlength=4 size=5> (0-4094) </td>
+                    </tr>
+                    <tr>
+                      <td align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SIP 802.1p 优先级  </td>                      
+                      <td>&nbsp; <input type=text name="P5038" value="<% 5038  %>" maxlength=1 size=5> (0-7) </td>
+                    </tr>
+                    <tr>
+                      <td align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;音频 802.1p 优先级  </td>
+                      <td>&nbsp; <input type=text name="P5042" value="<% 5042  %>" maxlength=1 size=5> (0-7)</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>STUN服务器 :</i></td>
+                <td>&nbsp; <input type=text name="P76" value="<% 76                                                            %>" maxlength=64 size=32>
+                  (URI或IP:端口) </td>
+              </tr>
+              <tr>
+                <td align=right><i>心跳间隔: </i></td>
+                <td>&nbsp; <input type=text name="P84" value="<% 84 %>" maxlength=5 size=7>
+                  (以秒为单位,默认20秒)</td>
+              </tr>
+              <tr>
+                <td align=right><i>用 STUN 检测网络连通性: </i></td>
+                <td>&nbsp;
+                   <input type=radio name="P474" value=0 <% 474 0 checked %> > No &nbsp; <br> &nbsp
+                   <input type=radio name="P474" value=1 <% 474 1 checked %> > Yes, 如果STUN没答复超过
+                   <input type=text name="P475" value="<% 475 %>" maxlength=3 size=3>次, 就重启DHCP (最小值是3)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>用 DNS 检测网络连通性: </i></td>
+                <td>&nbsp;
+                   <input type=radio name="P1564" value=0 <% 1564 0 checked %> > No &nbsp; &nbsp;
+                   <input type=radio name="P1564" value=1 <% 1564 1 checked %> > Yes
+                </td>
+              </tr>
+              <tr>
+                <td align=right valign=top><i>版本升级和预配置: </i></td>
+                <td>
+                               &nbsp; 升级模式
+                       &nbsp; &nbsp; <input type=radio name="P212" value=0 <% 212 0 checked %>> TFTP &nbsp; &nbsp; <input type=radio name="P212" value=1 <% 212 1 checked %>> HTTP &nbsp; &nbsp; <input type=radio name="P212" value=2 <% 212 2 checked %>> HTTPS
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 版本服务器路径: <input type=text name="P192" value="<% 192                                                            %>" maxlength=128 size=40>
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 配置服务器路径: <input type=text name="P237" value="<% 237                                                            %>" maxlength=128 size=40><br>
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; XML配置文件密码: <input type=password name="P1359" maxlength=40 size=40>
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; HTTP/HTTPS用户名: <input type=text name="P1360" value="<% 1360                                                            %>" maxlength=40 size=40>
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; HTTP/HTTPS密码: <input type=password name="P1361" maxlength=40 size=40><br>
+                  <br> <input type=radio name="P20713" value=1 <% 20713 1 checked %>> 总是发送HTTP基本验证信息 
+                  <br> <input type=radio name="P20713" value=0 <% 20713 0 checked %>> 仅在需要时发送HTTP基本验证信息 <br>
+                          <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 版本文件前缀: <input type=text name="P232" value="<% 232                         %>" maxlength=32 size=7>
+                               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 版本文件后缀: <input type=text name="P233" value="<% 233                         %>" maxlength=32 size=7>
+                          <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 配置文件前缀: <input type=text name="P234" value="<% 234                         %>" maxlength=32 size=7>
+                               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 配置文件后缀: <input type=text name="P235" value="<% 235                         %>" maxlength=32 size=7> <br>
+                          <br> &nbsp; 启用DHCP Option 66覆盖功能:
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                               &nbsp; &nbsp; <input type=radio name="P145" value=0 <% 145 0 checked %>> No
+                               &nbsp; &nbsp; <input type=radio name="P145" value=1 <% 145 1 checked %>> Yes
+                          <br>
+                  <br> &nbsp; 自动升级:
+                  <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                       &nbsp; &nbsp; <input type=radio name="P194" value=0 <% 194 0 checked %>> 不启用
+                               &nbsp; &nbsp; <input type=radio name="P194" value=3 <% 194 3 checked %>> 每隔
+                               <input type=text name="P193" value="<% 193 %>" maxlength=7 size=7> 分钟检测(30-5256000).
+                          <br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                               &nbsp; &nbsp; <input type=radio name="P194" value=1 <% 194 1 checked %>> 每天于小时
+                               <input type=text name="P285" value="<% 285 %>" maxlength=2 size=2>(0-23)检测.&nbsp;&nbsp;
+                               <input type=radio name="P194" value=2 <% 194 2 checked %>> 每周于星期
+                               <input type=text name="P286" value="<% 286 %>" maxlength=1 size=2>(0-6)检测.
+                  <br>
+                          <br> &nbsp; &nbsp; <input type=radio name="P238" value=0 <% 238 0 checked %>> 总是在启动时检测新版本
+                          <br> &nbsp; &nbsp; <input type=radio name="P238" value=1 <% 238 1 checked %>> 唯有当版本前后缀发生变化时才检测新的版本
+                          <br> &nbsp; &nbsp; <input type=radio name="P238" value=2 <% 238 2 checked %>> 总是跳过版本检测
+            </td>
+              </tr>
+              <tr>
+                <td align=right><i>关闭NOTIFY请求认证:</i></td>
+                <td>&nbsp; <input type=radio name="P4428" value=0 <% 4428 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P4428" value=1 <% 4428 1 checked %>>
+                  Yes &nbsp;(如果设置为Yes，NOTIFY请求将会被接受无需认证)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>配置文件认证: </i></td>
+                <td>&nbsp; <input type=radio name="P240" value=0 <% 240 0 checked %>>
+                  No &nbsp;&nbsp; &nbsp; <input type=radio name="P240" value=1 <% 240 1 checked %>>
+                  Yes &nbsp; (如果设置为Yes，预配置文件将会在接受前进行认证) </td>
+              </tr>
+              <tr>
+                <td align=right><i>SIP TLS证书: </i></td>
+                <td>&nbsp; <textarea name="P280" rows="10" cols="64"></textarea></td>
+              </tr>
+              <tr>
+                <td align=right><i>SIP TLS私用密钥: </i></td>
+                <td>&nbsp; <textarea name="P279" rows="10" cols="64"></textarea></td>
+              </tr>
+              <tr>
+                <td align=right><i>SIP TLS私用密钥密码: </i></td>
+                <td>&nbsp; <input type=password name="P281" maxlength=64 size=64></td>
+              </tr>
+
+              <tr>
+                <td align=right><i>ACS URL: </i></td>
+                <td>&nbsp; <input type=text name="P4503" value="<% 4503                                                                                             %>" maxlength=96 size=30></td>
+              </tr>
+              <tr>
+                <td align=right><i>ACS 用户名: </i></td>
+                <td>&nbsp; <input type=text name="P4504" value="<% 4504                                                           %>" maxlength=64 size=30></td>
+              </tr>
+              <tr>
+                <td align=right><i>ACS 密码: </i></td>
+                <td>&nbsp; <input type=password name="P4505" maxlength=64 size=30></td>
+              </tr>
+              <tr>
+                <td align=right><i>开启 Periodic Inform: </i></td>
+                <td>&nbsp; <input type=radio name="P4506" value=0 <% 4506 0 checked %>>
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P4506" value=1 <% 4506 1 checked %>>
+                  Yes &nbsp; </td>
+              </tr>
+              <tr>
+                <td align=right><i>Periodic Inform 间隔: </i></td>
+                <td>&nbsp; <input type=text name="P4507" value="<% 4507 %>" maxlength=5 size=7></td>
+              </tr>
+              <tr>
+                <td align=right><i>Conncetion Request 用户名: </i></td>
+                <td>&nbsp; <input type=text name="P4511" value="<% 4511                                                           %>" maxlength=64 size=30></td>
+              </tr>
+              <tr>
+                <td align=right><i>Connection Request 密码: </i></td>
+                <td>&nbsp; <input type=password name="P4512" maxlength=64 size=30></td>
+              </tr>
+              <tr>
+                <td align=right><i>CPE SSL证书: </i></td>
+                <td>&nbsp; <textarea name="P8220" rows="10" cols="64"></textarea></td>
+              </tr>
+              <tr>
+                <td align=right><i>CPE SSL私用密钥: </i></td>
+                <td>&nbsp; <textarea name="P8221" rows="10" cols="64"></textarea></td>
+              </tr>
+
+              <tr>
+                <td align="right"><i>系统Cadence音:</i></td>
+                <td>&nbsp; <input type=text name="P4040" value="<% 4040                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+              </tr>
+              <tr>
+                <td align="right"><i>呼叫状态音(CPT):</i></td>
+                <td>
+                  <table>
+                    <tr>
+                      <td align="left"><i>拨号音:</i></td>
+                      <td>&nbsp; <input type=text name="P4000" value="<% 4000                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+                    </tr>
+                    <tr>
+                      <td align="left"><i>回铃音:</i></td>
+                      <td>&nbsp; <input type=text name="P4001" value="<% 4001                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+                    </tr>
+                    <tr>
+                      <td align="left"><i>忙音:</i></td>
+                      <td>&nbsp; <input type=text name="P4002" value="<% 4002                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+                    </tr>
+                    <tr>
+                      <td align="left"><i>续订音:</i></td>
+                      <td>&nbsp; <input type=text name="P4003" value="<% 4003                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+                    </tr>
+                    <tr>
+                      <td align="left"><i>确认音:</i></td>
+                      <td>&nbsp; <input type=text name="P4004" value="<% 4004                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+                    </tr>
+                    <tr>
+                      <td align="left"><i>呼叫等待音:</i></td>
+                      <td>&nbsp; <input type=text name="P4005" value="<% 4005                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+                    </tr>
+                    <tr>
+                      <td align="left"><i>等待拨号音:</i></td>
+                      <td>&nbsp; <input type=text name="P4041" value="<% 4041                                                                                                                                                                                                                                                           %>" maxlength=256 size=50></td>
+                    </tr>
+                  </table>
+                  语法: <font face="Courier New">f1=<font color="#000099">val</font>[,f2=<font color="#000099">val</font>[,c=<font color="#000099">on1</font>/<font color="#000099">off1</font>[-<font color="#000099">on2</font>/<font color="#000099">off2</font>[-<font color="#000099">on3</font>/<font color="#000099">off3</font>]]]];</font>
+                    <br>(频率用Hz为单位，Cadence值以毫秒为单位)
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>等待拨号音激活码: </i></td>
+                <td>&nbsp; <input type=text name="P4042" value="<% 4042 %>" maxlength=20 size=20>
+				(最多可用20位数字. 无默认值.)
+                 </td>
+              </tr>
+
+              <tr>
+                <td align=right><i>话机配置锁定: </i></td>
+                <td>&nbsp; <input type=radio name="P88" value=0 <% 88 0 checked %>>
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P88" value=1 <% 88 1 checked %>>
+                  Yes &nbsp; (如果设置为Yes, 拒绝设备通过话机来进行配置) </td>
+              </tr>
+              <tr>
+                <td align=right><i>关闭语音提示: </i></td>
+                <td>&nbsp; <input type=radio name="P253" value=0 <% 253 0 checked %>>
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P253" value=1 <% 253 1 checked %>>
+                  Yes &nbsp; (如果设置为Yes, 语音提示关闭) </td>
+              </tr>
+              <tr>
+                <td align=right><i>禁止IP地址直拨功能: </i></td>
+                <td>&nbsp; <input type=radio name="P277" value=0 <% 277 0 checked %>>
+
+                  No &nbsp; &nbsp; &nbsp; <input type=radio name="P277" value=1 <% 277 1 checked %>>
+                  Yes &nbsp; (如果设置为Yes, 禁止IP地址直拨呼叫) </td>
+              </tr>
+              <tr>
+                <td align=right><i>时间服务器: </i></td>
+                <td>&nbsp; <input type=text name="P30" value="<% 30                                                            %>" maxlength=64 size=30>
+                  (URI或IP地址) </td>
+              </tr>
+              <tr>
+                <td align=right><i>启用DHCP Option 42覆盖时间服务器: </i></td>
+                <td>&nbsp; <input type=radio name="P144" value=0 <% 144 0 checked %>> No
+				    &nbsp; <input type=radio name="P144" value=1 <% 144 1 checked %>> Yes
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>系统日志服务器: </i></td>
+                <td>&nbsp; <input type=text name="P207" value="<% 207                                                        %>" maxlength=64 size=30></td>
+              </tr>
+              <tr>
+                <td align=right><i>日志级别: </i></td>
+                <td>&nbsp;
+                  <select name="P208">
+                    <option value=5 <% 208 5 selected %>>EXTRA DEBUG</option>
+                    <option value=1 <% 208 1 selected %>>DEBUG</option>
+                    <option value=2 <% 208 2 selected %>>INFO</option>
+                    <option value=3 <% 208 3 selected %>>WARNING</option>
+                    <option value=4 <% 208 4 selected %>>ERROR</option>
+                    <option value=0 <% 208 0 selected %>>NONE</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>显示SIP消息日志: </i></td>
+                <td>&nbsp; <input type=radio name="P1387" value=0 <% 1387 0 checked %>> No
+				    &nbsp; <input type=radio name="P1387" value=1 <% 1387 1 checked %>> Yes
+                </td>
+              </tr>
+              <tr>
+                <td align=right><i>下载当前配置: </i></td>
+                <td><input type="button" name="Download" value="下载" onClick="document.location='/cgi-bin/download_cfg'"></td>
+              </tr>
+              <tr>
+                <td align=right><i>手动升级软件版本: </i></td>
+                <td><input type="button" name="Upload" value="软件升级" onClick="document.location='firmware_page'"></td>
+              </tr>
+              <tr height=28 bgcolor="#F3C47C" align=center>
+                <td colspan=2> <input type="submit" name="update" value="保存">
+                  &nbsp;&nbsp; <input type="submit" name="apply" value="生效">
+                  &nbsp;&nbsp; <input type="button" name="cancel" value="取消" onClick="document.location='login'">
+                  &nbsp;&nbsp; <input type="button" name="reboot" value="重启" onClick="document.location='rs'">
+                  <input name="gnkey" type=hidden value=0b82> </td>
+              </tr>
+            </table></td>
+        </tr>
+<tr><td bgcolor="#336699" align="center" class="l"><font size="1">版权所有 潮流网络 2006-2014</font></td></tr>
+</table></td></tr></table>
+</form>
+</body></html>

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+MAC="`nvram get 67|tr -d ':'`"
+
+RAND="`hexdump -e'\"%08X%08x\n\"' /rand_core.txt`"
+VER="`prov_procheader /proc/provision/partition/prog | grep 'Ver:' | cut -d' ' -f3`"
+TIME="`date +%s`"
+
+
+cat - > "/core/${MAC}/core.${MAC}.${TIME}.${VER}.${RAND}"
